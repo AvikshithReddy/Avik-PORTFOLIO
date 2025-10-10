@@ -1,1200 +1,528 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- ====== Basics ====== -->
   <meta charset="UTF-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  />
-  <title>Avikshith Yelakonda - Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Avikshith Yelakonda — Data Science Portfolio</title>
+  <meta name="description" content="Data Science portfolio of Avikshith Yelakonda: ML, analytics, automation workflows, and impactful projects." />
+
+  <!-- Fav (optional) -->
+  <!-- <link rel="icon" href="favicon.ico" /> -->
+
+  <!-- SEO / Social -->
+  <meta property="og:title" content="Avikshith Yelakonda — Data Science Portfolio" />
+  <meta property="og:description" content="ML, analytics, automation workflows, and impactful projects." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://avik-portfolio.vercel.app/og-image.jpg" />
 
   <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #8e2de2 0%, #4a00e0 100%);
-    min-height: 100vh;
-    overflow-x: hidden;
-
-        }
-
-        /* Animated background */
-        .bg-animation {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: linear-gradient(45deg, #667eea, #764ba2, #5b2c87, #4c63d2);
-            background-size: 400% 400%;
-            animation: gradientShift 15s ease infinite;
-        }
-
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Floating particles */
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-
-        .particle {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
-        }
-
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 1rem 2rem;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            z-index: 1000;
-            transition: all 0.3s ease;
-        }
-
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: white;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            position: relative;
-            padding: 0.5rem 1rem;
-            border-radius: 25px;
-        }
-
-        .nav-links a:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            padding: 0 2rem;
-            position: relative;
-        }
-
-        .hero-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .hero-text h1 {
-            font-size: 3.5rem;
-            color: white;
-            margin-bottom: 1rem;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-            animation: slideInLeft 1s ease;
-        }
-
-        .hero-text .subtitle {
-            font-size: 1.3rem;
-            color: #e0e6ff;
-            margin-bottom: 2rem;
-            animation: slideInLeft 1s ease 0.2s both;
-        }
-
-        .hero-text .bio {
-            font-size: 1rem;
-            color: #d0d8ff;
-            line-height: 1.6;
-            margin-bottom: 2rem;
-            animation: slideInLeft 1s ease 0.4s both;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 1rem;
-            animation: slideInLeft 1s ease 0.6s both;
-        }
-
-        .btn {
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 50px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        .btn-primary {
-            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
-            color: white;
-        }
-
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        .hero-avatar {
-            display: flex;
-            justify-content: center;
-            animation: slideInRight 1s ease;
-        }
-
-        .avatar-container {
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            padding: 5px;
-            animation: rotate 20s linear infinite;
-        }
-
-        .avatar {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 6rem;
-            color: white;
-            text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
-        }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        @keyframes slideInLeft {
-            from { opacity: 0; transform: translateX(-50px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        @keyframes slideInRight {
-            from { opacity: 0; transform: translateX(50px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        /* Contact Links */
-        .contact-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .contact-link {
-            display: flex;
-            align-items: center;
-            padding: 0.8rem 1.5rem;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 25px;
-            color: white;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .contact-link:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-        }
-
-        .contact-link i {
-            margin-right: 0.5rem;
-            font-size: 1.2rem;
-        }
-
-        /* Sections */
-        .section {
-            padding: 6rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            font-size: 2.5rem;
-            color: white;
-            text-align: center;
-            margin-bottom: 3rem;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-        }
-
-        /* Skills Section */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .skill-category {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            padding: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
-        }
-
-        .skill-category:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-            background: rgba(255, 255, 255, 0.15);
-        }
-
-        .skill-category h3 {
-            color: #ff6b6b;
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-        }
-
-        .skill-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .skill-tag {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-        }
-
-        .skill-tag:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: scale(1.05);
-        }
-
-        /* Projects Section */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-        }
-
-        .project-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            padding: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .project-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transition: all 0.5s ease;
-        }
-
-        .project-card:hover::before {
-            left: 100%;
-        }
-
-        .project-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
-            background: rgba(255, 255, 255, 0.15);
-        }
-
-        .project-card h3 {
-            color: #ff6b6b;
-            margin-bottom: 1rem;
-            font-size: 1.4rem;
-        }
-
-        .project-card p {
-            color: #d0d8ff;
-            line-height: 1.6;
-            margin-bottom: 1rem;
-        }
-
-        .tech-stack {
-            color: #a0a8ff;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        /* Education & Experience */
-        .timeline {
-            position: relative;
-            padding-left: 2rem;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: linear-gradient(to bottom, #667eea, #764ba2);
-        }
-
-        .timeline-item {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            border-radius: 15px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -2.5rem;
-            top: 2rem;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: #ff6b6b;
-            border: 3px solid white;
-        }
-
-        .timeline-item:hover {
-            transform: translateX(10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        .timeline-item h3 {
-            color: #ff6b6b;
-            margin-bottom: 0.5rem;
-        }
-
-        .timeline-item .date {
-            color: #a0a8ff;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        .timeline-item p {
-            color: #d0d8ff;
-            line-height: 1.6;
-        }
-
-        /* Mobile Responsiveness */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
-            .hero-content {
-                grid-template-columns: 1fr;
-                text-align: center;
-                gap: 2rem;
-            }
-
-            .hero-text h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .avatar-container {
-                width: 200px;
-                height: 200px;
-            }
-
-            .avatar {
-                font-size: 4rem;
-            }
-
-            .contact-links {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .section {
-                padding: 4rem 1rem;
-            }
-
-            .skills-grid,
-            .projects-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Scroll animations */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    </style>
+  <style>
+    :root{
+      --bg1:#8e2de2; --bg2:#4a00e0;
+      --glass: rgba(255,255,255,.10);
+      --glass-2: rgba(255,255,255,.16);
+      --text:#eaf0ff; --muted:#cfd8ff; --accent:#ff6b6b; --accent-2:#ee5a24;
+      --border: rgba(255,255,255,.22);
+      --card-shadow: 0 8px 32px rgba(0,0,0,.25);
+      --maxw: 1200px;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background: linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 100%);
+      min-height: 100vh; overflow-x: hidden;
+    }
+
+    /* ===== Background anim (respects reduced motion) ===== */
+    .bg-animation{
+      position: fixed; inset: 0; z-index:-2;
+      background: linear-gradient(45deg,#667eea,#764ba2,#5b2c87,#4c63d2);
+      background-size: 400% 400%;
+      animation: gradientShift 18s ease infinite;
+      opacity:.25;
+    }
+    @keyframes gradientShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+    @media (prefers-reduced-motion: reduce){
+      .bg-animation{animation:none}
+    }
+
+    /* ===== Nav ===== */
+    nav{
+      position:sticky; top:0; z-index:1000;
+      background: rgba(0,0,0,.25);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-container{
+      max-width: var(--maxw); margin:0 auto;
+      display:flex; align-items:center; justify-content:space-between;
+      padding: .85rem 1rem;
+    }
+    .logo{font-weight:700; letter-spacing:.3px}
+    .nav-links{list-style:none; display:flex; gap:1rem}
+    .nav-links a{
+      display:inline-block; padding:.55rem .9rem; border-radius:999px;
+      color:var(--text); text-decoration:none; font-weight:600; opacity:.92;
+      transition: all .2s ease;
+    }
+    .nav-links a:hover{background:var(--glass); transform: translateY(-2px)}
+    .nav-links a.active{background:linear-gradient(45deg,var(--accent),var(--accent-2)); color:#fff}
+
+    /* ===== Sections ===== */
+    .section{padding: 5.5rem 1rem}
+    .container{max-width: var(--maxw); margin:0 auto}
+    .section-title{
+      text-align:center; font-size: 2.2rem; margin-bottom: 2.2rem; letter-spacing:.3px
+    }
+
+    /* ===== Hero ===== */
+    .hero{min-height: calc(100vh - 68px); display:grid; place-items:center}
+    .hero-grid{
+      display:grid; gap: 2.5rem; align-items:center;
+      grid-template-columns: 1.1fr .9fr;
+    }
+    .hero h1{font-size: clamp(2.2rem, 4vw, 3.2rem); line-height:1.15; margin-bottom:.6rem}
+    .subtitle{color:var(--muted); font-weight:600; margin-bottom:1.2rem}
+    .bio{color:#d6deff; line-height:1.7; max-width:58ch; margin-bottom:1.3rem}
+    .cta{display:flex; gap:.8rem; flex-wrap:wrap}
+    .btn{
+      display:inline-flex; align-items:center; gap:.55rem; padding:.85rem 1.2rem;
+      border-radius:12px; border:1px solid var(--border);
+      background: linear-gradient(45deg,var(--accent),var(--accent-2));
+      color:#fff; text-decoration:none; font-weight:700; box-shadow: var(--card-shadow);
+      transition: transform .18s ease, box-shadow .18s ease, opacity .18s ease;
+    }
+    .btn:hover{transform: translateY(-2px)}
+    .btn.secondary{
+      background: var(--glass-2); color: var(--text);
+      border:1px solid var(--border); box-shadow:none;
+    }
+    .avatar-wrap{
+      width: 260px; height:260px; margin-inline:auto; border-radius:50%;
+      background: linear-gradient(45deg,#667eea,#764ba2);
+      padding:6px; box-shadow: var(--card-shadow);
+      animation: spin 24s linear infinite;
+    }
+    .avatar{
+      width:100%; height:100%; border-radius:50%;
+      display:grid; place-items:center;
+      background: rgba(255,255,255,.12); font-size:4.2rem
+    }
+    @keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+    @media (prefers-reduced-motion: reduce){.avatar-wrap{animation:none}}
+
+    /* ===== Skill Cards ===== */
+    .cards{
+      display:grid; gap:1.2rem;
+      grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+    }
+    .card{
+      background: var(--glass-2);
+      border:1px solid var(--border);
+      border-radius: 18px; padding:1.3rem 1.2rem;
+      box-shadow: var(--card-shadow); transition: transform .16s ease, background .2s ease;
+    }
+    .card:hover{transform: translateY(-4px)}
+    .card h3{font-size:1.1rem; margin-bottom:.9rem; color:#ffd6d6}
+    .tagrow{display:flex; flex-wrap:wrap; gap:.5rem}
+    .tag{
+      background: rgba(255,255,255,.18);
+      border:1px solid var(--border);
+      color: var(--text);
+      padding:.38rem .66rem; border-radius:999px; font-size:.9rem; font-weight:600
+    }
+
+    /* ===== Projects ===== */
+    .projects{display:grid; gap:1.2rem; grid-template-columns: repeat(auto-fit,minmax(330px,1fr))}
+    .project{
+      position:relative; overflow:hidden;
+      background: var(--glass-2); border:1px solid var(--border);
+      border-radius: 18px; padding:1.3rem 1.2rem; box-shadow: var(--card-shadow);
+      isolation:isolate;
+    }
+    .project:before{
+      content:""; position:absolute; inset:-1px; z-index:-1;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.1), transparent);
+      transform: translateX(-100%); transition: transform .6s ease;
+    }
+    .project:hover:before{transform: translateX(100%)}
+    .project h3{color:#ffd6d6; margin-bottom:.6rem}
+    .project p{color:#d9e2ff; line-height:1.6; margin-bottom:.6rem}
+    .stack{color:#a8b4ff; font-weight:700; font-size:.92rem}
+
+    /* ===== Timeline ===== */
+    .timeline{position:relative; padding-left: 1.4rem}
+    .timeline:before{
+      content:""; position:absolute; left:.25rem; top:.2rem; bottom:.2rem; width:2px;
+      background: linear-gradient(to bottom, #667eea, #764ba2);
+      opacity:.75;
+    }
+    .titem{
+      position:relative; margin: 0 0 1rem 0; padding:1.15rem 1.1rem;
+      background: var(--glass-2); border:1px solid var(--border); border-radius:14px;
+      box-shadow: var(--card-shadow);
+    }
+    .titem:before{
+      content:""; position:absolute; left:-1.35rem; top:1.35rem; width:11px; height:11px; border-radius:50%;
+      background: var(--accent); border: 3px solid #fff;
+    }
+    .titem h3{margin-bottom:.25rem; color:#ffd6d6; font-size:1.05rem}
+    .titem .date{color:#a8b4ff; font-weight:700; margin-bottom:.6rem; font-size:.92rem}
+    .titem p{color:#d9e2ff}
+    .pill{
+      display:inline-block; margin-left:.5rem; padding:.12rem .5rem; font-size:.78rem;
+      border-radius:999px; background: rgba(255,255,255,.15); border:1px solid var(--border)
+    }
+    .xp-list{margin:.35rem 0 1rem 1.2rem; color:#d9e2ff; line-height:1.55}
+    .xp-list li{margin-bottom:.4rem}
+    .skill-tags{display:flex; flex-wrap:wrap; gap:.5rem; margin-top:.2rem}
+
+    /* ===== Utilities ===== */
+    .muted{color:var(--muted)}
+    .fade-in{opacity:0; transform: translateY(24px); transition: all .6s ease}
+    .fade-in.visible{opacity:1; transform: translateY(0)}
+    .toc{display:none} /* (mobile menu spot if needed) */
+
+    /* ===== Back to top ===== */
+    .to-top{
+      position:fixed; right:1rem; bottom:1rem; z-index:999;
+      display:none; place-items:center; width:46px; height:46px; border-radius:999px;
+      border:1px solid var(--border); background: var(--glass-2); color:#fff; text-decoration:none;
+      box-shadow: var(--card-shadow); transition: transform .18s ease
+    }
+    .to-top:hover{transform: translateY(-2px)}
+
+    /* ===== Responsive ===== */
+    @media (max-width: 900px){
+      .hero-grid{grid-template-columns: 1fr; text-align:center}
+      .avatar-wrap{order:-1}
+      .nav-links{display:none}
+    }
+  </style>
 </head>
 <body>
-    <div class="bg-animation"></div>
-    <div class="particles" id="particles"></div>
+  <div class="bg-animation" aria-hidden="true"></div>
 
-    <nav>
-        <div class="nav-container">
-            <div class="logo"> Avikshith Reddy Yelakonda</div>
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#experience">Experience</a></li>
-                <li><a href="#education">Education</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <section class="hero" id="home">
-        <div class="hero-content">
-            <div class="hero-text">
-                <h1>Avikshith Reddy Yelakonda</h1>
-                <div class="subtitle">Data Analysis | AI & Data Science | Machine Learning </div>
-                <div class="bio">
-                    I'm Avikshith Reddy Yelakonda, a Computer Science graduate with a specialization in AI/ML. Passionate about building data-driven solutions, predictive models, and intelligent systems that create real-world impact.
-                </div>
-                <div class="hero-buttons">
-                    <a href="https://drive.google.com/file/d/15OgyD3Mt1Cw2GniVsf2hnq-zT_Y71VUR/view?usp=drive_link" class="btn btn-primary" target="_blank">
-                        <i class="fas fa-download"></i> Resume
-                    </a>
-                    <a href="#contact" class="btn btn-secondary">
-                        <i class="fas fa-envelope"></i> Contact Me
-                    </a>
-                </div>
-                <div class="contact-links">
-                    <a href="mailto:avikshith.y@gmail.com" class="contact-link">
-                        <i class="fas fa-envelope"></i> Email
-                    </a>
-                    <a href="tel:+1 9459983967" class="contact-link">
-                        <i class="fas fa-phone"></i> Call
-                    </a>
-                    <a href="https://github.com/AvikshithReddy" class="contact-link" target="_blank">
-                        <i class="fab fa-github"></i> GitHub
-                    </a>
-                    <a href="https://www.linkedin.com/in/avikshith-reddy-y-1a4272234/" class="contact-link" target="_blank">
-                        <i class="fab fa-linkedin"></i> LinkedIn
-                    </a>
-                </div>
-            </div>
-            <div class="hero-avatar">
-                <div class="avatar-container">
-                    <div class="avatar">
-                        <i class="fas fa-user-astronaut"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-
-  <section class="section fade-in" id="skills">
-  <h2 class="section-title">Skills</h2>
-  <div class="skills-grid">
-
-    <!-- Programming -->
-    <div class="skill-category">
-      <h3><i class="fas fa-code"></i> Programming</h3>
-      <div class="skill-tags">
-        <span class="skill-tag">Python</span>
-        <span class="skill-tag">R</span>
-        <span class="skill-tag">C++</span>
-        <span class="skill-tag">Java</span>
-         <span class="skill-tag">SAS</span>
-          <span class="skill-tag">MATLAB</span>
-      </div>
-    </div>
-
-    <!-- Data Analysis & Visualization -->
-    <div class="skill-category">
-      <h3><i class="fas fa-chart-bar"></i> Data Analysis & Visualization</h3>
-      <div class="skill-tags">
-        <span class="skill-tag">Pandas</span>
-        <span class="skill-tag">NumPy</span>
-        <span class="skill-tag">Matplotlib</span>
-        <span class="skill-tag">Seaborn</span>
-        <span class="skill-tag">Power BI</span>
-        <span class="skill-tag">Tableau</span>
-      </div>
-    </div>
-
-    <!-- Machine Learning & AI -->
-    <div class="skill-category">
-      <h3><i class="fas fa-robot"></i> Machine Learning & AI</h3>
-      <div class="skill-tags">
-        <span class="skill-tag">Scikit-learn</span>
-        <span class="skill-tag">TensorFlow</span>
-        <span class="skill-tag">Keras</span>
-        <span class="skill-tag">PyTorch</span>
-        <span class="skill-tag">LangChain</span>
-        <span class="skill-tag">Hugging Face</span>
-        <span class="skill-tag">NLP</span>
-        <span class="skill-tag">LLM</span>
-      </div>
-    </div>
-
-    <!-- Databases & Cloud -->
-    <div class="skill-category">
-      <h3><i class="fas fa-database"></i> Databases & Cloud</h3>
-      <div class="skill-tags">
-        <span class="skill-tag">SQL</span>
-        <span class="skill-tag">MySQL</span>
-        <span class="skill-tag">PostgreSQL</span>
-        <span class="skill-tag">AWS</span>
-        <span class="skill-tag">Azure</span>
-        <span class="skill-tag">GCP</span>
-      </div>
-    </div>
-<!-- Automation & Workflows -->
-<div class="skill-category">
-  <h3><i class="fas fa-cogs"></i> Automation & Workflows</h3>
-  <div class="skill-tags">
-    <span class="skill-tag">Airflow</span>
-    <span class="skill-tag">dbt</span>
-    <span class="skill-tag">Apache Spark</span>
-    <span class="skill-tag">Databricks</span>
-    <span class="skill-tag">ETL Pipelines</span>
-    <span class="skill-tag">CI/CD</span>
-    <span class="skill-tag">Docker</span>
-    <span class="skill-tag">Kubernetes</span>
-    <span class="skill-tag">MLflow</span>
-  </div>
-
-</div>
-  </div>
-</section>
-
-
-    <section class="section fade-in" id="projects">
-  <h2 class="section-title">Featured Projects</h2>
-  <div class="projects-grid">
-    
-    <div class="project-card">
-      <h3>Consumer Affairs Lead Conversion Case Study</h3>
-      <p>Designed an end-to-end predictive modeling pipeline (Logistic Regression, XGBoost) achieving ROC AUC ≈ 0.68 and 2.3–2.4× lift in top-decile leads. Delivered actionable insights via interactive Power BI dashboards.</p>
-      <div class="tech-stack">Tech Stack: Python, Scikit-learn, XGBoost, Power BI</div>
-    </div>
-
-    <div class="project-card">
-      <h3>Revenue Growth Campaign Optimization</h3>
-      <p>Improved marketing ROI by 22% through A/B testing of Google vs. Facebook ads. Applied statistical KPIs to optimize ad budget allocation and boost lead conversions.</p>
-      <div class="tech-stack">Tech Stack: Python, A/B Testing, KPI Analysis</div>
-    </div>
-
-    <div class="project-card">
-      <h3>Stock Price Time-Series Forecasting</h3>
-      <p>Forecasted stock movements for Shopify and Alibaba using ARIMA and exponential smoothing models, supporting investor risk profiling and strategic investment decisions.</p>
-      <div class="tech-stack">Tech Stack: Python, ARIMA, Data Forecasting</div>
-    </div>
-
-    <div class="project-card">
-      <h3>NYC Taxi Demand Forecasting System</h3>
-      <p>Predicted hourly taxi demand with 92%+ accuracy across NYC boroughs by engineering weather-based and trip-based features. Trained advanced ML models including LightGBM, XGBoost, and CatBoost.</p>
-      <div class="tech-stack">Tech Stack: Python, LightGBM, XGBoost, CatBoost, Weather Data</div>
-    </div>
-
-    <div class="project-card">
-      <h3>Vendor Sales & Inventory Optimization</h3>
-      <p>Reduced inventory holding costs by 72% and optimized $2.7M of unsold stock using Power BI dashboards and Python analytics workflows to streamline vendor restocking strategies.</p>
-      <div class="tech-stack">Tech Stack: Power BI, Python, Inventory Analytics</div>
-    </div>
-
-    <div class="project-card">
-      <h3>AI-Powered News Research Assistant</h3>
-      <p>Reduced financial research time by 40% by developing an NLP-based assistant using LangChain and FAISS for semantic search and document retrieval in financial datasets.</p>
-      <div class="tech-stack">Tech Stack: Python, LangChain, FAISS, OpenAI</div>
-    </div>
-
-  </div>
-</section>
-
-
-
-
-
-
-
-<section class="section fade-in" id="experience">
-  <h2 class="section-title">Experience</h2>
-
-  <div class="timeline">
-
-    <!-- Data Scientist -->
-    <div class="timeline-item">
-      <h3>Data Scientist — Poineersoft Corporation <span class="pill">Full-time</span></h3>
-      <div class="date">Aug 2025 – Present · United States</div>
-
-      <!-- bullets -->
-      <ul class="xp-list">
-        <li>Build and evaluate ML models for business use-cases; ship production-ready data/ML pipelines and dashboards.</li>
-        <li>Partner with product and business teams to define metrics, run experiments, and translate insights into action.</li>
-        <li>Automate workflows and model retraining schedules to improve reliability and speed of delivery.</li>
+  <!-- ===== NAV ===== -->
+  <nav>
+    <div class="nav-container">
+      <div class="logo">Avikshith Reddy Yelakonda</div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home" class="navlink">Home</a></li>
+        <li><a href="#skills" class="navlink">Skills</a></li>
+        <li><a href="#projects" class="navlink">Projects</a></li>
+        <li><a href="#experience" class="navlink">Experience</a></li>
+        <li><a href="#education" class="navlink">Education</a></li>
+        <li><a href="#contact" class="navlink">Contact</a></li>
       </ul>
+    </div>
+  </nav>
 
-      <!-- skill stack -->
-      <div class="skill-tags">
-        <span class="skill-tag">Python</span>
-        <span class="skill-tag">SQL</span>
-        <span class="skill-tag">ML</span>
-        <span class="skill-tag">MLOps</span>
+  <!-- ===== HERO ===== -->
+  <header id="home" class="section hero">
+    <div class="container hero-grid fade-in">
+      <div>
+        <h1>Data Scientist & ML Engineer</h1>
+        <div class="subtitle">Turning messy data into measurable business impact</div>
+        <p class="bio">
+          I’m a Computer Science graduate specializing in AI/ML. I build end-to-end
+          data products — from ingestion and modeling to deployment and dashboards —
+          with a focus on reliability and ROI.
+        </p>
+        <div class="cta">
+          <a class="btn" target="_blank" rel="noopener" href="https://drive.google.com/file/d/15OgyD3Mt1Cw2GniVsf2hnq-zT_Y71VUR/view?usp=drive_link">
+            <i class="fa-solid fa-file-arrow-down"></i> Resume
+          </a>
+          <a class="btn secondary" href="#contact"><i class="fa-solid fa-envelope"></i> Contact</a>
+          <a class="btn secondary" target="_blank" rel="noopener" href="https://github.com/AvikshithReddy"><i class="fa-brands fa-github"></i> GitHub</a>
+          <a class="btn secondary" target="_blank" rel="noopener" href="https://www.linkedin.com/in/avikshith-reddy-y-1a4272234/"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+        </div>
+      </div>
+      <div class="avatar-wrap">
+        <div class="avatar" aria-hidden="true"><i class="fa-solid fa-user-astronaut"></i></div>
       </div>
     </div>
+  </header>
 
-    <!-- Cox Copy Center - Support -->
-    <div class="timeline-item">
-      <h3>Cox Copy Center — Support <span class="pill">Part-time</span></h3>
-      <div class="date">SMU Cox School of Business · Sep 2024 – May 2025 · Dallas, TX · On-site</div>
-
-      <ul class="xp-list">
-        <li>Maintained secure access to confidential materials (exam papers, office keys, staff resources).</li>
-        <li>Handled high-volume print/copy requests under tight deadlines for professors and staff.</li>
-        <li>Point-of-contact for real-time staff support in a fast-paced academic environment.</li>
-        <li>Assisted with building security procedures and safe closing operations after hours.</li>
-        <li>Supported exam proctoring while upholding academic integrity.</li>
-      </ul>
-
-      <div class="skill-tags">
-        <span class="skill-tag">Communication</span>
-        <span class="skill-tag">Customer Service</span>
-        <span class="skill-tag">Team Coordination</span>
-        <span class="skill-tag">Time Management</span>
+  <!-- ===== SKILLS ===== -->
+  <section id="skills" class="section">
+    <div class="container fade-in">
+      <h2 class="section-title">Skills</h2>
+      <div class="cards">
+        <div class="card">
+          <h3><i class="fa-solid fa-code"></i> Programming</h3>
+          <div class="tagrow">
+            <span class="tag">Python</span><span class="tag">R</span><span class="tag">C++</span><span class="tag">Java</span><span class="tag">SAS</span><span class="tag">MATLAB</span>
+          </div>
+        </div>
+        <div class="card">
+          <h3><i class="fa-solid fa-chart-line"></i> Data Analysis & Viz</h3>
+          <div class="tagrow">
+            <span class="tag">Pandas</span><span class="tag">NumPy</span><span class="tag">Matplotlib</span><span class="tag">Seaborn</span><span class="tag">Power BI</span><span class="tag">Tableau</span>
+          </div>
+        </div>
+        <div class="card">
+          <h3><i class="fa-solid fa-robot"></i> Machine Learning & AI</h3>
+          <div class="tagrow">
+            <span class="tag">Scikit-learn</span><span class="tag">TensorFlow</span><span class="tag">Keras</span><span class="tag">PyTorch</span><span class="tag">NLP</span><span class="tag">LLMs</span><span class="tag">LangChain</span><span class="tag">Hugging Face</span>
+          </div>
+        </div>
+        <div class="card">
+          <h3><i class="fa-solid fa-database"></i> Databases & Cloud</h3>
+          <div class="tagrow">
+            <span class="tag">SQL</span><span class="tag">MySQL</span><span class="tag">PostgreSQL</span><span class="tag">AWS</span><span class="tag">Azure</span><span class="tag">GCP</span>
+          </div>
+        </div>
+        <div class="card">
+          <h3><i class="fa-solid fa-cogs"></i> Automation & Workflows</h3>
+          <div class="tagrow">
+            <span class="tag">Airflow</span><span class="tag">dbt</span><span class="tag">Apache Spark</span><span class="tag">Databricks</span><span class="tag">ETL pipelines</span><span class="tag">CI/CD</span><span class="tag">Docker</span><span class="tag">Kubernetes</span><span class="tag">MLflow</span>
+          </div>
+        </div>
       </div>
     </div>
+  </section>
 
-   
+  <!-- ===== PROJECTS ===== -->
+  <section id="projects" class="section">
+    <div class="container fade-in">
+      <h2 class="section-title">Featured Projects</h2>
+      <div class="projects">
+        <article class="project">
+          <h3>Consumer Affairs Lead Conversion Case Study</h3>
+          <p>Built a predictive modeling pipeline (Logistic Regression, XGBoost) achieving ROC-AUC ≈ 0.68 and 2.3–2.4× lift in top-decile leads; shipped Power BI dashboards for stakeholders.</p>
+          <div class="stack">Python · Scikit-learn · XGBoost · Power BI</div>
+        </article>
 
-    <!-- Student Ambassador -->
-    <div class="timeline-item">
-      <h3>Student Ambassador — RLSH SMU <span class="pill">Part-time</span></h3>
-      <div class="date">Southern Methodist University · Sep 2023 – Aug 2024 · Dallas, TX · On-site</div>
+        <article class="project">
+          <h3>Revenue Growth Campaign Optimization</h3>
+          <p>Designed A/B tests (Google vs Facebook), analyzed KPIs, and improved marketing ROI by 22% with budget allocation recommendations.</p>
+          <div class="stack">Python · A/B Testing · KPI Analysis</div>
+        </article>
 
-      <ul class="xp-list">
-        <li>Front-desk representative supporting student engagement and housing operations.</li>
-        <li>Maintained accurate housing records; ensured policy clarity through consistent documentation.</li>
-        <li>Resolved routine and urgent concerns with confidentiality and professionalism.</li>
-        <li>Led one-on-one and group engagement to improve residential experience.</li>
-        <li>Served as interim Program Coordinator for a Dorm Leadership Team.</li>
-      </ul>
+        <article class="project">
+          <h3>Stock Price Time-Series Forecasting</h3>
+          <p>Forecasted Shopify & Alibaba movements using ARIMA & exponential smoothing models to support investor risk profiling.</p>
+          <div class="stack">Python · ARIMA · Forecasting</div>
+        </article>
 
-      <div class="skill-tags">
-        <span class="skill-tag">Leadership</span>
-        <span class="skill-tag">Event Planning</span>
-        <span class="skill-tag">Problem Solving</span>
-        <span class="skill-tag">Slack</span>
+        <article class="project">
+          <h3>NYC Taxi Demand Forecasting</h3>
+          <p>Predicted hourly demand (92%+ accuracy) using weather & trip features; trained LightGBM, XGBoost, and CatBoost on TLC ride and weather data.</p>
+          <div class="stack">Python · LightGBM · XGBoost · CatBoost</div>
+        </article>
+
+        <article class="project">
+          <h3>Vendor Sales & Inventory Optimization</h3>
+          <p>Reduced holding cost by 72% and optimized $2.7M unsold stock via Power BI + Python analytics workflows.</p>
+          <div class="stack">Power BI · Python · Inventory Analytics</div>
+        </article>
+
+        <article class="project">
+          <h3>AI-Powered News Research Assistant</h3>
+          <p>Cut research time by 40% with a LangChain/FAISS assistant for semantic search across financial news & docs.</p>
+          <div class="stack">Python · LangChain · FAISS · OpenAI</div>
+        </article>
       </div>
     </div>
+  </section>
 
-    <!-- Data Analyst -->
-    <div class="timeline-item">
-      <h3>Data Analyst — Yogin</h3>
-      <div class="date">Jan 2021 – May 2023 · 2 yrs 5 mos · India · Hybrid</div>
+  <!-- ===== EXPERIENCE ===== -->
+  <section id="experience" class="section">
+    <div class="container fade-in">
+      <h2 class="section-title">Experience</h2>
+      <div class="timeline">
 
-      <ul class="xp-list">
-        <li>Partnered with product/business teams across media, finance, healthcare, and retail to frame data-driven solutions.</li>
-        <li>Built/maintained ETL/ELT pipelines using dbt &amp; Airflow on Snowflake; enforced end-to-end data validation &amp; QA.</li>
-        <li>Developed dashboards in Power BI/Tableau for KPIs, campaign effectiveness, and operational metrics.</li>
-        <li>Engineered ML models (regression, classification, clustering, forecasting) for churn, demand, and fraud.</li>
-        <li>Ran A/B tests and statistical analysis to evaluate changes and optimize marketing performance.</li>
-        <li>Processed large datasets with Databricks &amp; PySpark; used AWS (S3, Glue) and GCP (BigQuery).</li>
-        <li>Documented workflows and supported Agile rituals with JIRA; communicated findings to diverse audiences.</li>
-        <li>Assisted model deployment with MLflow &amp; Docker; scheduled retraining triggers.</li>
-      </ul>
+        <div class="titem">
+          <h3>Data Scientist — Poineersoft Corporation <span class="pill">Full-time</span></h3>
+          <div class="date">Aug 2025 – Present · United States</div>
+          <ul class="xp-list">
+            <li>Build and evaluate ML models for business use-cases; ship production-ready data/ML pipelines and dashboards.</li>
+            <li>Partner with product and business teams to define metrics, run experiments, and translate insights into action.</li>
+            <li>Automate workflows and model retraining schedules to improve reliability and speed of delivery.</li>
+          </ul>
+          <div class="skill-tags">
+            <span class="tag">Python</span><span class="tag">SQL</span><span class="tag">ML</span><span class="tag">MLOps</span>
+          </div>
+        </div>
 
-      <div class="skill-tags">
-        <span class="skill-tag">Python</span>
-        <span class="skill-tag">SQL</span>
-        <span class="skill-tag">dbt</span>
-        <span class="skill-tag">Airflow</span>
-        <span class="skill-tag">Snowflake</span>
-        <span class="skill-tag">Databricks</span>
-        <span class="skill-tag">PySpark</span>
-        <span class="skill-tag">Power BI</span>
-        <span class="skill-tag">Tableau</span>
-        <span class="skill-tag">MLflow</span>
-        <span class="skill-tag">Docker</span>
-        <span class="skill-tag">JIRA</span>
+        <div class="titem">
+          <h3>Cox Copy Center — Support <span class="pill">Part-time</span></h3>
+          <div class="date">SMU Cox School of Business · Sep 2024 – May 2025 · Dallas, TX · On-site</div>
+          <ul class="xp-list">
+            <li>Maintained secure access to confidential materials (exam papers, keys, staff resources).</li>
+            <li>Handled high-volume print/copy requests under tight deadlines for professors and staff.</li>
+            <li>Point-of-contact for real-time staff support in a fast-paced academic environment.</li>
+            <li>Assisted building security procedures and safe closing operations after hours.</li>
+            <li>Supported exam proctoring while upholding academic integrity.</li>
+          </ul>
+          <div class="skill-tags">
+            <span class="tag">Communication</span><span class="tag">Customer Service</span><span class="tag">Team Coordination</span><span class="tag">Time Management</span>
+          </div>
+        </div>
+
+        <div class="titem">
+          <h3>Student Ambassador — RLSH SMU <span class="pill">Part-time</span></h3>
+          <div class="date">Southern Methodist University · Sep 2023 – Aug 2024 · Dallas, TX · On-site</div>
+          <ul class="xp-list">
+            <li>Front-desk representative supporting student engagement and housing operations.</li>
+            <li>Maintained accurate housing records and ensured policy clarity through consistent documentation.</li>
+            <li>Resolved routine and urgent concerns with confidentiality and professionalism.</li>
+            <li>Led one-on-one and group engagement to improve residential experience.</li>
+            <li>Served as interim Program Coordinator for a Dorm Leadership Team.</li>
+          </ul>
+          <div class="skill-tags">
+            <span class="tag">Leadership</span><span class="tag">Event Planning</span><span class="tag">Problem Solving</span><span class="tag">Slack</span>
+          </div>
+        </div>
+
+        <div class="titem">
+          <h3>Data Analyst — Yogin</h3>
+          <div class="date">Jan 2021 – May 2023 · 2 yrs 5 mos · India · Hybrid</div>
+          <ul class="xp-list">
+            <li>Partnered with product/business teams across media, finance, healthcare, and retail to frame data-driven solutions.</li>
+            <li>Built and maintained ETL/ELT pipelines using dbt & Airflow on Snowflake; enforced end-to-end data validation and QA.</li>
+            <li>Developed dashboards in Power BI/Tableau for KPIs, campaign effectiveness, and operational metrics.</li>
+            <li>Engineered ML models (regression, classification, clustering, forecasting) for churn, demand, and fraud.</li>
+            <li>Ran A/B tests and statistical analysis to evaluate changes and optimize marketing performance.</li>
+            <li>Processed large datasets with Databricks & PySpark; used AWS (S3, Glue) and GCP (BigQuery).</li>
+            <li>Documented workflows and supported Agile rituals with JIRA; communicated findings to diverse audiences.</li>
+            <li>Assisted model deployment with MLflow & Docker; scheduled retraining triggers.</li>
+          </ul>
+          <div class="skill-tags">
+            <span class="tag">Python</span><span class="tag">SQL</span><span class="tag">dbt</span><span class="tag">Airflow</span><span class="tag">Snowflake</span><span class="tag">Databricks</span><span class="tag">PySpark</span><span class="tag">Power BI</span><span class="tag">Tableau</span><span class="tag">MLflow</span><span class="tag">Docker</span><span class="tag">JIRA</span>
+          </div>
+        </div>
+
       </div>
     </div>
+  </section>
 
-  </div>
-</section>
+  <!-- ===== EDUCATION & ACHIEVEMENTS ===== -->
+  <section id="education" class="section">
+    <div class="container fade-in">
+      <h2 class="section-title">Education & Achievements</h2>
 
+      <div class="timeline" style="margin-bottom:1.4rem">
+        <div class="titem">
+          <h3>B.Tech (Computer Engineering)</h3>
+          <div class="date">2019 – 2023</div>
+          <p>CVR College of Engineering — Hyderabad</p>
+        </div>
+        <div class="titem">
+          <h3>Masters (Computer Science — AI/ML)</h3>
+          <div class="date">2023 – 2025</div>
+          <p>Southern Methodist University — Dallas</p>
+        </div>
+      </div>
 
-
-
-
-    <section class="section fade-in" id="education">
-        <h2 class="section-title">Education & Achievements</h2>
-        <div class="timeline">
-            <div class="timeline-item">
-                <h3>B.Tech (Computer Engineering)</h3>
-                <div class="date">2019 - 2023</div>
-                <p> CVR College of Engineering - Hyderabad </p>
-            </div>
-            <div class="timeline-item">
-                <h3>Masters (Computer Science - AI/ML)</h3>
-                <div class="date">2020 - 2023</div>
-                <p>Southern Methodist University - Dallas </p>
-            </div>
-    <div class="skill-category">
-      <h3><i class="fas fa-users"></i> Leadership Roles</h3>
-      <ul style="color:white; line-height:1.8;">
-        <li>Served as <b>Coordinator Head</b> for the college annual fest, driving cross-team collaboration and ensuring seamless event execution.</li>
-        <li>Appointed as <b>Program Coordinator</b> for the SMU residential leadership team, leading peer engagement initiatives and strengthening community culture.</li>
-        <li>Coordinator for <b>Street Cause</b> at CVR College of Engineering, managing student volunteers and executing social impact campaigns.</li>
-        <li>Active <b>Board Member</b> of the SMU International Student Board, representing student interests and fostering global inclusivity on campus.</li>
-      </ul>
-  </div>
-
-  <div class="skill-category">
-      <h3><i class="fas fa-award"></i> Recognition</h3>
-      <ul style="color:white; line-height:1.8;">
-        <li>Nominated for the <b>Unsung Hero Award</b> at the SMU RLSH Year-End Student Banquet, recognizing leadership and dedication.</li>
-      </ul>
-  </div>
+      <div class="cards">
+        <div class="card">
+          <h3><i class="fa-solid fa-users"></i> Leadership Roles</h3>
+          <ul class="xp-list" style="margin-left:1rem">
+            <li>Coordinator Head for the college annual fest; drove cross-team collaboration and seamless execution.</li>
+            <li>Program Coordinator for the SMU residential leadership team; led peer engagement and strengthened community culture.</li>
+            <li>Coordinator for Street Cause at CVR College of Engineering; managed volunteers and executed social impact campaigns.</li>
+            <li>Board Member, SMU International Student Board; represented student interests and fostered global inclusivity.</li>
+          </ul>
         </div>
 
-        <h3 style="color: white; margin: 3rem 0 2rem 0; font-size: 1.8rem;">Certifications & Awards</h3>
-<div class="skills-grid">
-    <div class="skill-category">
-        <h3><i class="fas fa-certificate"></i> Technical Certifications</h3>
-        <div class="skill-tags">
-            <span class="skill-tag">British Airways - Data Science Job Simulation (Forage, May 2025)</span>
-            <span class="skill-tag">Deloitte Australia - Data Analytics Job Simulation (Forage, May 2025)</span>
-            <span class="skill-tag">Quantium - Data Analytics Job Simulation (Forage, May 2025)</span>
-            <span class="skill-tag">Tata Group - Data Visualisation Job Simulation (Forage, May 2025)</span>
-            <span class="skill-tag">Data Analyst Certification - OneRoadmap (Apr 2025)</span>
-            <span class="skill-tag">Google Project Management - Coursera</span>
+        <div class="card">
+          <h3><i class="fa-solid fa-award"></i> Recognition</h3>
+          <ul class="xp-list" style="margin-left:1rem">
+            <li>Nominee, Unsung Hero Award — SMU RLSH Year-End Student Banquet.</li>
+          </ul>
         </div>
+
+        <div class="card">
+          <h3><i class="fa-solid fa-certificate"></i> Certifications</h3>
+          <div class="tagrow">
+            <span class="tag">British Airways — Data Science (Forage, May 2025)</span>
+            <span class="tag">Deloitte AU — Data Analytics (Forage, May 2025)</span>
+            <span class="tag">Quantium — Data Analytics (Forage, May 2025)</span>
+            <span class="tag">Tata — Data Visualisation (Forage, May 2025)</span>
+            <span class="tag">Data Analyst Certification — OneRoadmap (Apr 2025)</span>
+            <span class="tag">Google Project Management — Coursera</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3><i class="fa-solid fa-trophy"></i> Hackathons & Events</h3>
+          <div class="tagrow">
+            <span class="tag">Hackathon — SMU</span>
+            <span class="tag">Career Development Programme (Oracle) — CVR</span>
+          </div>
+        </div>
+      </div>
     </div>
-</div>
-            <div class="skill-category">
-                <h3><i class="fas fa-trophy"></i> Hackathons & Events</h3>
-                <div class="skill-tags">
-                  <span class="skill-tag">Hackathon - SMU</span>
-                  <span class="skill-tag">Career Development Programme Oracle - CVR</span>
-                   
-                </div>
-            </div>
+  </section>
+
+  <!-- ===== CONTACT ===== -->
+  <section id="contact" class="section">
+    <div class="container fade-in">
+      <h2 class="section-title">Let’s Connect</h2>
+      <p class="muted" style="text-align:center; margin:-.8rem 0 1.6rem">Open to Data Science roles — internships and full-time.</p>
+      <div class="cards">
+        <div class="card" style="text-align:center">
+          <p style="margin-bottom:1rem">Prefer email? I’ll reply quickly.</p>
+          <div class="tagrow" style="justify-content:center">
+            <a class="btn" href="mailto:avikshith.y@gmail.com"><i class="fa-solid fa-paper-plane"></i> Email</a>
+            <a class="btn secondary" href="tel:+19459983967"><i class="fa-solid fa-phone"></i> Call</a>
+            <a class="btn secondary" target="_blank" rel="noopener" href="https://github.com/AvikshithReddy"><i class="fa-brands fa-github"></i> GitHub</a>
+            <a class="btn secondary" target="_blank" rel="noopener" href="https://www.linkedin.com/in/avikshith-reddy-y-1a4272234/"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+          </div>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <section class="section fade-in" id="contact">
-        <h2 class="section-title">Let's Connect</h2>
-        <div style="text-align: center; color: white; font-size: 1.2rem; margin-bottom: 2rem;">
-            Ready to collaborate on exciting projects? Reach out to me!
-        </div>
-        <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 2rem;">
-            <a href="mailto:avikshith.y@gmail.com" class="btn btn-primary">
-                <i class="fas fa-envelope"></i> Send Email
-            </a>
-            <a href="https://www.linkedin.com/in/avikshith-reddy-y-1a4272234/" class="btn btn-secondary" target="_blank">
-                <i class="fab fa-linkedin"></i> LinkedIn
-            </a>
-            <a href="https://github.com/AvikshithReddy" class="btn btn-secondary" target="_blank">
-                <i class="fab fa-github"></i> GitHub
-            </a>
-            <a href="tel:+1 9459983967" class="btn btn-secondary">
-                <i class="fas fa-phone"></i> Call Me
-            </a>
-        </div>
-    </section>
+  <a href="#home" class="to-top" id="toTop" aria-label="Back to top"><i class="fa-solid fa-arrow-up"></i></a>
 
-    <script>
-        // Create floating particles
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            const particleCount = 50;
+  <script>
+    // ===== Scroll reveal
+    const reveals = () => {
+      document.querySelectorAll('.fade-in').forEach(el=>{
+        const r = el.getBoundingClientRect();
+        if(r.top < window.innerHeight - 130) el.classList.add('visible');
+      });
+    };
+    document.addEventListener('scroll', reveals, {passive:true});
+    window.addEventListener('load', reveals);
 
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                
-                const size = Math.random() * 6 + 2;
-                particle.style.width = size + 'px';
-                particle.style.height = size + 'px';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.top = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 6 + 's';
-                particle.style.animationDuration = (Math.random() * 10 + 5) + 's';
-                
-                particlesContainer.appendChild(particle);
-            }
-        }
+    // ===== Scroll spy (active link)
+    const sections = [...document.querySelectorAll('section, header')].filter(s=>s.id);
+    const navlinks = document.querySelectorAll('.navlink');
+    const spy = () => {
+      let idx = 0;
+      sections.forEach((s,i)=>{
+        const top = s.getBoundingClientRect().top;
+        if(top <= 120) idx = i;
+      });
+      navlinks.forEach(a=>a.classList.remove('active'));
+      const active = document.querySelector('.navlink[href="#'+sections[idx].id+'"]');
+      if(active) active.classList.add('active');
+    };
+    document.addEventListener('scroll', spy, {passive:true});
+    window.addEventListener('load', spy);
 
-        // Scroll animations
-        function handleScrollAnimations() {
-            const elements = document.querySelectorAll('.fade-in');
-            
-            elements.forEach(element => {
-                const elementTop = element.getBoundingClientRect().top;
-                const elementVisible = 150;
-                
-                if (elementTop < window.innerHeight - elementVisible) {
-                    element.classList.add('visible');
-                }
-            });
-        }
+    // ===== Back to top visibility
+    const toTop = document.getElementById('toTop');
+    const showTop = () => { toTop.style.display = (window.scrollY > 600) ? 'grid' : 'none'; };
+    document.addEventListener('scroll', showTop, {passive:true});
+    window.addEventListener('load', showTop);
 
-        // Smooth scrolling for navigation links
-        function setupSmoothScrolling() {
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-                });
-            });
-        }
-
-        // Navigation background change on scroll
-        function handleNavScroll() {
-            const nav = document.querySelector('nav');
-            if (window.scrollY > 100) {
-                nav.style.background = 'rgba(255, 255, 255, 0.15)';
-            } else {
-                nav.style.background = 'rgba(255, 255, 255, 0.1)';
-            }
-        }
-
-        // Initialize everything
-        document.addEventListener('DOMContentLoaded', function() {
-            createParticles();
-            setupSmoothScrolling();
-            handleScrollAnimations();
-            
-            window.addEventListener('scroll', () => {
-                handleScrollAnimations();
-                handleNavScroll();
-            });
-        });
-
-        // Add cursor trail effect
-        document.addEventListener('mousemove', function(e) {
-            const trail = document.createElement('div');
-            trail.style.position = 'fixed';
-            trail.style.left = e.clientX + 'px';
-            trail.style.top = e.clientY + 'px';
-            trail.style.width = '4px';
-            trail.style.height = '4px';
-            trail.style.background = 'rgba(255, 255, 255, 0.6)';
-            trail.style.borderRadius = '50%';
-            trail.style.pointerEvents = 'none';
-            trail.style.zIndex = '999';
-            trail.style.animation = 'trailFade 0.5s ease-out forwards';
-            
-            document.body.appendChild(trail);
-            
-            setTimeout(() => {
-                if (trail.parentNode) {
-                    trail.parentNode.removeChild(trail);
-                }
-            }, 500);
-        });
-
-        // Add trail fade animation
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes trailFade {
-                0% {
-                    opacity: 1;
-                    transform: scale(1);
-                }
-                100% {
-                    opacity: 0;
-                    transform: scale(0.5);
-                }
-            }
-            
-            /* Glowing effect for skill tags */
-            .skill-tag:hover {
-                box-shadow: 0 0 20px rgba(255, 107, 107, 0.5);
-                background: linear-gradient(45deg, rgba(255, 107, 107, 0.3), rgba(238, 90, 36, 0.3));
-                transform: scale(1.05) translateY(-2px);
-            }
-            
-            /* Project card glow effect */
-            .project-card:hover {
-                box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3), 0 0 30px rgba(255, 107, 107, 0.2);
-            }
-            
-            /* Button pulse animation */
-            @keyframes pulse {
-                0% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.7); }
-                70% { box-shadow: 0 0 0 10px rgba(255, 107, 107, 0); }
-                100% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0); }
-            }
-            
-            .btn-primary:hover {
-                animation: pulse 1.5s infinite;
-            }
-            
-            /* Enhanced glassmorphism */
-            .skill-category, .project-card, .timeline-item {
-                border: 1px solid rgba(255, 255, 255, 0.2);
-                box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-                backdrop-filter: blur(8px);
-                -webkit-backdrop-filter: blur(8px);
-            }
-            
-            /* Mobile hamburger menu */
-            @media (max-width: 768px) {
-                .mobile-menu-btn {
-                    display: block;
-                    background: none;
-                    border: none;
-                    color: white;
-                    font-size: 1.5rem;
-                    cursor: pointer;
-                }
-                
-                .nav-links.mobile-open {
-                    display: flex;
-                    flex-direction: column;
-                    position: absolute;
-                    top: 100%;
-                    left: 0;
-                    right: 0;
-                    background: rgba(255, 255, 255, 0.15);
-                    backdrop-filter: blur(20px);
-                    padding: 2rem;
-                    border-radius: 0 0 20px 20px;
-                }
-            }
-        `;
-        document.head.appendChild(style);
-
-        // Mobile menu toggle
-        const mobileMenuBtn = document.createElement('button');
-        mobileMenuBtn.className = 'mobile-menu-btn';
-        mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
-        mobileMenuBtn.style.display = 'none';
-        
-        const navContainer = document.querySelector('.nav-container');
-        navContainer.appendChild(mobileMenuBtn);
-        
-        mobileMenuBtn.addEventListener('click', function() {
-            const navLinks = document.querySelector('.nav-links');
-            navLinks.classList.toggle('mobile-open');
-            
-            if (navLinks.classList.contains('mobile-open')) {
-                this.innerHTML = '<i class="fas fa-times"></i>';
-            } else {
-                this.innerHTML = '<i class="fas fa-bars"></i>';
-            }
-        });
-
-        // Typing animation for hero title
-        function typeWriter(element, text, speed = 100) {
-            element.innerHTML = '';
-            let i = 0;
-            
-            function type() {
-                if (i < text.length) {
-                    element.innerHTML += text.charAt(i);
-                    i++;
-                    setTimeout(type, speed);
-                }
-            }
-            
-            type();
-        }
-
-        // Start typing animation after page load
-        setTimeout(() => {
-            const heroTitle = document.querySelector('.hero-text h1');
-            typeWriter(heroTitle, 'Avikshith Reddy Yelakonda', 150);
-        }, 1000);
-
-        // Add scroll progress indicator
-        const progressBar = document.createElement('div');
-        progressBar.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 0%;
-            height: 3px;
-            background: linear-gradient(90deg, #ff6b6b, #ee5a24);
-            z-index: 10000;
-            transition: width 0.25s ease;
-        `;
-        document.body.appendChild(progressBar);
-
-        window.addEventListener('scroll', () => {
-            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrolled = (winScroll / height) * 100;
-            progressBar.style.width = scrolled + '%';
-        });
-
-        // Add floating action button for quick contact
-        const fab = document.createElement('div');
-        fab.innerHTML = '<i class="fas fa-envelope"></i>';
-        fab.style.cssText = `
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            cursor: pointer;
-            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4);
-            transition: all 0.3s ease;
-            z-index: 1000;
-            animation: fabPulse 2s infinite;
-        `;
-
-        const fabStyle = document.createElement('style');
-        fabStyle.textContent = `
-            @keyframes fabPulse {
-                0% { transform: scale(1); }
-                50% { transform: scale(1.1); }
-                100% { transform: scale(1); }
-            }
-        `;
-        document.head.appendChild(fabStyle);
-
-        fab.addEventListener('click', () => {
-            window.location.href = 'mailto:niranjan.kj2022ai-ds@sece.ac.in';
-        });
-
-        fab.addEventListener('mouseenter', () => {
-            fab.style.transform = 'scale(1.2)';
-            fab.style.boxShadow = '0 15px 40px rgba(255, 107, 107, 0.6)';
-        });
-
-        fab.addEventListener('mouseleave', () => {
-            fab.style.transform = 'scale(1)';
-            fab.style.boxShadow = '0 10px 30px rgba(255, 107, 107, 0.4)';
-        });
-
-        document.body.appendChild(fab);
-
-        // Add tilt effect to project cards
-        document.querySelectorAll('.project-card').forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                
-                const rotateX = (y - centerY) / 10;
-                const rotateY = (centerX - x) / 10;
-                
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px)`;
-            });
-            
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
-            });
-        });
-
-        console.log('🚀 Portfolio loaded successfully!');
-        console.log('💫 Dynamic effects activated');
-        console.log('📧 Contact: niranjan.kj2022ai-ds@sece.ac.in');
-    </script>
+    // ===== Respect reduced motion for subtle animations
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.querySelectorAll('.avatar-wrap').forEach(el=>el.style.animation = 'none');
+    }
+  </script>
 </body>
 </html>
-
-
-
-
-
-
-
-

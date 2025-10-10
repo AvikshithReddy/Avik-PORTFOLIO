@@ -41,6 +41,77 @@
       min-height: 100vh; overflow-x: hidden;
     }
 
+    /* ===== Contact (card layout) ===== */
+.contact-wrap { padding-top: 6rem; padding-bottom: 6rem; }
+
+.contact-title{
+  text-align:center;
+  font-size: clamp(2.2rem, 5vw, 3rem);
+  font-weight: 800;
+  margin-bottom: .75rem;
+  background: linear-gradient(90deg,#79a6ff, #b07cff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.contact-subtitle{
+  text-align:center;
+  color:#cfd8ff;
+  max-width: 64ch;
+  margin: 0 auto 2.2rem;
+  line-height: 1.6;
+}
+
+.contact-grid{
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(260px, 1fr));
+  margin-bottom: 1.8rem;
+}
+@media (max-width: 820px){
+  .contact-grid{ grid-template-columns: 1fr; }
+}
+
+.contact-card{
+  display:flex;
+  align-items: center;
+  gap: 1rem;
+  text-decoration: none;
+  background: var(--glass-2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.2rem 1.1rem;
+  color: var(--text);
+  box-shadow: var(--card-shadow);
+  transition: transform .16s ease, border-color .18s ease, background .18s ease;
+}
+.contact-card:hover{
+  transform: translateY(-3px);
+  border-color: rgba(255,255,255,.35);
+  background: rgba(255,255,255,.18);
+}
+
+.contact-icon{
+  width: 44px; height: 44px; border-radius: 12px;
+  display:grid; place-items:center;
+  background: rgba(111,228,255,.12);
+  border: 1px solid rgba(111,228,255,.35);
+  flex: 0 0 auto;
+}
+.contact-icon i{
+  font-size: 20px;
+  color: #79c7ff;
+}
+
+.contact-meta{ display:flex; flex-direction: column; gap:.2rem }
+.contact-label{ font-weight: 700; letter-spacing:.2px }
+.contact-value{ color:#b9c6ff; font-size:.98rem }
+
+.contact-cta{
+  display:flex; gap:.9rem; justify-content:center; flex-wrap:wrap; margin-top: .2rem;
+}
+.btn-lg{ padding: .95rem 1.25rem; border-radius: 12px; font-size: 1rem }
+
     /* ===== Background anim (respects reduced motion) ===== */
     .bg-animation{
       position: fixed; inset: 0; z-index:-2;
@@ -466,23 +537,75 @@
   </section>
 
   <!-- ===== CONTACT ===== -->
-  <section id="contact" class="section">
-    <div class="container fade-in">
-      <h2 class="section-title">Let’s Connect</h2>
-      <p class="muted" style="text-align:center; margin:-.8rem 0 1.6rem">Open to Data Science roles — internships and full-time.</p>
-      <div class="cards">
-        <div class="card" style="text-align:center">
-          <p style="margin-bottom:1rem">Prefer email? I’ll reply quickly.</p>
-          <div class="tagrow" style="justify-content:center">
-            <a class="btn" href="mailto:avikshith.y@gmail.com"><i class="fa-solid fa-paper-plane"></i> Email</a>
-            <a class="btn secondary" href="tel:+19459983967"><i class="fa-solid fa-phone"></i> Call</a>
-            <a class="btn secondary" target="_blank" rel="noopener" href="https://github.com/AvikshithReddy"><i class="fa-brands fa-github"></i> GitHub</a>
-            <a class="btn secondary" target="_blank" rel="noopener" href="https://www.linkedin.com/in/avikshith-reddy-y-1a4272234/"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
-          </div>
+  <section id="contact" class="section contact-wrap">
+  <div class="container">
+
+    <!-- Title & subtitle -->
+    <h2 class="contact-title">Let's Connect</h2>
+    <p class="contact-subtitle">
+      I'm actively seeking opportunities in Data Science and AI. Let's discuss how I
+      can contribute to your team!
+    </p>
+
+    <!-- Contact cards -->
+    <div class="contact-grid">
+      <!-- Email -->
+      <a class="contact-card" href="mailto:avikshith.y@gmail.com">
+        <div class="contact-icon">
+          <i class="fa-regular fa-envelope"></i>
         </div>
-      </div>
+        <div class="contact-meta">
+          <div class="contact-label">Email</div>
+          <div class="contact-value">avikshith.y@gmail.com</div>
+        </div>
+      </a>
+
+      <!-- Phone -->
+      <a class="contact-card" href="tel:+19459983967">
+        <div class="contact-icon">
+          <i class="fa-solid fa-phone"></i>
+        </div>
+        <div class="contact-meta">
+          <div class="contact-label">Phone</div>
+          <div class="contact-value">+1 (945) 998-3967</div>
+        </div>
+      </a>
+
+      <!-- LinkedIn -->
+      <a class="contact-card" target="_blank" rel="noopener" href="https://www.linkedin.com/in/avikshith-reddy-y-1a4272234/">
+        <div class="contact-icon">
+          <i class="fa-brands fa-linkedin"></i>
+        </div>
+        <div class="contact-meta">
+          <div class="contact-label">LinkedIn</div>
+          <div class="contact-value">Connect on LinkedIn</div>
+        </div>
+      </a>
+
+      <!-- GitHub -->
+      <a class="contact-card" target="_blank" rel="noopener" href="https://github.com/AvikshithReddy">
+        <div class="contact-icon">
+          <i class="fa-brands fa-github"></i>
+        </div>
+        <div class="contact-meta">
+          <div class="contact-label">GitHub</div>
+          <div class="contact-value">View my repositories</div>
+        </div>
+      </a>
     </div>
-  </section>
+
+    <!-- CTAs -->
+    <div class="contact-cta">
+      <a class="btn btn-lg" href="mailto:avikshith.y@gmail.com">
+        <i class="fa-regular fa-paper-plane"></i> Send Email
+      </a>
+      <a class="btn secondary btn-lg" target="_blank" rel="noopener" href="https://www.linkedin.com/in/avikshith-reddy-y-1a4272234/">
+        <i class="fa-brands fa-linkedin"></i> LinkedIn Profile
+      </a>
+    </div>
+
+  </div>
+</section>
 
   <a href="#home" class="to-top" id="toTop" aria-label="Back to top"><i class="fa-solid fa-arrow-up"></i></a>
 
@@ -526,3 +649,4 @@
   </script>
 </body>
 </html>
+

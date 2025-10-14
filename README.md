@@ -1,1 +1,2 @@
-https://niranjankj304.github.io/Niranjan-PORTFOLIO/
+
+https://avikshithreddy.github.io/Avik-PORTFOLIO/

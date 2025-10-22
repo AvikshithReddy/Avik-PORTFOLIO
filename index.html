@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,37 +14,49 @@
   <meta property="og:type" content="website" />
   <meta property="og:image" content="https://avik-portfolio.vercel.app/og-image.jpg" />
 
+  <!-- Favicon (inline SVG; replace with your own if you want) -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Cdefs/%3E%3Ccircle cx='64' cy='64' r='62' fill='%230c1020'/%3E%3Cpath d='M36 75l20 9 35-35-9-20-46 46z' fill='%237dd3fc'/%3E%3Ccircle cx='86' cy='42' r='8' fill='%23a78bfa'/%3E%3C/svg%3E" />
+
   <!-- Fonts & Icons -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Poppins:wght@600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <!-- Google Analytics (replace G-XXXXXXX) -->
+  <!--
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXX');
+  </script>
+  -->
 
   <style>
     /* =========================
        THEME TOKENS
        ========================= */
     :root{
-      /* Dark theme (default) */
       --bg: #0c1020;
       --surface: rgba(255,255,255,.08);
       --surface-2: rgba(255,255,255,.12);
       --border: rgba(255,255,255,.18);
       --text: #e8edff;
       --muted:#b9c6ff;
-      --accent:#7dd3fc;    /* cyan */
-      --accent-2:#a78bfa;  /* lavender */
+      --accent:#2dd4bf;    /* TEAL */
+      --accent-2:#a78bfa;  /* LAVENDER */
       --shadow: 0 12px 32px rgba(0,0,0,.35);
       --maxw: 1200px;
     }
     [data-theme="light"]{
-      /* Light theme */
       --bg: #f7f8ff;
       --surface: rgba(10,10,20,.06);
       --surface-2: rgba(10,10,20,.08);
       --border: rgba(10,10,20,.18);
       --text:#0f1230;
       --muted:#4a4f7a;
-      --accent:#2563eb;
+      --accent:#0ea5a4;
       --accent-2:#7c3aed;
       --shadow: 0 10px 22px rgba(26,32,44,.16);
     }
@@ -74,7 +84,7 @@
        PREMIUM BACKGROUND + NOISE
        ========================= */
     .bg-animation{
-      position: fixed; inset: 0; z-index: -2;
+      position: fixed; inset: 0; z-index: -3;
       background:
         radial-gradient(1200px 600px at 8% 10%, #1a2140 0%, transparent 60%),
         radial-gradient(1100px 700px at 92% 18%, #2a1446 0%, transparent 60%),
@@ -82,7 +92,6 @@
       opacity:.92;
     }
     .bg-animation::after{
-      /* Subtle noise for premium feel */
       content:""; position:fixed; inset:0; pointer-events:none; opacity:.06;
       background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="140" height="140"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2"/></filter><rect width="100%" height="100%" filter="url(%23n)" opacity=".9"/></svg>');
       mix-blend-mode:overlay;
@@ -94,6 +103,11 @@
         linear-gradient(135deg, #ffffff, #eef2ff 55%, #f6f7ff);
     }
     [data-theme="light"] .bg-animation::after{opacity:.03}
+
+    /* Particle canvas */
+    #particles {
+      position: fixed; inset: 0; z-index: -2; pointer-events: none; opacity:.55;
+    }
 
     /* =========================
        NAV
@@ -114,14 +128,21 @@
       font-family:"Poppins", system-ui, sans-serif;
       font-weight:700; letter-spacing:.3px;
     }
-    .nav-links{list-style:none; display:flex; gap:.4rem}
+    .nav-links{list-style:none; display:flex; gap:.4rem; position:relative}
     .nav-links a{
       display:inline-block; padding:.55rem .9rem; border-radius:999px;
       color:var(--text); text-decoration:none; font-weight:700; opacity:.92;
-      transition: all .2s ease; outline: none;
+      transition: color .2s ease, transform .2s ease;
+      position: relative;
     }
-    .nav-links a:hover{background:var(--surface)}
-    .nav-links a.active{background:linear-gradient(45deg,var(--accent),var(--accent-2)); color:#fff}
+    .nav-links a:hover{transform: translateY(-1px)}
+    .nav-links a.active{color:#fff}
+    /* floating underline bar */
+    .nav-underline{
+      position:absolute; bottom:4px; height:3px; background: linear-gradient(90deg,var(--accent),var(--accent-2));
+      border-radius:6px; transition: all .25s ease; left:0; width:0; pointer-events:none;
+    }
+
     .theme-toggle{
       margin-left:.4rem; border:1px solid var(--border); background:var(--surface-2);
       color:var(--text); border-radius:999px; padding:.55rem .8rem; cursor:pointer;
@@ -132,7 +153,8 @@
     /* =========================
        LAYOUT
        ========================= */
-    .section{padding: 6rem 1rem}
+    .section{padding: 6.5rem 1rem}               /* a little more air */
+    #projects.section{padding-top: 7.2rem;}      /* extra space after Skills */
     .container{max-width: var(--maxw); margin:0 auto}
     .section-title{
       text-align:center; font-size: clamp(2rem, 3.8vw, 2.6rem);
@@ -153,6 +175,7 @@
       line-height:1.14; margin-bottom:.6rem;
       background: linear-gradient(90deg, var(--accent), var(--accent-2));
       -webkit-background-clip:text; background-clip:text; color:transparent;
+      min-height: 3.2rem; /* avoids layout shift during typing */
     }
     .subtitle{color:var(--muted); font-weight:700; margin-bottom:1.1rem}
     .bio{color:rgba(255,255,255,.92); line-height:1.7; max-width:60ch; margin-bottom:1.3rem}
@@ -190,24 +213,26 @@
        CARDS (Skills / Certs etc.)
        ========================= */
     .cards{
-      display:grid; gap:1.2rem;
+      display:grid; gap:1.25rem;
       grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
     }
     .card{
       background: var(--surface-2);
       border:1px solid var(--border);
       border-radius: 18px; padding:1.35rem 1.2rem;
-      box-shadow: var(--shadow); transition: transform .16s ease, background .2s ease;
+      box-shadow: var(--shadow); transition: transform .16s ease, background .2s ease, border-color .2s ease;
     }
-    .card:hover{transform: translateY(-4px)}
+    .card:hover{transform: translateY(-4px); border-color: rgba(255,255,255,.28)}
     .card h3{font-size:1.08rem; margin-bottom:1rem; color:var(--text)}
     .tagrow{display:flex; flex-wrap:wrap; gap:.5rem}
     .tag{
       background: rgba(255,255,255,.14);
       border:1px solid var(--border);
       color: var(--text);
-      padding:.42rem .66rem; border-radius:999px; font-size:.9rem; font-weight:700
+      padding:.42rem .66rem; border-radius:999px; font-size:.9rem; font-weight:700;
+      transition: transform .12s ease, background .2s ease;
     }
+    .tag:hover{transform: translateY(-1px); background: rgba(255,255,255,.2)}
 
     /* =========================
        PROJECTS
@@ -217,8 +242,9 @@
       position:relative; overflow:hidden;
       background: var(--surface-2); border:1px solid var(--border);
       border-radius: 18px; padding:1.3rem 1.2rem; box-shadow: var(--shadow);
-      isolation:isolate;
+      isolation:isolate; transition: transform .18s ease, border-color .2s ease;
     }
+    .project:hover{transform: translateY(-4px); border-color: rgba(255,255,255,.28)}
     .project:before{
       content:""; position:absolute; inset:-1px; z-index:-1;
       background: linear-gradient(90deg, transparent, rgba(255,255,255,.12), transparent);
@@ -297,7 +323,7 @@
     .contact-card:hover{ transform: translateY(-3px); border-color: rgba(255,255,255,.35) }
     .contact-icon{
       width: 44px; height: 44px; border-radius: 12px; display:grid; place-items:center;
-      background: rgba(125,211,252,.15); border: 1px solid rgba(125,211,252,.4); flex: 0 0 auto;
+      background: rgba(45,212,191,.15); border: 1px solid rgba(45,212,191,.4); flex: 0 0 auto;
     }
     .contact-icon i{ font-size: 20px; color: var(--accent); }
     .contact-meta{ display:flex; flex-direction: column; gap:.2rem }
@@ -327,23 +353,34 @@
       .nav-links{display:none}
       .theme-toggle{display:none}
     }
+
+    /* Dashboard embed */
+    .embed-wrap{
+      background: var(--surface-2); border:1px solid var(--border); border-radius: 18px;
+      padding: .8rem; box-shadow: var(--shadow);
+    }
+    .embed-frame{
+      width:100%; aspect-ratio: 16/9; border:0; border-radius: 12px;
+      background: #0f1330;
+    }
   </style>
 </head>
 <body>
   <a class="skip" href="#home">Skip to content</a>
   <div class="bg-animation" aria-hidden="true"></div>
+  <canvas id="particles" aria-hidden="true"></canvas>
 
-  <!-- =========================
-       NAV
-       ========================= -->
+  <!-- ========================= NAV ========================= -->
   <nav>
     <div class="nav-container">
       <div class="logo">Avikshith Reddy Yelakonda</div>
       <div>
         <ul class="nav-links" id="navLinks">
+          <span class="nav-underline" id="navUnderline"></span>
           <li><a href="#home" class="navlink">Home</a></li>
           <li><a href="#skills" class="navlink">Skills</a></li>
           <li><a href="#projects" class="navlink">Projects</a></li>
+          <li><a href="#dashboard" class="navlink">Dashboard</a></li>
           <li><a href="#experience" class="navlink">Experience</a></li>
           <li><a href="#education" class="navlink">Education</a></li>
           <li><a href="#contact" class="navlink">Contact</a></li>
@@ -355,20 +392,18 @@
     </div>
   </nav>
 
-  <!-- =========================
-       HERO
-       ========================= -->
+  <!-- ========================= HERO ========================= -->
   <header id="home" class="section hero">
     <div class="container hero-grid fade-in">
       <div>
-        <h1>Data Science · Machine Learning · Analytics</h1>
+        <h1 id="typing">Data Science · Machine Learning · Analytics</h1>
         <div class="subtitle">Turning messy data into measurable business impact</div>
         <p class="bio">
-          I build end-to-end data products—from ingestion and modeling to deployment and dashboards— focused on reliability, accountability, and measurable impact.
+          I build end-to-end data products—from ingestion and modeling to deployment and dashboards—focused on reliability, accountability, and measurable impact.
         </p>
         <div class="cta">
           <a class="btn" target="_blank" rel="noopener" href="https://drive.google.com/file/d/15OgyD3Mt1Cw2GniVsf2hnq-zT_Y71VUR/view?usp=drive_link">
-            <i class="fa-solid fa-file-arrow-down"></i> Resume
+            <i class="fa-solid fa-file-arrow-down"></i> Resume (PDF)
           </a>
           <a class="btn secondary" href="#contact"><i class="fa-solid fa-envelope"></i> Contact</a>
           <a class="btn secondary" target="_blank" rel="noopener" href="https://github.com/AvikshithReddy"><i class="fa-brands fa-github"></i> GitHub</a>
@@ -381,9 +416,7 @@
     </div>
   </header>
 
-  <!-- =========================
-       SKILLS
-       ========================= -->
+  <!-- ========================= SKILLS ========================= -->
   <section id="skills" class="section">
     <div class="container fade-in">
       <h2 class="section-title">Skills</h2>
@@ -427,9 +460,7 @@
     </div>
   </section>
 
-  <!-- =========================
-       PROJECTS
-       ========================= -->
+  <!-- ========================= PROJECTS ========================= -->
   <section id="projects" class="section">
     <div class="container fade-in">
       <h2 class="section-title">Featured Projects</h2>
@@ -439,17 +470,17 @@
           <p>Built a predictive modeling pipeline (Logistic Regression, XGBoost), achieving ROC-AUC ≈ 0.68 and 2.3–2.4× lift in top-decile leads; shipped Power BI dashboards for stakeholders.</p>
           <div class="stack">Python · Scikit-learn · XGBoost · Power BI</div>
         </article>
-        
+
         <article class="project">
-        <h3>AI Assignments – Intelligent Agent Systems</h3>
-        <p>Designed and implemented AI agents to solve search and optimization problems, including maze navigation, n-Queens, and Connect 4. Applied classical AI algorithms such as BFS, DFS, A*, Hill Climbing, Simulated Annealing, and Minimax with Alpha-Beta pruning to analyze decision efficiency, heuristic quality, and agent performance under deterministic and adversarial environments.</p>
-        <div class="stack">Python · NumPy · Matplotlib · OpenAI Gym · AI Search Algorithms</div>
+          <h3>AI Assignments – Intelligent Agent Systems</h3>
+          <p>Designed AI agents for search & optimization (maze, n-Queens, Connect-4) using BFS/DFS/A*, Hill-Climbing, Simulated Annealing, and Minimax+Alpha-Beta. Benchmarked heuristics and decision efficiency under adversarial settings.</p>
+          <div class="stack">Python · NumPy · Matplotlib · AI Search</div>
         </article>
 
         <article class="project">
-        <h3>ML Assignments – Predictive Modeling & Neural Networks</h3>
-        <p>Developed and compared supervised learning models, including Logistic Regression, PCA-based dimensionality reduction, and deep neural networks (MLP, CNN, Wide & Deep models). Implemented optimization and regularization techniques, experimented with adaptive learning (RMSProp, AdaDelta), and evaluated model performance on structured, image, and text datasets.</p>
-        <div class="stack">Python · Scikit-learn · TensorFlow · Keras · Pandas · NumPy · Matplotlib</div>
+          <h3>ML Assignments – Predictive Modeling & Neural Nets</h3>
+          <p>Compared supervised learners (LogReg, PCA+MLP, CNN, Wide & Deep). Tuned optimizers (RMSProp, AdaDelta) and evaluated across structured, image, and text datasets.</p>
+          <div class="stack">Python · scikit-learn · TensorFlow · Keras</div>
         </article>
 
         <article class="project">
@@ -460,13 +491,13 @@
 
         <article class="project">
           <h3>Stock Price Time-Series Forecasting</h3>
-          <p>Forecasted Shopify & Alibaba movements using ARIMA & exponential smoothing models to support investor risk profiling.</p>
+          <p>Forecasted Shopify & Alibaba using ARIMA & exponential smoothing to support investor risk profiling.</p>
           <div class="stack">Python · ARIMA · Forecasting</div>
         </article>
 
         <article class="project">
           <h3>NYC Taxi Demand Forecasting</h3>
-          <p>Predicted hourly demand (92%+ accuracy) using weather & trip features; trained LightGBM, XGBoost, and CatBoost on TLC ride and weather data.</p>
+          <p>Predicted hourly demand (92%+ accuracy) with weather & trip features; trained LightGBM, XGBoost, and CatBoost.</p>
           <div class="stack">Python · LightGBM · XGBoost · CatBoost</div>
         </article>
 
@@ -485,9 +516,26 @@
     </div>
   </section>
 
-  <!-- =========================
-       EXPERIENCE
-       ========================= -->
+  <!-- ========================= LIVE DASHBOARD (Bonus) ========================= -->
+  <section id="dashboard" class="section">
+    <div class="container fade-in">
+      <h2 class="section-title">Live Dashboard</h2>
+      <p class="bio" style="margin:0 auto 1rem; text-align:center; max-width:70ch;">
+        A lightweight interactive view of my analytics—swap the link below with your Streamlit/Power BI public URL.
+      </p>
+      <div class="embed-wrap">
+        <!-- Replace src with your public dashboard link -->
+        <iframe
+          class="embed-frame"
+          loading="lazy"
+          src="https://public.tableau.com/views/RegionalSampleWorkbook/Storms"
+          title="Interactive Dashboard">
+        </iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================= EXPERIENCE ========================= -->
   <section id="experience" class="section">
     <div class="container fade-in">
       <h2 class="section-title">Experience</h2>
@@ -558,9 +606,7 @@
     </div>
   </section>
 
-  <!-- =========================
-       EDUCATION & ACHIEVEMENTS
-       ========================= -->
+  <!-- ========================= EDUCATION & ACHIEVEMENTS ========================= -->
   <section id="education" class="section">
     <div class="container fade-in">
       <h2 class="section-title">Education & Achievements</h2>
@@ -619,12 +665,9 @@
     </div>
   </section>
 
-  <!-- =========================
-       CONTACT (cards layout)
-       ========================= -->
+  <!-- ========================= CONTACT ========================= -->
   <section id="contact" class="section contact-wrap">
     <div class="container">
-
       <h2 class="contact-title">Let's Connect</h2>
       <p class="contact-subtitle">
         I'm actively seeking opportunities in Data Science and AI. Let's discuss how I
@@ -681,11 +724,9 @@
     const themeBtn = document.getElementById('themeBtn');
     const saved = localStorage.getItem('theme');
     if(saved) root.setAttribute('data-theme', saved);
-
     themeBtn?.addEventListener('click', () => {
       const now = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-      if(now === 'dark') root.removeAttribute('data-theme');
-      else root.setAttribute('data-theme', 'light');
+      if(now === 'dark') root.removeAttribute('data-theme'); else root.setAttribute('data-theme', 'light');
       localStorage.setItem('theme', now);
     });
 
@@ -699,10 +740,19 @@
     document.addEventListener('scroll', reveals, {passive:true});
     window.addEventListener('load', reveals);
 
-    /* ===== Scroll spy (active link) ===== */
+    /* ===== Scroll spy + floating underline ===== */
     const sections = [...document.querySelectorAll('section, header')].filter(s=>s.id);
-    const navlinks = document.querySelectorAll('.navlink');
-    const spy = () => {
+    const navlinks = [...document.querySelectorAll('.navlink')];
+    const underline = document.getElementById('navUnderline');
+
+    function moveUnderline(el){
+      if(!el) return;
+      const r = el.getBoundingClientRect();
+      const parent = el.closest('.nav-links').getBoundingClientRect();
+      underline.style.width = r.width + 'px';
+      underline.style.left = (r.left - parent.left) + 'px';
+    }
+    function spy(){
       let idx = 0;
       sections.forEach((s,i)=>{
         const top = s.getBoundingClientRect().top;
@@ -710,10 +760,15 @@
       });
       navlinks.forEach(a=>a.classList.remove('active'));
       const active = document.querySelector('.navlink[href="#'+sections[idx].id+'"]');
-      if(active) active.classList.add('active');
-    };
+      if(active){ active.classList.add('active'); moveUnderline(active); }
+    }
+    navlinks.forEach(a=>{
+      a.addEventListener('mouseenter', ()=>moveUnderline(a));
+      a.addEventListener('mouseleave', ()=>spy());
+    });
+    window.addEventListener('resize', ()=>spy());
     document.addEventListener('scroll', spy, {passive:true});
-    window.addEventListener('load', spy);
+    window.addEventListener('load', ()=>{ spy(); moveUnderline(document.querySelector('.navlink[href="#home"]')); });
 
     /* ===== Back to top visibility ===== */
     const toTop = document.getElementById('toTop');
@@ -721,13 +776,74 @@
     document.addEventListener('scroll', showTop, {passive:true});
     window.addEventListener('load', showTop);
 
+    /* ===== Typing effect (hero headline) ===== */
+    const phrases = [
+      'Data Science · Machine Learning · Analytics',
+      'From raw data to decisions',
+      'Reliable models. Real business impact.'
+    ];
+    const typingEl = document.getElementById('typing');
+    let p = 0, i = 0, deleting = false;
+    function type() {
+      const current = phrases[p];
+      typingEl.textContent = current.slice(0, i);
+      if(!deleting && i < current.length){ i++; }
+      else if(deleting && i > 0){ i--; }
+      else if(!deleting && i === current.length){ deleting = true; setTimeout(type, 1400); return; }
+      else { deleting = false; p = (p+1)%phrases.length; }
+      setTimeout(type, deleting ? 24 : 38);
+    }
+    setTimeout(type, 600);
+
+    /* ===== Connected-dots particles (lightweight) ===== */
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    let w, h, points = [];
+    function resize(){
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+      points = [];
+      const density = Math.min(120, Math.floor((w*h)/18000)); // adaptive count
+      for(let i=0;i<density;i++){
+        points.push({
+          x: Math.random()*w, y: Math.random()*h,
+          vx: (Math.random()-0.5)*0.3, vy: (Math.random()-0.5)*0.3
+        });
+      }
+    }
+    function tick(){
+      ctx.clearRect(0,0,w,h);
+      for(const p of points){
+        p.x+=p.vx; p.y+=p.vy;
+        if(p.x<0||p.x>w) p.vx*=-1;
+        if(p.y<0||p.y>h) p.vy*=-1;
+        ctx.fillStyle = 'rgba(255,255,255,0.35)';
+        ctx.beginPath(); ctx.arc(p.x,p.y,1.4,0,Math.PI*2); ctx.fill();
+      }
+      for(let i=0;i<points.length;i++){
+        for(let j=i+1;j<points.length;j++){
+          const dx=points[i].x-points[j].x, dy=points[i].y-points[j].y;
+          const d=dx*dx+dy*dy;
+          if(d<9000){
+            ctx.strokeStyle='rgba(255,255,255,'+(0.12*(1-d/9000))+')';
+            ctx.beginPath();
+            ctx.moveTo(points[i].x,points[i].y);
+            ctx.lineTo(points[j].x,points[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(tick);
+    }
+    window.addEventListener('resize', resize);
+    resize(); tick();
+
     /* ===== Reduced motion respect ===== */
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       document.querySelectorAll('.avatar-wrap').forEach(el=>el.style.animation = 'none');
+      // Tone down particles
+      cancelAnimationFrame(tick);
     }
   </script>
 </body>
 </html>
-
-
-

@@ -22,17 +22,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Poppins:wght@600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
-  <!-- Google Analytics (replace G-XXXXXXX) -->
-  <!--
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-XXXXXXX');
-  </script>
-  -->
-
   <style>
     /* =========================
        THEME TOKENS
@@ -137,7 +126,6 @@
     }
     .nav-links a:hover{transform: translateY(-1px)}
     .nav-links a.active{color:#fff}
-    /* floating underline bar */
     .nav-underline{
       position:absolute; bottom:4px; height:3px; background: linear-gradient(90deg,var(--accent),var(--accent-2));
       border-radius:6px; transition: all .25s ease; left:0; width:0; pointer-events:none;
@@ -153,8 +141,8 @@
     /* =========================
        LAYOUT
        ========================= */
-    .section{padding: 6.5rem 1rem}               /* a little more air */
-    #projects.section{padding-top: 7.2rem;}      /* extra space after Skills */
+    .section{padding: 6.5rem 1rem}
+    #projects.section{padding-top: 7.2rem;}
     .container{max-width: var(--maxw); margin:0 auto}
     .section-title{
       text-align:center; font-size: clamp(2rem, 3.8vw, 2.6rem);
@@ -175,7 +163,7 @@
       line-height:1.14; margin-bottom:.6rem;
       background: linear-gradient(90deg, var(--accent), var(--accent-2));
       -webkit-background-clip:text; background-clip:text; color:transparent;
-      min-height: 3.2rem; /* avoids layout shift during typing */
+      min-height: 3.2rem;
     }
     .subtitle{color:var(--muted); font-weight:700; margin-bottom:1.1rem}
     .bio{color:rgba(255,255,255,.92); line-height:1.7; max-width:60ch; margin-bottom:1.3rem}
@@ -353,16 +341,6 @@
       .nav-links{display:none}
       .theme-toggle{display:none}
     }
-
-    /* Dashboard embed */
-    .embed-wrap{
-      background: var(--surface-2); border:1px solid var(--border); border-radius: 18px;
-      padding: .8rem; box-shadow: var(--shadow);
-    }
-    .embed-frame{
-      width:100%; aspect-ratio: 16/9; border:0; border-radius: 12px;
-      background: #0f1330;
-    }
   </style>
 </head>
 <body>
@@ -380,7 +358,6 @@
           <li><a href="#home" class="navlink">Home</a></li>
           <li><a href="#skills" class="navlink">Skills</a></li>
           <li><a href="#projects" class="navlink">Projects</a></li>
-          <li><a href="#dashboard" class="navlink">Dashboard</a></li>
           <li><a href="#experience" class="navlink">Experience</a></li>
           <li><a href="#education" class="navlink">Education</a></li>
           <li><a href="#contact" class="navlink">Contact</a></li>
@@ -512,25 +489,6 @@
           <p>Cut research time by 40% with a LangChain/FAISS assistant for semantic search across financial news & docs.</p>
           <div class="stack">Python · LangChain · FAISS · OpenAI</div>
         </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========================= LIVE DASHBOARD (Bonus) ========================= -->
-  <section id="dashboard" class="section">
-    <div class="container fade-in">
-      <h2 class="section-title">Live Dashboard</h2>
-      <p class="bio" style="margin:0 auto 1rem; text-align:center; max-width:70ch;">
-        A lightweight interactive view of my analytics—swap the link below with your Streamlit/Power BI public URL.
-      </p>
-      <div class="embed-wrap">
-        <!-- Replace src with your public dashboard link -->
-        <iframe
-          class="embed-frame"
-          loading="lazy"
-          src="https://public.tableau.com/views/RegionalSampleWorkbook/Storms"
-          title="Interactive Dashboard">
-        </iframe>
       </div>
     </div>
   </section>
@@ -803,7 +761,7 @@
       w = canvas.width = window.innerWidth;
       h = canvas.height = window.innerHeight;
       points = [];
-      const density = Math.min(120, Math.floor((w*h)/18000)); // adaptive count
+      const density = Math.min(120, Math.floor((w*h)/18000));
       for(let i=0;i<density;i++){
         points.push({
           x: Math.random()*w, y: Math.random()*h,
@@ -841,7 +799,6 @@
     /* ===== Reduced motion respect ===== */
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       document.querySelectorAll('.avatar-wrap').forEach(el=>el.style.animation = 'none');
-      // Tone down particles
       cancelAnimationFrame(tick);
     }
   </script>

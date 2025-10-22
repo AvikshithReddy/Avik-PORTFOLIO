@@ -198,30 +198,55 @@
     @media (prefers-reduced-motion: reduce){.avatar-wrap{animation:none}}
 
     /* =========================
-       CARDS (Skills / Certs etc.)
-       ========================= */
-    .cards{
-      display:grid; gap:1.25rem;
-      grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
-    }
-    .card{
-      background: var(--surface-2);
-      border:1px solid var(--border);
-      border-radius: 18px; padding:1.35rem 1.2rem;
-      box-shadow: var(--shadow); transition: transform .16s ease, background .2s ease, border-color .2s ease;
-    }
-    .card:hover{transform: translateY(-4px); border-color: rgba(255,255,255,.28)}
-    .card h3{font-size:1.08rem; margin-bottom:1rem; color:var(--text)}
-    .tagrow{display:flex; flex-wrap:wrap; gap:.5rem}
-    .tag{
-      background: rgba(255,255,255,.14);
-      border:1px solid var(--border);
-      color: var(--text);
-      padding:.42rem .66rem; border-radius:999px; font-size:.9rem; font-weight:700;
-      transition: transform .12s ease, background .2s ease;
-    }
-    .tag:hover{transform: translateY(-1px); background: rgba(255,255,255,.2)}
+   CARDS (Skills / Certs etc.)
+   ========================= */
+.cards{
+  display:grid; gap:1.25rem;
+  grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
+}
+.card{
+  background: var(--surface-2);
+  border:1px solid var(--border);
+  border-radius: 18px; padding:1.35rem 1.2rem;
+  box-shadow: var(--shadow);
+  transition: transform .16s ease, background .2s ease, border-color .2s ease;
+}
+.card:hover{
+  transform: translateY(-4px);
+  border-color: rgba(255,255,255,.28);
+}
+.card h3{
+  font-size:1.08rem;
+  margin-bottom:1rem;
+  color:var(--text);
+}
+.tagrow{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.5rem;
+}
+.tag{
+  background: rgba(255,255,255,.14);
+  border:1px solid var(--border);
+  color: var(--text);
+  padding:.42rem .66rem;
+  border-radius:999px;
+  font-size:.9rem;
+  font-weight:700;
+  transition: transform .12s ease, background .2s ease;
+}
+.tag:hover{
+  transform: translateY(-1px);
+  background: rgba(255,255,255,.2);
+}
 
+/* ✅ New addition — subtle descriptive text under each skill category */
+.card-subtext {
+  font-size: 0.85rem;
+  color: #bcbcbc;
+  margin-top: 6px;
+  line-height: 1.3;
+}
     /* =========================
        PROJECTS
        ========================= */
@@ -374,9 +399,9 @@
     <div class="container hero-grid fade-in">
       <div>
         <h1 id="typing">Data Science · Machine Learning · Analytics</h1>
-        <div class="subtitle">Turning messy data into measurable business impact</div>
+        <div class="subtitle"> From raw data to decisions </div>
         <p class="bio">
-          I build end-to-end data products—from ingestion and modeling to deployment and dashboards—focused on reliability, accountability, and measurable impact.
+            I build end-to-end data products—from ingestion and modeling to deployment and dashboards—focused on reliability, scalability, and measurable outcomes that drive smarter decisions.
         </p>
         <div class="cta">
           <a class="btn" target="_blank" rel="noopener" href="https://drive.google.com/file/d/15OgyD3Mt1Cw2GniVsf2hnq-zT_Y71VUR/view?usp=drive_link">
@@ -395,47 +420,106 @@
 
   <!-- ========================= SKILLS ========================= -->
   <section id="skills" class="section">
-    <div class="container fade-in">
-      <h2 class="section-title">Skills</h2>
-      <div class="cards">
-        <div class="card">
-          <h3><i class="fa-solid fa-code"></i> Programming</h3>
-          <div class="tagrow">
-            <span class="tag">Python</span><span class="tag">R</span><span class="tag">C++</span><span class="tag">Java</span><span class="tag">SAS</span><span class="tag">MATLAB</span>
-          </div>
+  <div class="container fade-in">
+    <h2 class="section-title">Capabilities Across the Data Lifecycle</h2>
+
+    <div class="cards">
+      <!-- Programming -->
+      <div class="card">
+        <h3><i class="fa-solid fa-code"></i> Programming & Core Languages</h3>
+        <div class="tagrow">
+          <span class="tag">Python</span>
+          <span class="tag">R</span>
+          <span class="tag">SQL</span>
+          <span class="tag">Java</span>
+          <span class="tag">C++</span>
+          <span class="tag">SAS</span>
+          <span class="tag">MATLAB</span>
         </div>
-        <div class="card">
-          <h3><i class="fa-solid fa-chart-line"></i> Data Analysis & Visualization</h3>
-          <div class="tagrow">
-            <span class="tag">Pandas</span><span class="tag">NumPy</span><span class="tag">Matplotlib</span><span class="tag">Seaborn</span><span class="tag">Power BI</span><span class="tag">Tableau</span>
-          </div>
+        <p class="card-subtext">Data wrangling, automation, and statistical programming</p>
+      </div>
+
+      <!-- Data Analysis & Visualization -->
+      <div class="card">
+        <h3><i class="fa-solid fa-chart-line"></i> Data Analysis & Visualization</h3>
+        <div class="tagrow">
+          <span class="tag">Pandas</span>
+          <span class="tag">NumPy</span>
+          <span class="tag">Power BI</span>
+          <span class="tag">Tableau</span>
+          <span class="tag">Matplotlib</span>
+          <span class="tag">Seaborn</span>
+          <span class="tag">Looker Studio</span>
         </div>
-        <div class="card">
-          <h3><i class="fa-solid fa-robot"></i> Machine Learning & AI</h3>
-          <div class="tagrow">
-            <span class="tag">Scikit-learn</span><span class="tag">TensorFlow</span><span class="tag">Keras</span>
-            <span class="tag">PyTorch</span><span class="tag">NLP</span><span class="tag">LLMs</span>
-            <span class="tag">LangChain</span><span class="tag">Hugging Face</span>
-          </div>
+        <p class="card-subtext">KPI dashboards, business storytelling, and data-driven insights</p>
+      </div>
+
+      <!-- Machine Learning & AI -->
+      <div class="card">
+        <h3><i class="fa-solid fa-robot"></i> Machine Learning, AI & Statistics</h3>
+        <div class="tagrow">
+          <span class="tag">Scikit-learn</span>
+          <span class="tag">TensorFlow</span>
+          <span class="tag">PyTorch</span>
+          <span class="tag">Keras</span>
+          <span class="tag">XGBoost</span>
+          <span class="tag">NLP</span>
+          <span class="tag">LLMs</span>
+          <span class="tag">LangChain</span>
+          <span class="tag">Hugging Face</span>
         </div>
-        <div class="card">
-          <h3><i class="fa-solid fa-database"></i> Databases & Cloud</h3>
-          <div class="tagrow">
-            <span class="tag">SQL</span><span class="tag">MySQL</span><span class="tag">PostgreSQL</span>
-            <span class="tag">AWS</span><span class="tag">Azure</span><span class="tag">GCP</span>
-          </div>
+        <p class="card-subtext">Predictive modeling, A/B testing, and generative AI solutions</p>
+      </div>
+
+      <!-- Data Engineering & Workflows -->
+      <div class="card">
+        <h3><i class="fa-solid fa-cogs"></i> Data Engineering & Automation Workflows</h3>
+        <div class="tagrow">
+          <span class="tag">Airflow</span>
+          <span class="tag">dbt</span>
+          <span class="tag">Apache Spark</span>
+          <span class="tag">Databricks</span>
+          <span class="tag">ETL pipelines</span>
+          <span class="tag">MLflow</span>
+          <span class="tag">Docker</span>
+          <span class="tag">Kubernetes</span>
+          <span class="tag">CI/CD</span>
         </div>
-        <div class="card">
-          <h3><i class="fa-solid fa-cogs"></i> Automation & Workflows</h3>
-          <div class="tagrow">
-            <span class="tag">Airflow</span><span class="tag">dbt</span><span class="tag">Apache Spark</span>
-            <span class="tag">Databricks</span><span class="tag">ETL pipelines</span><span class="tag">CI/CD</span>
-            <span class="tag">Docker</span><span class="tag">Kubernetes</span><span class="tag">MLflow</span>
-          </div>
+        <p class="card-subtext">Scalable data pipelines, model deployment, and orchestration</p>
+      </div>
+
+      <!-- Databases & Cloud -->
+      <div class="card">
+        <h3><i class="fa-solid fa-database"></i> Databases & Cloud Platforms</h3>
+        <div class="tagrow">
+          <span class="tag">Snowflake</span>
+          <span class="tag">MySQL</span>
+          <span class="tag">PostgreSQL</span>
+          <span class="tag">AWS</span>
+          <span class="tag">Azure</span>
+          <span class="tag">GCP</span>
+          <span class="tag">BigQuery</span>
+          <span class="tag">Redshift</span>
         </div>
+        <p class="card-subtext">Data integration, warehousing, and cloud-native analytics</p>
+      </div>
+
+      <!-- Tools & Collaboration -->
+      <div class="card">
+        <h3><i class="fa-solid fa-briefcase"></i> Tools & Collaboration</h3>
+        <div class="tagrow">
+          <span class="tag">Git/GitHub</span>
+          <span class="tag">JIRA</span>
+          <span class="tag">Confluence</span>
+          <span class="tag">Excel (VBA)</span>
+          <span class="tag">Streamlit</span>
+          <span class="tag">FastAPI</span>
+        </div>
+        <p class="card-subtext">Version control, agile teamwork, and rapid prototyping</p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
   <!-- ========================= PROJECTS ========================= -->
   <section id="projects" class="section">
@@ -804,3 +888,4 @@
   </script>
 </body>
 </html>
+

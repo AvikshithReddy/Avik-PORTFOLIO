@@ -23,6 +23,61 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
   <style>
+
+
+/* ===== Summary ===== */
+.summary .summary-intro{
+  color: var(--text);
+  opacity:.95;
+  max-width: 70ch;
+  margin: 0 auto 1.2rem;
+  line-height: 1.7;
+}
+.summary .summary-points{
+  max-width: 72ch; margin: 0.5rem auto 0; padding-left: 1.1rem; color: var(--muted);
+}
+.summary .summary-points li{ margin: .45rem 0 }
+
+/* ===== Stack Badges ===== */
+.badge-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: .6rem;
+  margin-top: 1.2rem;
+}
+.badge{
+  display:flex; align-items:center; gap:.55rem;
+  padding: .55rem .7rem;
+  border:1px solid var(--border);
+  background: var(--surface-2);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  transition: transform .15s ease, border-color .2s ease, background .2s ease;
+}
+.badge:hover{ transform: translateY(-2px); border-color: rgba(255,255,255,.28) }
+.badge i{ font-size: 1.15rem }
+.badge span{ font-weight: 700; letter-spacing: .2px }
+
+/* Make the inline SVG icons align like FA icons */
+.badge svg{
+  width: 18px; height: 18px; display:inline-block; flex: 0 0 auto;
+}
+
+/* Light mode contrast polish */
+[data-theme="light"] .badge{
+  background: var(--surface-2);
+  border-color: rgba(10,10,20,.22);
+}
+
+
+
+
+
+
+    
+
+
+    
     /* =========================
        THEME TOKENS
        ========================= */
@@ -435,6 +490,26 @@
     </div>
   </header>
 
+<!-- ========================= PROFESSIONAL SUMMARY ========================= -->
+<section id="summary" class="section">
+  <div class="container fade-in summary">
+    <h2 class="section-title">Professional Summary</h2>
+    <p class="summary-intro">
+      Data professional with hands-on experience across Data Science, Analytics, and MLOps—designing
+      end-to-end solutions from data ingestion and feature engineering to model deployment and decision
+      dashboards. Comfortable in ambiguity, I translate business questions into measurable outcomes using
+      Python, SQL, Databricks, Snowflake, and modern cloud/ETL stacks.
+    </p>
+
+    <ul class="summary-points">
+      <li><strong>Full lifecycle:</strong> ETL/ELT (Airflow, dbt) → feature pipelines (Spark/Databricks) → ML modeling → MLflow tracking → dashboards (Power BI, Tableau)</li>
+      <li><strong>ML breadth:</strong> classification, regression, time-series, experimentation (A/B), and explainability (SHAP)</li>
+      <li><strong>Impact mindset:</strong> ship reliable, observable workflows; optimize costs & latency; communicate insights clearly to stakeholders</li>
+    </ul>
+  </div>
+</section>
+  
+
   <!-- ========================= SKILLS ========================= -->
   <section id="skills" class="section">
   <div class="container fade-in">
@@ -537,6 +612,60 @@
     </div>
   </div>
 </section>
+
+
+<!-- Logo badges: instantly recognizable stack -->
+<div class="badge-grid">
+  <!-- FA = Font Awesome; SVG = inline vector for brands FA doesn't provide -->
+  <div class="badge"><i class="fa-brands fa-python" aria-hidden="true"></i><span>Python</span></div>
+  <div class="badge"><i class="fa-solid fa-database" aria-hidden="true"></i><span>SQL</span></div>
+  <div class="badge"><i class="fa-brands fa-git-alt" aria-hidden="true"></i><span>Git</span></div>
+  <div class="badge"><i class="fa-brands fa-docker" aria-hidden="true"></i><span>Docker</span></div>
+
+  <!-- Databricks (SVG) -->
+  <div class="badge">
+    <svg viewBox="0 0 256 256" aria-hidden="true"><path d="M20 128 128 68l108 60-108 60z" fill="#ff3621"/><path d="M20 96 128 36l108 60-24 13-84-46-84 46z" fill="#ff7a59"/></svg>
+    <span>Databricks</span>
+  </div>
+
+  <!-- Snowflake (SVG) -->
+  <div class="badge">
+    <svg viewBox="0 0 256 256" aria-hidden="true"><path fill="#29B5E8" d="M120 24h16v208h-16z"/><path fill="#29B5E8" d="M40 64l176 128-9 12L31 76zM216 64L40 192l9 12 176-128z"/></svg>
+    <span>Snowflake</span>
+  </div>
+
+  <!-- Airflow (SVG) -->
+  <div class="badge">
+    <svg viewBox="0 0 256 256" aria-hidden="true"><path fill="#017CEE" d="M128 128 28 92l36 100z"/><path fill="#E4392E" d="M128 128 92 28l100 36z"/><path fill="#2FB67C" d="M128 128l100 36-36-100z"/><path fill="#8C4FFF" d="M128 128l36 100L64 192z"/></svg>
+    <span>Airflow</span>
+  </div>
+
+  <!-- dbt (SVG) -->
+  <div class="badge">
+    <svg viewBox="0 0 256 256" aria-hidden="true"><path fill="#FF694B" d="M67 49 49 67l58 61 18-18zM207 49l-61 58 18 18 61-58zM49 207l58-61 18 18-58 61zM207 207l-61-58 18-18 61 58z"/></svg>
+    <span>dbt</span>
+  </div>
+
+  <!-- AWS (SVG) -->
+  <div class="badge">
+    <svg viewBox="0 0 256 256" aria-hidden="true"><path fill="#FF9900" d="M36 172c56 34 128 34 184 0v12c-56 34-128 34-184 0z"/><path fill="#FF9900" d="M80 88h16v56H80zm40-16h16v72h-16zm40 24h16v48h-16z"/></svg>
+    <span>AWS</span>
+  </div>
+
+  <!-- Azure (SVG) -->
+  <div class="badge">
+    <svg viewBox="0 0 256 256" aria-hidden="true"><path fill="#008AD7" d="M28 196 116 36l40 24-76 136z"/><path fill="#1F96FF" d="M140 60 228 196H96l44-76 20 36h28z"/></svg>
+    <span>Azure</span>
+  </div>
+
+  <!-- Power BI (SVG) -->
+  <div class="badge">
+    <svg viewBox="0 0 256 256" aria-hidden="true"><rect x="36" y="96" width="24" height="64" rx="4" fill="#F2C811"/><rect x="80" y="72" width="24" height="112" rx="4" fill="#F2C811"/><rect x="124" y="112" width="24" height="72" rx="4" fill="#F2C811"/><rect x="168" y="88" width="24" height="96" rx="4" fill="#F2C811"/></svg>
+    <span>Power BI</span>
+  </div>
+</div>
+
+  
 
   <!-- ========================= PROJECTS ========================= -->
   <section id="projects" class="section">
@@ -965,6 +1094,7 @@
   </script>
 </body>
 </html>
+
 
 
 

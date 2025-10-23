@@ -22,84 +22,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Poppins:wght@600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
-  /* ===== Spotlight summary band (distinct from cards) ===== */
-.summary-spotlight{
-  position: relative;
-  border-radius: 22px;
-  padding: 2.2rem 2rem;
-  background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
-  border: 1px solid var(--border);
-  box-shadow: 0 18px 48px rgba(0,0,0,.35);
-  overflow: hidden;
-}
-.summary-spotlight::before{
-  /* soft glow edge */
-  content:"";
-  position:absolute; inset:-2px;
-  background: radial-gradient(1200px 300px at 50% -10%, rgba(167,139,250,.35), transparent 60%),
-              radial-gradient(800px 300px at 50% 110%, rgba(45,212,191,.28), transparent 60%);
-  filter: blur(18px); opacity:.35; pointer-events:none;
-}
-.summary-title{
-  text-align:center;
-  font-family:"Poppins", system-ui, sans-serif;
-  font-size: clamp(1.9rem, 3.6vw, 2.4rem);
-  font-weight: 800;
-  margin-bottom: .65rem;
-  background: linear-gradient(90deg,var(--accent), var(--accent-2));
-  -webkit-background-clip: text; background-clip: text; color: transparent;
-}
-.summary-lead{
-  max-width: 80ch;
-  margin: 0 auto 1.4rem;
-  color: rgba(255,255,255,.95);
-  line-height: 1.7;
-  text-align: center;
-}
-[data-theme="light"] .summary-lead{ color: #2a2f55; }
-
-.summary-grid{
-  display: grid; gap: 1rem;
-  grid-template-columns: repeat(3, minmax(220px,1fr));
-  margin-top: 1.1rem;
-}
-@media (max-width: 920px){ .summary-grid{ grid-template-columns: 1fr; } }
-
-.summary-item{
-  background: rgba(255,255,255,.08);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 1rem .9rem;
-}
-.summary-item h4{
-  display:flex; align-items:center; gap:.5rem;
-  font-size: 1.02rem; margin-bottom: .45rem;
-}
-.summary-item h4 i{ color: var(--accent); }
-.summary-item ul{ margin-left: 1.1rem; line-height: 1.55; }
-.summary-item li{ margin:.3rem 0; }
-
-.mini-badges{
-  display:flex; flex-wrap:wrap; gap:.45rem; justify-content:center;
-  margin-top: 1.1rem;
-}
-.mini-badges .chip{
-  display:inline-flex; align-items:center; gap:.4rem;
-  font-weight:700; font-size:.85rem;
-  padding:.4rem .6rem; border-radius:999px;
-  background: rgba(255,255,255,.10); border:1px solid var(--border);
-}
-.mini-badges .chip i{ font-size:.95rem; }
-.mini-badges .chip svg{ width:14px; height:14px; }
-
-[data-theme="light"] .summary-spotlight{
-  background: linear-gradient(180deg, rgba(10,10,20,.06), rgba(10,10,20,.03));
-  box-shadow: 0 12px 32px rgba(26,32,44,.16);
-}
-[data-theme="light"] .summary-item{ background: rgba(10,10,20,.04); }
-
-/* optional: tighten section spacing for spotlight */
-#summary.section{ padding-top: 4.5rem; padding-bottom: 4.5rem; }
+  
 
     /* =========================
        THEME TOKENS
@@ -250,6 +173,94 @@
       background: rgba(255,255,255,.12); font-size:4.2rem }
     @keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
     @media (prefers-reduced-motion: reduce){.avatar-wrap{animation:none}}
+
+
+
+
+<style id="summary-css">
+/* Spotlight summary band (distinct from cards) */
+.summary-spotlight{
+  position: relative;
+  border-radius: 22px;
+  padding: 2.2rem 2rem;
+  background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
+  border: 1px solid var(--border);
+  box-shadow: 0 18px 48px rgba(0,0,0,.35);
+  overflow: hidden;
+}
+.summary-spotlight::before{
+  content:"";
+  position:absolute; inset:-2px;
+  background:
+    radial-gradient(1200px 300px at 50% -10%, rgba(167,139,250,.35), transparent 60%),
+    radial-gradient(800px 300px at 50% 110%, rgba(45,212,191,.28), transparent 60%);
+  filter: blur(18px); opacity:.35; pointer-events:none;
+}
+.summary-title{
+  text-align:center;
+  font-family:"Poppins", system-ui, sans-serif;
+  font-size: clamp(1.9rem, 3.6vw, 2.4rem);
+  font-weight: 800;
+  margin-bottom: .65rem;
+  background: linear-gradient(90deg,var(--accent), var(--accent-2));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.summary-lead{
+  max-width: 80ch;
+  margin: 0 auto 1.4rem;
+  color: rgba(255,255,255,.95);
+  line-height: 1.7;
+  text-align: center;
+}
+[data-theme="light"] .summary-lead{ color: #2a2f55; }
+
+.summary-grid{
+  display: grid; gap: 1rem;
+  grid-template-columns: repeat(3, minmax(220px,1fr));
+  margin-top: 1.1rem;
+}
+@media (max-width: 920px){ .summary-grid{ grid-template-columns: 1fr; } }
+
+.summary-item{
+  background: rgba(255,255,255,.08);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1rem .9rem;
+}
+.summary-item h4{
+  display:flex; align-items:center; gap:.5rem;
+  font-size: 1.02rem; margin-bottom: .45rem;
+}
+.summary-item h4 i{ color: var(--accent); }
+.summary-item ul{ margin-left: 1.1rem; line-height: 1.55; }
+.summary-item li{ margin:.3rem 0; }
+
+.mini-badges{
+  display:flex; flex-wrap:wrap; gap:.45rem; justify-content:center;
+  margin-top: 1.1rem;
+}
+.mini-badges .chip{
+  display:inline-flex; align-items:center; gap:.4rem;
+  font-weight:700; font-size:.85rem;
+  padding:.4rem .6rem; border-radius:999px;
+  background: rgba(255,255,255,.10); border:1px solid var(--border);
+}
+.mini-badges .chip i{ font-size:.95rem; }
+.mini-badges .chip svg{ width:14px; height:14px; }
+
+[data-theme="light"] .summary-spotlight{
+  background: linear-gradient(180deg, rgba(10,10,20,.06), rgba(10,10,20,.03));
+  box-shadow: 0 12px 32px rgba(26,32,44,.16);
+}
+[data-theme="light"] .summary-item{ background: rgba(10,10,20,.04); }
+
+/* Slightly tighter spacing for this section */
+#summary.section{ padding-top: 4.5rem; padding-bottom: 4.5rem; }
+</style>
+
+
+
+  
 
     /* ========================= CARDS (Skills / Certs etc.) ========================= */
     .cards{
@@ -477,7 +488,6 @@
     </div>
   </header>
 
-  <!-- ========================= SUMMARY (Spotlight) ========================= -->
 <section id="summary" class="section fade-in">
   <div class="container">
     <div class="summary-spotlight" aria-labelledby="summary-title">
@@ -490,7 +500,7 @@
 
       <div class="summary-grid" role="list">
         <div class="summary-item" role="listitem">
-          <h4><i class="fa-solid fa-diagram-project"></i> Full Lifecycle</h4>
+          <h4><i class="fa-solid fa-diagram-project" aria-hidden="true"></i> Full Lifecycle</h4>
           <ul>
             <li>ETL/ELT with Airflow &amp; dbt → Spark/Databricks feature pipelines</li>
             <li>Modeling &amp; tracking with MLflow → dashboards in Power BI/Tableau</li>
@@ -498,7 +508,7 @@
         </div>
 
         <div class="summary-item" role="listitem">
-          <h4><i class="fa-solid fa-brain"></i> ML Breadth</h4>
+          <h4><i class="fa-solid fa-brain" aria-hidden="true"></i> ML Breadth</h4>
           <ul>
             <li>Classification, regression, time-series, A/B experimentation</li>
             <li>Explainability (SHAP) and NLP/LLMs where they add value</li>
@@ -506,7 +516,7 @@
         </div>
 
         <div class="summary-item" role="listitem">
-          <h4><i class="fa-solid fa-gauge-high"></i> Impact Mindset</h4>
+          <h4><i class="fa-solid fa-gauge-high" aria-hidden="true"></i> Impact Mindset</h4>
           <ul>
             <li>Ship observable, cost-aware workflows; reduce latency</li>
             <li>Communicate clearly with stakeholders; own results</li>
@@ -514,27 +524,29 @@
         </div>
       </div>
 
-      <!-- small, recognizable stack chips -->
       <div class="mini-badges" aria-label="Core stack">
-        <span class="chip"><i class="fa-brands fa-python"></i>Python</span>
-        <span class="chip"><i class="fa-solid fa-database"></i>SQL</span>
+        <span class="chip"><i class="fa-brands fa-python" aria-hidden="true"></i>Python</span>
+        <span class="chip"><i class="fa-solid fa-database" aria-hidden="true"></i>SQL</span>
         <span class="chip">
-          <!-- Databricks SVG -->
           <svg viewBox="0 0 256 256" aria-hidden="true"><path d="M20 128 128 68l108 60-108 60z" fill="#ff3621"/><path d="M20 96 128 36l108 60-24 13-84-46-84 46z" fill="#ff7a59"/></svg>
           Databricks
         </span>
         <span class="chip">
-          <!-- Snowflake SVG -->
           <svg viewBox="0 0 256 256" aria-hidden="true"><path fill="#29B5E8" d="M120 24h16v208h-16z"/><path fill="#29B5E8" d="M40 64l176 128-9 12L31 76zM216 64L40 192l9 12 176-128z"/></svg>
           Snowflake
         </span>
-        <span class="chip"><i class="fa-brands fa-docker"></i>Docker</span>
-        <span class="chip"><i class="fa-solid fa-diagram-project"></i>MLflow</span>
-        <span class="chip"><i class="fa-brands fa-git-alt"></i>Git</span>
+        <span class="chip"><i class="fa-brands fa-docker" aria-hidden="true"></i>Docker</span>
+        <span class="chip"><i class="fa-solid fa-diagram-project" aria-hidden="true"></i>MLflow</span>
+        <span class="chip"><i class="fa-brands fa-git-alt" aria-hidden="true"></i>Git</span>
       </div>
     </div>
   </div>
 </section>
+
+
+
+
+  
 
   <!-- ========================= SKILLS ========================= -->
   <section id="skills" class="section">
@@ -1071,4 +1083,5 @@
   </script>
 </body>
 </html>
+
 

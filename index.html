@@ -6,1332 +6,1157 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Avikshith Yelakonda — Data Science Portfolio</title>
   <meta name="description" content="Data Science portfolio of Avikshith Yelakonda: ML, analytics, automation workflows, and measurable impact." />
-  <meta name="theme-color" content="#e0f7f4" />
+  <meta name="theme-color" content="#e6f7f8" />
 
-  <!-- Open Graph / Twitter -->
+  <!-- Open Graph -->
   <meta property="og:title" content="Avikshith Yelakonda — Data Science Portfolio" />
   <meta property="og:description" content="ML, analytics, automation workflows, and impactful projects." />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://avik-portfolio.vercel.app/og-image.jpg" />
 
-  <!-- Favicon (simple AY) -->
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Crect width='128' height='128' rx='28' fill='%230b9fab'/%3E%3Ctext x='50%25' y='53%25' text-anchor='middle' fill='white' font-family='Arial, sans-serif' font-size='54'%3EA%3C/text%3E%3Ctext x='50%25' y='88%25' text-anchor='middle' fill='white' font-family='Arial, sans-serif' font-size='24'%3EY%3C/text%3E%3C/svg%3E" />
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Ccircle cx='64' cy='64' r='62' fill='%23182732'/%3E%3Cpath d='M36 75l20 9 35-35-9-20-46 46z' fill='%2308b7b9'/%3E%3Ccircle cx='86' cy='42' r='8' fill='%2394a3b8'/%3E%3C/svg%3E" />
 
   <!-- Fonts & Icons -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=DM+Sans:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
   <style>
-/* ========================= THEME TOKENS ========================= */
-/* Tiffany blue + white + grey */
-:root{
-  --bg:#f6fafb;
-  --bg-soft:#ecf7f7;
-  --surface:#ffffff;
-  --surface-soft:#f9fbfc;
-  --border:#e3e7ee;
-  --border-strong:#cbd5e1;
-  --text:#111827;
-  --muted:#6b7280;
-  --accent:#0fb4b8;        /* main Tiffany-ish */
-  --accent-strong:#08979c; /* darker teal */
-  --accent-soft:#e0f7f4;
-  --accent-soft-2:#f0fbfa;
-  --shadow-soft:0 18px 40px rgba(15,23,42,.06);
-  --shadow-card:0 14px 32px rgba(15,23,42,.06);
-  --radius-lg:24px;
-  --radius-md:18px;
-  --maxw:1120px;
-}
+    /* ========== THEME TOKENS (TIFFANY BLUE / WHITE / GREY) ========== */
+    :root{
+      --bg:#e9f6f8;
+      --bg-soft:#dbeff3;
+      --surface:#ffffff;
+      --surface-soft:#f3f6f8;
+      --border:rgba(15,23,42,.08);
+      --border-strong:rgba(15,23,42,.16);
+      --text:#12212b;
+      --muted:#607080;
+      --accent:#08b7b9;          /* Tiffany blue */
+      --accent-dark:#078388;
+      --accent-soft:#d3f3f4;
+      --shadow-soft:0 18px 40px rgba(15,23,42,.08);
+      --maxw:1100px;
+    }
 
-/* ========================= RESET / BASE ========================= */
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{
-  font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-  color:var(--text);
-  background:
-    radial-gradient(circle at top left,rgba(15,180,184,.12) 0,transparent 45%),
-    radial-gradient(circle at bottom right,rgba(148,163,184,.15) 0,transparent 50%),
-    var(--bg);
-  min-height:100vh;
-  overflow-x:hidden;
-}
-img{max-width:100%;display:block}
-a{text-decoration:none;color:inherit}
-ul{list-style:none}
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      color:var(--text);
+      background:radial-gradient(circle at top left,#d9f1f5 0,#e9f6f8 45%,#ffffff 100%);
+      min-height:100vh;
+      overflow-x:hidden;
+    }
 
-/* skip link */
-.skip{position:absolute;left:-9999px;}
-.skip:focus{
-  left:1rem;top:1rem;
-  padding:.6rem .9rem;
-  background:#fff;
-  color:#000;
-  border-radius:999px;
-  box-shadow:0 6px 18px rgba(15,23,42,.18);
-  z-index:9999;
-}
+    a{text-decoration:none;color:inherit}
 
-/* ========================= TOP BRAND BAR ========================= */
-.top-bar{
-  position:fixed;
-  top:0;left:0;right:0;
-  z-index:1000;
-  background:rgba(246,250,251,.96);
-  backdrop-filter:blur(18px);
-  border-bottom:1px solid rgba(203,213,225,.6);
-}
-.top-inner{
-  max-width:var(--maxw);
-  margin:0 auto;
-  display:grid;
-  grid-template-columns:1.2fr 1.2fr .8fr;
-  align-items:center;
-  gap:1rem;
-  padding:.85rem 1.2rem;
-}
-.top-left{
-  display:flex;
-  flex-direction:column;
-  gap:.15rem;
-  font-size:.78rem;
-  text-transform:uppercase;
-  letter-spacing:.16em;
-  color:var(--muted);
-}
-.top-left span b{
-  font-weight:700;
-  color:var(--accent-strong);
-}
-.top-center{
-  text-align:center;
-}
-.top-name{
-  font-family:"DM Sans",system-ui,sans-serif;
-  font-size:1.12rem;
-  letter-spacing:.18em;
-  text-transform:uppercase;
-  font-weight:700;
-}
-.top-role{
-  margin-top:.25rem;
-  font-size:.8rem;
-  text-transform:uppercase;
-  letter-spacing:.16em;
-  color:var(--muted);
-}
-.top-right{
-  display:flex;
-  justify-content:flex-end;
-}
-.scroll-indicator{
-  display:flex;
-  align-items:center;
-  gap:.6rem;
-  cursor:pointer;
-}
-.scroll-indicator span{
-  font-size:.75rem;
-  text-transform:uppercase;
-  letter-spacing:.18em;
-  color:var(--muted);
-}
-.scroll-line{
-  width:60px;
-  height:2px;
-  border-radius:999px;
-  background:linear-gradient(90deg,var(--accent),var(--accent-strong));
-  position:relative;
-  overflow:hidden;
-}
-.scroll-line::after{
-  content:"";
-  position:absolute;
-  left:-30%;
-  top:0;
-  width:40%;height:100%;
-  background:rgba(255,255,255,.85);
-  opacity:.7;
-  animation:scrollPulse 2s infinite;
-}
-.scroll-indicator i{
-  font-size:.7rem;
-  color:var(--accent-strong);
-}
-@keyframes scrollPulse{
-  0%{transform:translateX(0)}
-  100%{transform:translateX(260%)}
-}
+    .skip{position:absolute;left:-9999px;}
+    .skip:focus{left:1rem;top:1rem;padding:.6rem .9rem;background:#fff;color:#000;border-radius:8px;z-index:10000}
 
-/* Slightly smaller layout on narrow screens */
-@media (max-width:900px){
-  .top-inner{
-    grid-template-columns:1fr;
-    text-align:center;
-  }
-  .top-left{align-items:center;}
-  .top-right{justify-content:center;}
-}
+    /* ========== BRAND BAR (ALWAYS VISIBLE TOP SECTION) ========== */
+    .brand-bar{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      background:rgba(246, 250, 251, 0.98);
+      backdrop-filter:blur(16px);
+      border-bottom:1px solid var(--border);
+    }
+    .brand-inner{
+      max-width:var(--maxw);
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:1.5rem;
+      padding:.7rem 1rem;
+      font-size:.8rem;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color:var(--muted);
+    }
 
-/* ========================= GENERIC LAYOUT ========================= */
-main{
-  padding-top:92px; /* height of top bar */
-}
-.section{
-  padding:4.5rem 1.2rem;
-}
-.section:nth-of-type(even){
-  background:linear-gradient(to bottom,rgba(240,253,250,.85),rgba(255,255,255,1));
-}
-.container{
-  max-width:var(--maxw);
-  margin:0 auto;
-}
-.section-title{
-  font-family:"DM Sans",system-ui,sans-serif;
-  font-size:clamp(1.8rem,3vw,2.2rem);
-  margin-bottom:1.6rem;
-  letter-spacing:.04em;
-  text-transform:uppercase;
-}
-.section-kicker{
-  font-size:.78rem;
-  letter-spacing:.18em;
-  text-transform:uppercase;
-  color:var(--muted);
-  margin-bottom:.5rem;
-}
+    /* Left: round icon buttons */
+    .brand-left{
+      display:flex;
+      align-items:center;
+      gap:.35rem;
+      flex:1;
+    }
+    .brand-pill{
+      width:32px;
+      height:32px;
+      border-radius:999px;
+      border:1px solid var(--border-strong);
+      background:var(--surface);
+      display:grid;
+      place-items:center;
+      font-size:14px;
+      box-shadow:0 6px 14px rgba(15,23,42,.08);
+      transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease, background .16s ease;
+    }
+    .brand-pill i{color:var(--accent-dark);}
+    .brand-pill:hover{
+      transform:translateY(-1px);
+      background:var(--accent-soft);
+      border-color:var(--accent);
+      box-shadow:0 10px 24px rgba(7,131,136,.18);
+    }
 
-/* ========================= HERO ========================= */
-.hero{
-  padding-top:4.8rem;
-  padding-bottom:3.8rem;
-}
-.hero-grid{
-  display:grid;
-  grid-template-columns:1.25fr 1fr;
-  align-items:center;
-  gap:2.6rem;
-}
-.hero-kicker{
-  font-size:.78rem;
-  letter-spacing:.18em;
-  text-transform:uppercase;
-  color:var(--accent-strong);
-  margin-bottom:.75rem;
-}
-.hero-title{
-  font-family:"DM Sans",system-ui,sans-serif;
-  font-size:clamp(2.4rem,4vw,3rem);
-  line-height:1.05;
-  margin-bottom:.8rem;
-}
-.hero-sub{
-  font-size:1rem;
-  color:var(--muted);
-  line-height:1.7;
-  max-width:48ch;
-  margin-bottom:1.6rem;
-}
-.hero-meta{
-  display:flex;
-  flex-wrap:wrap;
-  gap:1.2rem;
-  margin-bottom:1.8rem;
-  font-size:.85rem;
-  color:var(--muted);
-}
-.hero-meta span{
-  display:inline-flex;
-  align-items:center;
-  gap:.4rem;
-}
-.hero-meta i{
-  font-size:.9rem;
-  color:var(--accent-strong);
-}
-.hero-cta{
-  display:flex;
-  flex-wrap:wrap;
-  gap:.85rem;
-}
-.btn{
-  display:inline-flex;
-  align-items:center;
-  gap:.55rem;
-  padding:.78rem 1.25rem;
-  border-radius:999px;
-  border:1px solid transparent;
-  font-size:.88rem;
-  font-weight:600;
-  cursor:pointer;
-  box-shadow:var(--shadow-soft);
-  transition:transform .18s ease, box-shadow .18s ease, background .18s ease, color .18s ease, border-color .18s ease;
-}
-.btn-primary{
-  background:linear-gradient(135deg,var(--accent),var(--accent-strong));
-  color:#ffffff;
-}
-.btn-primary:hover{
-  transform:translateY(-1px);
-  box-shadow:0 20px 40px rgba(8,151,156,.25);
-}
-.btn-outline{
-  background:#ffffff;
-  color:var(--accent-strong);
-  border-color:rgba(148,163,184,.6);
-  box-shadow:0 8px 20px rgba(15,23,42,.04);
-}
-.btn-outline:hover{
-  background:var(--accent-soft-2);
-  border-color:var(--accent-strong);
-}
-.btn i{font-size:.9rem;}
+    /* Center: name + tagline */
+    .brand-center{
+      flex:2;
+      text-align:center;
+      display:flex;
+      flex-direction:column;
+      gap:.1rem;
+    }
+    .brand-name{
+      font-family:"Poppins",system-ui,sans-serif;
+      font-weight:700;
+      font-size:.9rem;
+      letter-spacing:.18em;
+      color:var(--accent-dark);   /* Name in Tiffany blue */
+    }
+    .brand-tagline{
+      font-weight:500;
+      font-size:.7rem;
+      color:var(--muted);
+    }
 
-.hero-photo-wrap{
-  justify-self:end;
-  max-width:290px;
-  width:100%;
-}
-.hero-photo-card{
-  border-radius:var(--radius-lg);
-  background:radial-gradient(circle at top,#e0f7f4 0,#ffffff 50%,#e5e7eb 100%);
-  padding:9px;
-  box-shadow:0 22px 55px rgba(15,23,42,.16);
-  position:relative;
-}
-.hero-photo{
-  border-radius:18px;
-  overflow:hidden;
-  background:#020617;
-}
-.hero-photo img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-.hero-badge{
-  position:absolute;
-  left:10px;
-  bottom:10px;
-  padding:.4rem .75rem;
-  border-radius:999px;
-  background:rgba(15,23,42,.86);
-  color:#e5f9f7;
-  font-size:.72rem;
-  letter-spacing:.12em;
-  text-transform:uppercase;
-  display:flex;
-  align-items:center;
-  gap:.4rem;
-}
-.hero-badge i{
-  color:#34d399;
-}
+    /* Right: now empty but kept for layout balance */
+    .brand-right{
+      flex:1;
+      display:flex;
+      justify-content:flex-end;
+      align-items:center;
+      font-size:.7rem;
+      color:var(--muted);
+    }
 
-/* hero responsive */
-@media (max-width:900px){
-  .hero-grid{
-    grid-template-columns:1fr;
-    gap:2.1rem;
-  }
-  .hero-photo-wrap{
-    justify-self:center;
-    order:-1;
-  }
-}
+    @media(max-width:800px){
+      .brand-inner{flex-wrap:wrap;justify-content:center}
+      .brand-left{order:2;justify-content:center}
+      .brand-center{order:1}
+      .brand-right{display:none}
+    }
 
-/* ========================= SUMMARY BAND ========================= */
-.summary-band{
-  border-radius:var(--radius-lg);
-  background:linear-gradient(135deg,#f0fbfa,#ffffff);
-  border:1px solid var(--border);
-  box-shadow:var(--shadow-soft);
-  padding:2.2rem 2rem;
-}
-.summary-lead{
-  max-width:70ch;
-  color:var(--muted);
-  line-height:1.7;
-  margin-bottom:1.8rem;
-}
-.summary-grid{
-  display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:1.4rem;
-}
-.summary-item{
-  border-radius:18px;
-  padding:1.1rem 1rem;
-  background:var(--surface-soft);
-  border:1px solid rgba(148,163,184,.4);
-}
-.summary-item h4{
-  display:flex;
-  align-items:center;
-  gap:.55rem;
-  font-size:.94rem;
-  margin-bottom:.5rem;
-}
-.summary-item h4 i{color:var(--accent-strong);}
-.summary-item ul{
-  margin-left:1.1rem;
-  color:var(--muted);
-  line-height:1.55;
-  font-size:.88rem;
-}
-.summary-item li{margin:.22rem 0;}
+    /* ========== LAYOUT SECTIONS ========== */
+    .section{padding:5rem 1rem}
+    .container{max-width:var(--maxw);margin:0 auto}
+    .section-title{
+      font-family:"Poppins",system-ui,sans-serif;
+      font-size:clamp(1.9rem,3vw,2.2rem);
+      margin-bottom:1.5rem;
+      letter-spacing:.02em;
+    }
 
-.summary-chips{
-  display:flex;
-  flex-wrap:wrap;
-  gap:.45rem;
-  margin-top:1.4rem;
-}
-.chip{
-  display:inline-flex;
-  align-items:center;
-  gap:.35rem;
-  padding:.34rem .7rem;
-  border-radius:999px;
-  border:1px solid rgba(15,180,184,.22);
-  background:var(--accent-soft);
-  font-size:.78rem;
-  font-weight:600;
-  color:var(--accent-strong);
-}
-.chip svg{flex-shrink:0;}
+    /* ========== HERO SECTION ========== */
+    .hero{
+      padding:4.2rem 1rem 4.8rem;
+      background:linear-gradient(135deg,#e4f5f7 0,#f6fbfc 40%,#ffffff 100%);
+    }
+    .hero-grid{
+      max-width:var(--maxw);
+      margin:0 auto;
+      display:grid;
+      grid-template-columns:1.35fr .9fr;
+      gap:2.8rem;
+      align-items:center;
+    }
+    .hero-kicker{
+      font-size:.8rem;
+      text-transform:uppercase;
+      letter-spacing:.25em;
+      color:var(--accent-dark);
+      margin-bottom:.9rem;
+    }
+    .hero-title{
+      font-family:"Poppins",system-ui,sans-serif;
+      font-size:clamp(2.4rem,3.7vw,3rem);
+      line-height:1.14;
+      margin-bottom:1rem;
+    }
+    .hero-body{
+      color:var(--muted);
+      line-height:1.7;
+      max-width:52ch;
+      margin-bottom:1.3rem;
+    }
 
-@media (max-width:900px){
-  .summary-grid{grid-template-columns:1fr;}
-}
+    .hero-meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:.9rem;
+      align-items:center;
+      font-size:.85rem;
+      color:var(--muted);
+    }
+    .hero-meta-item{
+      display:inline-flex;
+      align-items:center;
+      gap:.45rem;
+    }
+    .hero-meta-item i{color:var(--accent-dark);}
 
-/* ========================= SKILLS ========================= */
-.cards{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:1.2rem;
-}
-.card{
-  border-radius:var(--radius-md);
-  background:var(--surface);
-  border:1px solid var(--border);
-  box-shadow:var(--shadow-card);
-  padding:1.3rem 1.2rem;
-  transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease;
-}
-.card:hover{
-  transform:translateY(-3px);
-  box-shadow:0 18px 40px rgba(15,23,42,.08);
-  border-color:var(--border-strong);
-}
-.card h3{
-  font-size:1rem;
-  margin-bottom:.75rem;
-  display:flex;
-  align-items:center;
-  gap:.5rem;
-}
-.card h3 i{color:var(--accent-strong);}
-.card-subtext{
-  font-size:.83rem;
-  color:var(--muted);
-  margin-top:.6rem;
-  line-height:1.4;
-}
-.tagrow{
-  display:flex;
-  flex-wrap:wrap;
-  gap:.45rem;
-}
-.tag{
-  border-radius:999px;
-  border:1px solid rgba(148,163,184,.6);
-  background:#f3f4f6;
-  font-size:.78rem;
-  font-weight:600;
-  padding:.34rem .65rem;
-  color:#111827;
-}
-.tag.badge{
-  display:inline-flex;
-  align-items:center;
-  gap:.4rem;
-}
-.badge--airflow{background:#e0f2fe;}
-.badge--dbt{background:#fff7ed;}
-.badge--dbx{background:#fdf2ff;}
-.badge--snowflake{background:#ecfeff;}
-.badge--docker{background:#eff6ff;}
-.badge--aws{background:#fffbeb;}
-.badge--azure{background:#eef2ff;}
-.badge--git{background:#fef2f2;}
+    /* Right: photo card */
+    .hero-photo-card{
+      max-width:360px;
+      margin:0 auto;
+      background:var(--surface);
+      border-radius:30px;
+      padding:.6rem;
+      box-shadow:0 26px 60px rgba(15,23,42,.18);
+      border:1px solid rgba(15,23,42,.06);
+      position:relative;
+    }
+    .hero-photo-card::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      border-radius:30px;
+      padding:1px;
+      background:linear-gradient(135deg,rgba(8,183,185,.7),rgba(15,23,42,.15));
+      -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+      -webkit-mask-composite:xor;
+              mask-composite:exclude;
+    }
+    .hero-photo-inner{
+      border-radius:24px;
+      overflow:hidden;
+      background:#000;
+    }
+    .hero-photo-inner img{
+      width:100%;
+      height:100%;
+      display:block;
+      object-fit:cover;
+    }
+    .hero-chip{
+      position:absolute;
+      bottom:1.3rem;
+      left:50%;
+      transform:translateX(-50%);
+      padding:.35rem .9rem;
+      border-radius:999px;
+      background:rgba(16,24,40,.92);
+      color:#e5f7f8;
+      font-size:.7rem;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      display:inline-flex;
+      align-items:center;
+      gap:.45rem;
+      box-shadow:0 18px 36px rgba(15,23,42,.6);
+    }
+    .hero-chip-dot{
+      width:8px;height:8px;
+      border-radius:999px;
+      background:#22c55e;
+      box-shadow:0 0 0 4px rgba(34,197,94,.32);
+    }
 
-/* ========================= PROJECTS ========================= */
-.projects{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-  gap:1.1rem;
-}
-.project{
-  position:relative;
-  border-radius:var(--radius-md);
-  background:var(--surface);
-  border:1px solid var(--border);
-  box-shadow:var(--shadow-card);
-  padding:1.25rem 1.15rem 1.1rem;
-  transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease;
-}
-.project:hover{
-  transform:translateY(-4px);
-  border-color:var(--accent-soft);
-  box-shadow:0 20px 48px rgba(15,23,42,.12);
-}
-.project h3{
-  font-size:1.02rem;
-  margin-bottom:.4rem;
-}
-.project p{
-  font-size:.9rem;
-  color:var(--muted);
-  line-height:1.6;
-  margin-bottom:.55rem;
-}
-.stack{
-  font-size:.8rem;
-  font-weight:600;
-  color:var(--accent-strong);
-}
+    @media(max-width:900px){
+      .hero-grid{grid-template-columns:1fr;gap:2.2rem}
+      .hero-photo-card{order:-1}
+    }
 
-/* ========================= TIMELINE (EXPERIENCE / EDUCATION) ========================= */
-.timeline{
-  position:relative;
-  padding-left:1.4rem;
-}
-.timeline::before{
-  content:"";
-  position:absolute;
-  left:.35rem;
-  top:.2rem;
-  bottom:.2rem;
-  width:2px;
-  background:linear-gradient(to bottom,var(--accent),var(--accent-strong));
-  opacity:.65;
-}
-.titem{
-  position:relative;
-  margin-bottom:1.2rem;
-  padding:1.15rem 1.1rem 1.1rem;
-  border-radius:16px;
-  background:var(--surface);
-  border:1px solid var(--border);
-  box-shadow:var(--shadow-card);
-}
-.titem::before{
-  content:"";
-  position:absolute;
-  left:-1.2rem;
-  top:1.45rem;
-  width:11px;
-  height:11px;
-  border-radius:999px;
-  background:#ffffff;
-  border:3px solid var(--accent-strong);
-}
-.titem h3{
-  font-size:1.02rem;
-  margin-bottom:.22rem;
-}
-.titem .date{
-  font-size:.84rem;
-  font-weight:600;
-  color:var(--muted);
-  margin-bottom:.5rem;
-}
-.titem p{
-  font-size:.9rem;
-  color:var(--muted);
-}
-.pill{
-  display:inline-block;
-  margin-left:.4rem;
-  padding:.12rem .55rem;
-  font-size:.74rem;
-  border-radius:999px;
-  background:var(--accent-soft);
-  color:var(--accent-strong);
-  border:1px solid rgba(15,180,184,.4);
-}
-.xp-list{
-  margin:.35rem 0 1rem 1.1rem;
-  font-size:.9rem;
-  color:var(--muted);
-  line-height:1.6;
-}
-.xp-list li{margin-bottom:.32rem;}
-.skill-tags{
-  display:flex;
-  flex-wrap:wrap;
-  gap:.4rem;
-}
-.skill-tags .tag{
-  font-size:.76rem;
-  padding:.3rem .6rem;
-}
+    /* ========== SUMMARY SPOTLIGHT ========== */
+    #summary.section{padding-top:4rem;padding-bottom:3.5rem}
+    .summary-spotlight{
+      background:var(--surface);
+      border-radius:26px;
+      padding:2.2rem 2rem;
+      border:1px solid var(--border);
+      box-shadow:var(--shadow-soft);
+    }
+    .summary-title{
+      font-family:"Poppins",system-ui,sans-serif;
+      font-size:clamp(1.7rem,3vw,2rem);
+      font-weight:700;
+      margin-bottom:.55rem;
+    }
+    .summary-lead{
+      max-width:70ch;
+      margin:0 0 1.6rem 0;
+      color:var(--muted);
+      line-height:1.65;
+    }
+    .summary-grid{
+      display:grid;
+      gap:1.3rem;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      margin-top:.5rem;
+    }
+    @media (max-width:920px){.summary-grid{grid-template-columns:1fr}}
+    .summary-item{
+      background:var(--surface-soft);
+      border-radius:18px;
+      padding:1rem .95rem;
+      border:1px solid rgba(148,163,184,.35);
+    }
+    .summary-item h4{
+      display:flex;
+      align-items:center;
+      gap:.55rem;
+      font-size:1rem;
+      margin-bottom:.45rem;
+    }
+    .summary-item h4 i{color:var(--accent-dark);}
+    .summary-item ul{
+      margin-left:1.1rem;
+      line-height:1.55;
+      color:var(--muted);
+      font-size:.9rem;
+    }
+    .summary-item li{margin:.25rem 0}
+    .mini-badges{
+      display:flex;
+      flex-wrap:wrap;
+      gap:.45rem;
+      margin-top:1.3rem;
+    }
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap:.35rem;
+      font-weight:600;
+      font-size:.78rem;
+      padding:.35rem .7rem;
+      border-radius:999px;
+      background:var(--accent-soft);
+      border:1px solid rgba(8,183,185,.3);
+      color:var(--accent-dark);
+    }
 
-/* ========================= EDUCATION CARDS ========================= */
-.cards-edu{
-  display:grid;
-  grid-template-columns:1.1fr 1.2fr;
-  gap:1.1rem;
-}
-@media (max-width:900px){
-  .cards-edu{grid-template-columns:1fr;}
-}
+    /* ========== CARDS (SKILLS / CERTS) ========== */
+    .cards{
+      display:grid;
+      gap:1.2rem;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    }
+    .card{
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:1.3rem 1.25rem;
+      box-shadow:0 10px 30px rgba(15,23,42,.05);
+      transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+    }
+    .card:hover{
+      transform:translateY(-3px);
+      box-shadow:0 18px 40px rgba(15,23,42,.09);
+      border-color:var(--border-strong);
+    }
+    .card h3{
+      font-size:1rem;
+      margin-bottom:.8rem;
+      color:var(--text);
+    }
+    .tagrow{
+      display:flex;
+      flex-wrap:wrap;
+      gap:.45rem;
+    }
+    .tag{
+      background:#f3f4f6;
+      border:1px solid rgba(148,163,184,.5);
+      color:#111827;
+      padding:.36rem .65rem;
+      border-radius:999px;
+      font-size:.8rem;
+      font-weight:600;
+      transition:transform .12s ease, background .15s ease, border-color .15s ease;
+    }
+    .tag:hover{
+      transform:translateY(-1px);
+      background:#e0f7f8;
+      border-color:var(--accent);
+    }
+    .card-subtext{
+      font-size:.83rem;
+      color:var(--muted);
+      margin-top:.6rem;
+      line-height:1.4;
+    }
 
-/* ========================= CONTACT ========================= */
-.contact-wrap{
-  padding-top:4.5rem;
-  padding-bottom:5rem;
-}
-.contact-title{
-  font-family:"DM Sans",system-ui,sans-serif;
-  font-size:clamp(2rem,4vw,2.5rem);
-  margin-bottom:.6rem;
-}
-.contact-subtitle{
-  font-size:.98rem;
-  color:var(--muted);
-  max-width:58ch;
-  line-height:1.7;
-  margin-bottom:2rem;
-}
-.contact-grid{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(260px,1fr));
-  gap:1rem;
-  margin-bottom:1.8rem;
-}
-.contact-card{
-  display:flex;
-  align-items:center;
-  gap:1rem;
-  padding:1.15rem 1.1rem;
-  border-radius:16px;
-  background:var(--surface);
-  border:1px solid var(--border);
-  box-shadow:var(--shadow-card);
-  transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease;
-}
-.contact-card:hover{
-  transform:translateY(-3px);
-  border-color:var(--accent-soft);
-  box-shadow:0 18px 40px rgba(15,23,42,.1);
-}
-.contact-icon{
-  width:42px;height:42px;
-  border-radius:14px;
-  display:grid;
-  place-items:center;
-  background:var(--accent-soft);
-  border:1px solid rgba(15,180,184,.22);
-}
-.contact-icon i{
-  color:var(--accent-strong);
-  font-size:18px;
-}
-.contact-meta{
-  display:flex;
-  flex-direction:column;
-  gap:.1rem;
-}
-.contact-label{
-  font-size:.78rem;
-  text-transform:uppercase;
-  letter-spacing:.14em;
-  color:var(--muted);
-}
-.contact-value{
-  font-size:.96rem;
-}
-.contact-cta{
-  display:flex;
-  flex-wrap:wrap;
-  gap:.9rem;
-}
+    /* ========== PROJECTS ========== */
+    .projects{
+      display:grid;
+      gap:1.1rem;
+      grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    }
+    .project{
+      position:relative;
+      overflow:hidden;
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:1.25rem 1.15rem;
+      box-shadow:0 10px 30px rgba(15,23,42,.06);
+      transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+    }
+    .project:hover{
+      transform:translateY(-4px);
+      border-color:var(--border-strong);
+      box-shadow:0 18px 42px rgba(15,23,42,.12);
+    }
+    .project h3{
+      margin-bottom:.5rem;
+      font-size:1.02rem;
+    }
+    .project p{
+      color:var(--muted);
+      line-height:1.6;
+      margin-bottom:.55rem;
+      font-size:.9rem;
+    }
+    .stack{
+      color:var(--accent-dark);
+      font-weight:600;
+      font-size:.83rem;
+    }
 
-/* contact responsive */
-@media (max-width:820px){
-  .contact-grid{grid-template-columns:1fr;}
-}
+    /* ========== TIMELINE ========== */
+    .timeline{
+      position:relative;
+      padding-left:1.4rem;
+    }
+    .timeline:before{
+      content:"";
+      position:absolute;
+      left:.3rem;
+      top:.2rem;
+      bottom:.2rem;
+      width:2px;
+      background:linear-gradient(to bottom,var(--accent),var(--accent-dark));
+      opacity:.6;
+    }
+    .titem{
+      position:relative;
+      margin:0 0 1rem 0;
+      padding:1.15rem 1.1rem;
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:14px;
+      box-shadow:0 10px 30px rgba(15,23,42,.05);
+    }
+    .titem:before{
+      content:"";
+      position:absolute;
+      left:-1.25rem;
+      top:1.4rem;
+      width:10px;height:10px;
+      border-radius:50%;
+      background:var(--accent);
+      border:3px solid #e0f7f8;
+    }
+    .titem h3{
+      margin-bottom:.25rem;
+      font-size:1.02rem;
+    }
+    .titem .date{
+      color:var(--muted);
+      font-weight:600;
+      margin-bottom:.55rem;
+      font-size:.86rem;
+    }
+    .titem p{line-height:1.6}
+    .pill{
+      display:inline-block;
+      margin-left:.4rem;
+      padding:.12rem .5rem;
+      font-size:.75rem;
+      border-radius:999px;
+      background:#e0f7f8;
+      border:1px solid rgba(8,183,185,.5);
+      color:var(--accent-dark);
+    }
+    .xp-list{
+      margin:.35rem 0 1rem 1.1rem;
+      line-height:1.6;
+      color:var(--muted);
+      font-size:.9rem;
+    }
+    .xp-list li{margin-bottom:.34rem}
+    .skill-tags{
+      display:flex;
+      flex-wrap:wrap;
+      gap:.45rem;
+      margin-top:.2rem;
+    }
 
-/* ========================= BACK TO TOP ========================= */
-.to-top{
-  position:fixed;
-  right:1.4rem;
-  bottom:1.4rem;
-  width:44px;
-  height:44px;
-  border-radius:999px;
-  border:1px solid rgba(148,163,184,.7);
-  background:#ffffff;
-  display:none;
-  place-items:center;
-  box-shadow:0 16px 40px rgba(15,23,42,.2);
-  z-index:900;
-  cursor:pointer;
-  transition:transform .16s ease, box-shadow .16s ease;
-}
-.to-top i{
-  color:var(--accent-strong);
-}
-.to-top:hover{
-  transform:translateY(-1px);
-  box-shadow:0 20px 50px rgba(15,23,42,.25);
-}
+    /* ========== CONTACT SECTION ========== */
+    .contact-wrap{padding-top:5rem;padding-bottom:5rem}
+    .contact-title{
+      font-family:"Poppins",system-ui,sans-serif;
+      font-size:clamp(2rem,4vw,2.5rem);
+      margin-bottom:.5rem;
+    }
+    .contact-subtitle{
+      color:var(--muted);
+      max-width:60ch;
+      margin:0 0 2rem 0;
+      line-height:1.6;
+    }
+    .contact-grid{
+      display:grid;
+      gap:1rem;
+      grid-template-columns:repeat(2,minmax(260px,1fr));
+      margin-bottom:1.8rem;
+    }
+    @media (max-width:820px){.contact-grid{grid-template-columns:1fr}}
+    .contact-card{
+      display:flex;
+      align-items:center;
+      gap:1rem;
+      text-decoration:none;
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:1.15rem 1.1rem;
+      color:var(--text);
+      box-shadow:0 10px 30px rgba(15,23,42,.05);
+      transition:transform .16s ease, border-color .16s ease, box-shadow .16s ease;
+    }
+    .contact-card:hover{
+      transform:translateY(-3px);
+      border-color:var(--border-strong);
+      box-shadow:0 16px 36px rgba(15,23,42,.1);
+    }
+    .contact-icon{
+      width:42px;height:42px;
+      border-radius:14px;
+      display:grid;place-items:center;
+      background:#dbeff3;
+      border:1px solid #b8dde4;
+      flex:0 0 auto;
+    }
+    .contact-icon i{
+      font-size:18px;
+      color:var(--accent-dark);
+    }
+    .contact-meta{
+      display:flex;
+      flex-direction:column;
+      gap:.15rem;
+    }
+    .contact-label{
+      font-weight:600;
+      letter-spacing:.02em;
+      font-size:.8rem;
+      text-transform:uppercase;
+      color:var(--muted);
+    }
+    .contact-value{
+      color:var(--text);
+      font-size:.95rem;
+    }
+    .contact-cta{
+      display:flex;
+      gap:.9rem;
+      flex-wrap:wrap;
+    }
 
-/* ========================= REVEAL ON SCROLL ========================= */
-.fade-in{opacity:0; transform:translateY(22px); transition:all .6s ease;}
-.fade-in.visible{opacity:1; transform:translateY(0);}
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:.5rem;
+      padding:.85rem 1.3rem;
+      border-radius:999px;
+      border:1px solid transparent;
+      background:var(--accent);
+      color:#ffffff;
+      text-decoration:none;
+      font-weight:700;
+      font-size:.9rem;
+      box-shadow:0 18px 40px rgba(8,183,185,.32);
+      transition:transform .18s ease, box-shadow .18s ease, opacity .18s ease, background .18s ease;
+    }
+    .btn:hover{
+      transform:translateY(-2px);
+      background:var(--accent-dark);
+      box-shadow:0 20px 44px rgba(7,131,136,.4);
+    }
+    .btn.secondary{
+      background:#ffffff;
+      color:var(--accent-dark);
+      border:1px solid var(--border);
+      box-shadow:0 10px 26px rgba(15,23,42,.06);
+    }
+    .btn.secondary:hover{
+      background:#e5f7f8;
+      border-color:var(--accent);
+      box-shadow:0 16px 32px rgba(15,23,42,.12);
+    }
 
-/* ========================= RESPONSIVE TWEAKS ========================= */
-@media (max-width:640px){
-  .section{padding:3.7rem 1rem;}
-  .summary-band{padding:1.7rem 1.6rem;}
-}
+    /* Back to top */
+    .to-top{
+      position:fixed;
+      right:1.2rem;
+      bottom:1.2rem;
+      z-index:999;
+      display:none;
+      place-items:center;
+      width:44px;height:44px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:var(--surface);
+      color:var(--accent-dark);
+      text-decoration:none;
+      box-shadow:0 14px 30px rgba(15,23,42,.18);
+      transition:transform .18s ease, box-shadow .18s ease;
+    }
+    .to-top:hover{
+      transform:translateY(-2px);
+      box-shadow:0 18px 40px rgba(15,23,42,.24);
+    }
 
-/* ========================= TYPING (H1) ========================= */
-#typing{min-height:2.6rem;}
+    /* Reveal on scroll */
+    .fade-in{opacity:0; transform:translateY(24px); transition:all .6s ease}
+    .fade-in.visible{opacity:1; transform:translateY(0)}
   </style>
 </head>
 <body>
-  <a href="#home" class="skip">Skip to content</a>
+<a class="skip" href="#hero">Skip to content</a>
 
-  <!-- ========================= TOP BRAND BAR ========================= -->
-  <header class="top-bar">
-    <div class="top-inner">
-      <div class="top-left">
-        <span><b>Dallas, TX</b> · Data Science · ML</span>
-        <span>Open to roles · <b>avikshith.y@gmail.com</b></span>
-      </div>
-      <div class="top-center">
-        <div class="top-name">AVIKSHITH&nbsp;YELAKONDA</div>
-        <div class="top-role">Data Scientist · Machine Learning · Analytics</div>
-      </div>
-      <div class="top-right">
-        <a href="#home" class="scroll-indicator">
-          <span>Scroll</span>
-          <div class="scroll-line"></div>
-          <i class="fa-solid fa-arrow-down-long"></i>
-        </a>
+<!-- ================= BRAND BAR ================= -->
+<header class="brand-bar">
+  <div class="brand-inner">
+    <!-- Left: round buttons -->
+    <div class="brand-left">
+      <a class="brand-pill" href="https://drive.google.com/file/d/15OgyD3Mt1Cw2GniVsf2hnq-zT_Y71VUR/view?usp=drive_link" target="_blank" title="Resume (PDF)">
+        <i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i>
+      </a>
+      <a class="brand-pill" href="#contact" title="Contact">
+        <i class="fa-regular fa-envelope" aria-hidden="true"></i>
+      </a>
+      <a class="brand-pill" href="https://github.com/AvikshithReddy" target="_blank" title="GitHub">
+        <i class="fa-brands fa-github" aria-hidden="true"></i>
+      </a>
+      <a class="brand-pill" href="https://www.linkedin.com/in/avikshith-reddy-y-1a4272234/" target="_blank" title="LinkedIn">
+        <i class="fa-brands fa-linkedin-in" aria-hidden="true"></i>
+      </a>
+    </div>
+
+    <!-- Center: name + tagline -->
+    <div class="brand-center">
+      <span class="brand-name">AVIKSHITH YELAKONDA</span>
+      <span class="brand-tagline">DATA SCIENTIST · MACHINE LEARNING · ANALYTICS</span>
+    </div>
+
+    <!-- Right: empty (scroll text removed) -->
+    <div class="brand-right"></div>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section id="hero" class="hero">
+  <div class="hero-grid fade-in">
+    <div>
+      <div class="hero-kicker">Portfolio · Data Science · Machine Learning</div>
+      <h1 class="hero-title">Data Science · Machine Learning · Analytics</h1>
+      <p class="hero-body">
+        I build end-to-end data products—from ingestion and modeling to deployment and dashboards—focused on
+        reliability, scalability, and measurable outcomes that drive smarter decisions.
+      </p>
+
+      <div class="hero-meta">
+        <span class="hero-meta-item">
+          <i class="fa-solid fa-location-dot"></i> Dallas, Texas (Open to relocate)
+        </span>
+        <span class="hero-meta-item">
+          <i class="fa-solid fa-graduation-cap"></i> MS Computer Science — AI/ML, SMU
+        </span>
       </div>
     </div>
-  </header>
 
-  <main>
-    <!-- ========================= HERO ========================= -->
-    <section id="home" class="section hero">
-      <div class="container hero-grid fade-in">
-        <div>
-          <div class="hero-kicker">Portfolio · Data Science · Machine Learning</div>
-          <h1 id="typing" class="hero-title">From raw data to decisions</h1>
-          <p class="hero-sub">
-            I build end-to-end data products—from ingestion and modeling to deployment and dashboards—focused on
-            reliability, scalability, and measurable outcomes that drive smarter decisions.
-          </p>
+    <div class="hero-photo-card" aria-hidden="true">
+      <div class="hero-photo-inner">
+        <!-- Make sure this file exists next to index.html -->
+        <img src="avatar.jpg" alt="Portrait of Avikshith Yelakonda" />
+      </div>
+      <div class="hero-chip">
+        <span class="hero-chip-dot"></span>
+        END-TO-END ML &amp; ANALYTICS
+      </div>
+    </div>
+  </div>
+</section>
 
-          <div class="hero-meta">
-            <span><i class="fa-solid fa-location-dot"></i> Dallas, Texas (Open to relocate)</span>
-            <span><i class="fa-solid fa-graduation-cap"></i> MS Computer Science — AI/ML, SMU</span>
-          </div>
+<!-- ================= SUMMARY ================= -->
+<section id="summary" class="section fade-in">
+  <div class="container">
+    <div class="summary-spotlight" aria-labelledby="summary-title">
+      <h2 id="summary-title" class="summary-title">End-to-End Data Impact</h2>
+      <p class="summary-lead">
+        I design reliable, measurable data solutions—from ingestion and feature engineering to ML deployment and
+        decision dashboards. I turn ambiguous business questions into outcomes using Python, SQL, Databricks,
+        Snowflake, and modern cloud/MLOps stacks.
+      </p>
 
-          <div class="hero-cta">
-            <a class="btn btn-primary" target="_blank" rel="noopener"
-               href="https://drive.google.com/file/d/15OgyD3Mt1Cw2GniVsf2hnq-zT_Y71VUR/view?usp=drive_link">
-              <i class="fa-solid fa-file-arrow-down"></i> Resume (PDF)
-            </a>
-            <a class="btn btn-outline" href="#contact">
-              <i class="fa-solid fa-envelope"></i> Contact
-            </a>
-            <a class="btn btn-outline" target="_blank" rel="noopener"
-               href="https://github.com/AvikshithReddy">
-              <i class="fa-brands fa-github"></i> GitHub
-            </a>
-            <a class="btn btn-outline" target="_blank" rel="noopener"
-               href="https://www.linkedin.com/in/avikshith-reddy-y-1a4272234/">
-              <i class="fa-brands fa-linkedin"></i> LinkedIn
-            </a>
-          </div>
+      <div class="summary-grid" role="list">
+        <div class="summary-item" role="listitem">
+          <h4><i class="fa-solid fa-diagram-project" aria-hidden="true"></i> Full Lifecycle</h4>
+          <ul>
+            <li>ETL/ELT with Airflow &amp; dbt → Spark/Databricks feature pipelines</li>
+            <li>Modeling &amp; tracking with MLflow → dashboards in Power BI/Tableau</li>
+          </ul>
         </div>
 
-        <div class="hero-photo-wrap">
-          <div class="hero-photo-card">
-            <div class="hero-photo">
-              <!-- 🔁 Replace avatar.jpg with your actual image file path -->
-              <img src="avatar.jpg" alt="Portrait of Avikshith Yelakonda" />
-            </div>
-            <div class="hero-badge">
-              <i class="fa-solid fa-circle-check"></i>
-              <span>End-to-end ML & Analytics</span>
-            </div>
-          </div>
+        <div class="summary-item" role="listitem">
+          <h4><i class="fa-solid fa-brain" aria-hidden="true"></i> ML Breadth</h4>
+          <ul>
+            <li>Classification, regression, time-series, A/B experimentation</li>
+            <li>Explainability (SHAP) and NLP/LLMs where they add value</li>
+          </ul>
+        </div>
+
+        <div class="summary-item" role="listitem">
+          <h4><i class="fa-solid fa-gauge-high" aria-hidden="true"></i> Impact Mindset</h4>
+          <ul>
+            <li>Ship observable, cost-aware workflows; reduce latency</li>
+            <li>Communicate clearly with stakeholders; own results</li>
+          </ul>
         </div>
       </div>
-    </section>
 
-    <!-- ========================= SUMMARY BAND ========================= -->
-    <section id="summary" class="section fade-in">
-      <div class="container">
-        <div class="summary-band" aria-labelledby="summary-title">
-          <div class="section-kicker">Overview</div>
-          <h2 id="summary-title" class="section-title">End-to-End Data Impact</h2>
-          <p class="summary-lead">
-            I design reliable, measurable data solutions—from ingestion and feature engineering to ML deployment and
-            decision dashboards. I turn ambiguous business questions into outcomes using Python, SQL, Databricks,
-            Snowflake, and modern cloud/MLOps stacks.
-          </p>
+      <div class="mini-badges" aria-label="Core stack">
+        <span class="chip"><i class="fa-brands fa-python" aria-hidden="true"></i>Python</span>
+        <span class="chip"><i class="fa-solid fa-database" aria-hidden="true"></i>SQL</span>
+        <span class="chip"><i class="fa-brands fa-docker" aria-hidden="true"></i>Docker</span>
+        <span class="chip"><i class="fa-solid fa-diagram-project" aria-hidden="true"></i>MLflow</span>
+        <span class="chip"><i class="fa-brands fa-git-alt" aria-hidden="true"></i>Git</span>
+      </div>
+    </div>
+  </div>
+</section>
 
-          <div class="summary-grid" role="list">
-            <div class="summary-item" role="listitem">
-              <h4><i class="fa-solid fa-diagram-project" aria-hidden="true"></i> Full Lifecycle</h4>
-              <ul>
-                <li>ETL/ELT with Airflow &amp; dbt → Spark/Databricks feature pipelines</li>
-                <li>Modeling &amp; tracking with MLflow → dashboards in Power BI/Tableau</li>
-              </ul>
-            </div>
-            <div class="summary-item" role="listitem">
-              <h4><i class="fa-solid fa-brain" aria-hidden="true"></i> ML Breadth</h4>
-              <ul>
-                <li>Classification, regression, time-series, A/B experimentation</li>
-                <li>Explainability (SHAP) and NLP/LLMs where they add value</li>
-              </ul>
-            </div>
-            <div class="summary-item" role="listitem">
-              <h4><i class="fa-solid fa-gauge-high" aria-hidden="true"></i> Impact Mindset</h4>
-              <ul>
-                <li>Ship observable, cost-aware workflows; reduce latency</li>
-                <li>Communicate clearly with stakeholders; own results</li>
-              </ul>
-            </div>
-          </div>
+<!-- ================= SKILLS ================= -->
+<section id="skills" class="section">
+  <div class="container fade-in">
+    <h2 class="section-title">Capabilities Across the Data Lifecycle</h2>
 
-          <div class="summary-chips" aria-label="Core stack">
-            <span class="chip"><i class="fa-brands fa-python" aria-hidden="true"></i>Python</span>
-            <span class="chip"><i class="fa-solid fa-database" aria-hidden="true"></i>SQL</span>
-            <span class="chip">
-              <svg viewBox="0 0 256 256" aria-hidden="true" width="14" height="14">
-                <path d="M20 128 128 68l108 60-108 60z" fill="#ff3621"/>
-                <path d="M20 96 128 36l108 60-24 13-84-46-84 46z" fill="#ff7a59"/>
-              </svg>
-              Databricks
-            </span>
-            <span class="chip">
-              <svg viewBox="0 0 256 256" aria-hidden="true" width="14" height="14">
-                <path fill="#29B5E8" d="M120 24h16v208h-16z"/>
-                <path fill="#29B5E8" d="M40 64l176 128-9 12L31 76zM216 64L40 192l9 12 176-128z"/>
-              </svg>
-              Snowflake
-            </span>
-            <span class="chip"><i class="fa-brands fa-docker" aria-hidden="true"></i>Docker</span>
-            <span class="chip"><i class="fa-solid fa-diagram-project" aria-hidden="true"></i>MLflow</span>
-            <span class="chip"><i class="fa-brands fa-git-alt" aria-hidden="true"></i>Git</span>
-          </div>
+    <div class="cards">
+      <!-- Programming -->
+      <div class="card">
+        <h3><i class="fa-solid fa-code"></i> Programming &amp; Core Languages</h3>
+        <div class="tagrow">
+          <span class="tag"><i class="fa-brands fa-python"></i>&nbsp;Python</span>
+          <span class="tag">R</span>
+          <span class="tag">SQL</span>
+          <span class="tag">Java</span>
+          <span class="tag">C++</span>
+          <span class="tag">SAS</span>
+          <span class="tag">MATLAB</span>
+        </div>
+        <p class="card-subtext">Data wrangling, automation, and statistical programming</p>
+      </div>
+
+      <!-- Data Analysis & Visualization -->
+      <div class="card">
+        <h3><i class="fa-solid fa-chart-line"></i> Data Analysis &amp; Visualization</h3>
+        <div class="tagrow">
+          <span class="tag">Pandas</span>
+          <span class="tag">NumPy</span>
+          <span class="tag">Power BI</span>
+          <span class="tag">Tableau</span>
+          <span class="tag">Matplotlib</span>
+          <span class="tag">Seaborn</span>
+          <span class="tag">Looker Studio</span>
+        </div>
+        <p class="card-subtext">KPI dashboards, business storytelling, and data-driven insights</p>
+      </div>
+
+      <!-- Machine Learning & AI -->
+      <div class="card">
+        <h3><i class="fa-solid fa-robot"></i> Machine Learning, AI &amp; Statistics</h3>
+        <div class="tagrow">
+          <span class="tag">Scikit-learn</span>
+          <span class="tag">TensorFlow</span>
+          <span class="tag">PyTorch</span>
+          <span class="tag">Keras</span>
+          <span class="tag">XGBoost</span>
+          <span class="tag">NLP</span>
+          <span class="tag">LLMs</span>
+          <span class="tag">LangChain</span>
+          <span class="tag">Hugging Face</span>
+        </div>
+        <p class="card-subtext">Predictive modeling, A/B testing, and generative AI solutions</p>
+      </div>
+
+      <!-- Data Engineering & Workflows -->
+      <div class="card">
+        <h3><i class="fa-solid fa-cogs"></i> Data Engineering &amp; Automation Workflows</h3>
+        <div class="tagrow">
+          <span class="tag">Apache Airflow</span>
+          <span class="tag">dbt</span>
+          <span class="tag">Apache Spark</span>
+          <span class="tag">Databricks</span>
+          <span class="tag">ETL pipelines</span>
+          <span class="tag">MLflow</span>
+          <span class="tag">Docker</span>
+          <span class="tag">Kubernetes</span>
+          <span class="tag">CI/CD</span>
+        </div>
+        <p class="card-subtext">Scalable data pipelines, model deployment, and orchestration</p>
+      </div>
+
+      <!-- Databases & Cloud -->
+      <div class="card">
+        <h3><i class="fa-solid fa-database"></i> Databases &amp; Cloud Platforms</h3>
+        <div class="tagrow">
+          <span class="tag">Snowflake</span>
+          <span class="tag">MySQL</span>
+          <span class="tag">PostgreSQL</span>
+          <span class="tag">AWS</span>
+          <span class="tag">Azure</span>
+          <span class="tag">GCP</span>
+          <span class="tag">BigQuery</span>
+          <span class="tag">Redshift</span>
+        </div>
+        <p class="card-subtext">Data integration, warehousing, and cloud-native analytics</p>
+      </div>
+
+      <!-- Tools & Collaboration -->
+      <div class="card">
+        <h3><i class="fa-solid fa-briefcase"></i> Tools &amp; Collaboration</h3>
+        <div class="tagrow">
+          <span class="tag"><i class="fa-brands fa-git-alt"></i>&nbsp;Git/GitHub</span>
+          <span class="tag">JIRA</span>
+          <span class="tag">Confluence</span>
+          <span class="tag">Excel (VBA)</span>
+          <span class="tag">Streamlit</span>
+          <span class="tag">FastAPI</span>
+        </div>
+        <p class="card-subtext">Version control, agile teamwork, and rapid prototyping</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PROJECTS ================= -->
+<section id="projects" class="section">
+  <div class="container fade-in">
+    <h2 class="section-title">Featured Projects</h2>
+    <div class="projects">
+      <article class="project">
+        <h3>Consumer Affairs Lead Conversion Case Study</h3>
+        <p>Built a predictive modeling pipeline (Logistic Regression, XGBoost), achieving ROC-AUC ≈ 0.68 and 2.3–2.4× lift in top-decile leads; shipped Power BI dashboards for stakeholders.</p>
+        <div class="stack">Python · Scikit-learn · XGBoost · Power BI</div>
+      </article>
+
+      <article class="project">
+        <h3>AI Assignments – Intelligent Agent Systems</h3>
+        <p>Designed AI agents for search &amp; optimization (maze, n-Queens, Connect-4) using BFS/DFS/A*, Hill-Climbing, Simulated Annealing, and Minimax+Alpha-Beta. Benchmarked heuristics and decision efficiency under adversarial settings.</p>
+        <div class="stack">Python · NumPy · Matplotlib · AI Search</div>
+      </article>
+
+      <article class="project">
+        <h3>ML Assignments – Predictive Modeling &amp; Neural Nets</h3>
+        <p>Compared supervised learners (LogReg, PCA+MLP, CNN, Wide &amp; Deep). Tuned optimizers (RMSProp, AdaDelta) and evaluated across structured, image, and text datasets.</p>
+        <div class="stack">Python · scikit-learn · TensorFlow · Keras</div>
+      </article>
+
+      <article class="project">
+        <h3>Revenue Growth Campaign Optimization</h3>
+        <p>Designed A/B tests (Google vs Facebook), analyzed KPIs, and improved marketing ROI by 22% with budget allocation recommendations.</p>
+        <div class="stack">Python · A/B Testing · KPI Analysis</div>
+      </article>
+
+      <article class="project">
+        <h3>Stock Price Time-Series Forecasting</h3>
+        <p>Forecasted Shopify &amp; Alibaba using ARIMA &amp; exponential smoothing to support investor risk profiling.</p>
+        <div class="stack">Python · ARIMA · Forecasting</div>
+      </article>
+
+      <article class="project">
+        <h3>Super Bowl Ad Analysis</h3>
+        <p>Performed data wrangling, EDA, and visualization on Super Bowl commercials to uncover trends in ad spending, brand presence, celebrity appearances, and viewer engagement using Python and visualization libraries.</p>
+        <div class="stack">Python · pandas · numpy · Seaborn · Matplotlib · Plotly · Jupyter</div>
+      </article>
+
+      <article class="project">
+        <h3>Columbus Trash &amp; Recycling RAG Assistant</h3>
+        <p>Developed an end-to-end Retrieval-Augmented Generation (RAG) system using LangChain and OpenAI LLMs to deliver context-aware answers from Columbus city waste management PDFs and HTML pages. Implemented ingestion, chunking, embeddings, and ChromaDB vector retrieval for accurate, source-backed Q&amp;A.</p>
+        <div class="stack">Python · LangChain · OpenAI API · ChromaDB · RAG · LLMs</div>
+      </article>
+
+      <article class="project">
+        <h3>Financial Education LLM — TinyLlama Fine-Tune</h3>
+        <p>Built an end-to-end pipeline to ingest CFPB financial guides (PDF/HTML), generate Q&amp;A pairs, and fine-tune TinyLlama with LoRA for beginner-friendly tutoring; added evaluation scripts vs baseline and a CLI/Streamlit chatbot that explains concepts like credit scores, loans, and savings in clear, concise language.</p>
+        <div class="stack">Python · PyTorch · Hugging Face Transformers · PEFT (LoRA) · TinyLlama · Streamlit</div>
+      </article>
+
+      <article class="project">
+        <h3>Python Fundamentals &amp; Job-Market Analytics (Capstone)</h3>
+        <p>Captured my Python learning path and a final project analyzing job-market data with pandas/NumPy wrangling and Matplotlib/Seaborn visualisation, cleaning raw postings, engineering skills features, and exploring demand and salary ranges.</p>
+        <div class="stack">Python · Pandas · NumPy · Matplotlib · Seaborn · Jupyter · EDA</div>
+      </article>
+
+      <article class="project">
+        <h3>NYC Taxi Demand Forecasting</h3>
+        <p>Predicted hourly demand (92%+ accuracy) with weather &amp; trip features using tuned LightGBM, XGBoost, and CatBoost models for operational planning.</p>
+        <div class="stack">Python · LightGBM · XGBoost · CatBoost</div>
+      </article>
+
+      <article class="project">
+        <h3>Vendor Sales &amp; Inventory Optimization</h3>
+        <p>Reduced holding cost by 72% and optimized $2.7M unsold stock through Power BI dashboards and Python analytics workflows for inventory decisions.</p>
+        <div class="stack">Power BI · Python · Inventory Analytics</div>
+      </article>
+
+      <article class="project">
+        <h3>AI-Powered News Research Assistant</h3>
+        <p>Cut research time by 40% with a LangChain/FAISS assistant enabling semantic search and summarisation across financial news articles and documents.</p>
+        <div class="stack">Python · LangChain · FAISS · OpenAI</div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= EXPERIENCE ================= -->
+<section id="experience" class="section">
+  <div class="container fade-in">
+    <h2 class="section-title">Experience</h2>
+    <div class="timeline">
+      <div class="titem">
+        <h3>Data Scientist — PioneerSoft Corporation <span class="pill">Full-time</span></h3>
+        <div class="date">Aug 2025 – Present · United States</div>
+        <ul class="xp-list">
+          <li>Built and evaluated <b>machine learning models</b> for business use cases; deployed production-ready <b>data pipelines</b> and dashboards.</li>
+          <li>Partnered with <b>product and business teams</b> to define KPIs, run experiments, and translate insights into measurable outcomes.</li>
+          <li>Designed and automated <b>ETL workflows</b> using <b>Python, SQL, and Airflow</b> for efficient model training and data delivery.</li>
+          <li>Implemented <b>MLOps pipelines</b> for versioning, reproducibility, and continuous improvement using <b>MLflow</b> and <b>Docker</b>.</li>
+          <li>Collaborated cross-functionally to improve <b>data reliability</b> and reduce model deployment latency through CI/CD automation.</li>
+        </ul>
+        <div class="skill-tags">
+          <span class="tag">Python</span><span class="tag">SQL</span><span class="tag">Airflow</span>
+          <span class="tag">MLOps</span><span class="tag">MLflow</span><span class="tag">Docker</span>
+          <span class="tag">CI/CD</span><span class="tag">Data Pipelines</span>
         </div>
       </div>
-    </section>
 
-    <!-- ========================= SKILLS ========================= -->
-    <section id="skills" class="section">
-      <div class="container fade-in">
-        <div class="section-kicker">Capabilities</div>
-        <h2 class="section-title">Across the Data Lifecycle</h2>
-
-        <div class="cards">
-          <!-- Programming -->
-          <div class="card">
-            <h3><i class="fa-solid fa-code"></i> Programming & Core Languages</h3>
-            <div class="tagrow">
-              <span class="tag badge"><i class="fa-brands fa-python"></i>Python</span>
-              <span class="tag">R</span>
-              <span class="tag">SQL</span>
-              <span class="tag">Java</span>
-              <span class="tag">C++</span>
-              <span class="tag">SAS</span>
-              <span class="tag">MATLAB</span>
-            </div>
-            <p class="card-subtext">Data wrangling, automation, and statistical programming.</p>
-          </div>
-
-          <!-- Data Analysis & Visualization -->
-          <div class="card">
-            <h3><i class="fa-solid fa-chart-line"></i> Data Analysis & Visualization</h3>
-            <div class="tagrow">
-              <span class="tag">Pandas</span>
-              <span class="tag">NumPy</span>
-              <span class="tag badge"><i class="fa-solid fa-chart-simple"></i>Power BI</span>
-              <span class="tag">Tableau</span>
-              <span class="tag">Matplotlib</span>
-              <span class="tag">Seaborn</span>
-              <span class="tag">Looker Studio</span>
-            </div>
-            <p class="card-subtext">KPI dashboards, business storytelling, and data-driven insights.</p>
-          </div>
-
-          <!-- Machine Learning & AI -->
-          <div class="card">
-            <h3><i class="fa-solid fa-robot"></i> Machine Learning, AI & Statistics</h3>
-            <div class="tagrow">
-              <span class="tag">Scikit-learn</span>
-              <span class="tag">TensorFlow</span>
-              <span class="tag">PyTorch</span>
-              <span class="tag">Keras</span>
-              <span class="tag">XGBoost</span>
-              <span class="tag">NLP</span>
-              <span class="tag">LLMs</span>
-              <span class="tag">LangChain</span>
-              <span class="tag">Hugging Face</span>
-            </div>
-            <p class="card-subtext">Predictive modeling, A/B testing, and generative AI solutions.</p>
-          </div>
-
-          <!-- Data Engineering & Workflows -->
-          <div class="card">
-            <h3><i class="fa-solid fa-cogs"></i> Data Engineering & Automation Workflows</h3>
-            <div class="tagrow">
-              <span class="tag badge badge--airflow">
-                <svg viewBox="0 0 256 256" width="16" height="16" aria-hidden="true">
-                  <path fill="#017CEE" d="M128 128 28 92l36 100z"/>
-                  <path fill="#E4392E" d="M128 128 92 28l100 36z"/>
-                  <path fill="#2FB67C" d="M128 128l100 36-36-100z"/>
-                  <path fill="#8C4FFF" d="M128 128l36 100L64 192z"/>
-                </svg>
-                Airflow
-              </span>
-              <span class="tag badge badge--dbt">
-                <svg viewBox="0 0 256 256" width="16" height="16" aria-hidden="true">
-                  <path fill="#FF694B" d="M67 49 49 67l58 61 18-18zM207 49l-61 58 18 18 61-58zM49 207l58-61 18 18-58 61zM207 207l-61-58 18-18 61 58z"/>
-                </svg>
-                dbt
-              </span>
-              <span class="tag">Apache Spark</span>
-              <span class="tag badge badge--dbx">
-                <svg viewBox="0 0 256 256" width="16" height="16" aria-hidden="true">
-                  <path d="M20 128 128 68l108 60-108 60z" fill="#ff3621"/>
-                  <path d="M20 96 128 36l108 60-24 13-84-46-84 46z" fill="#ff7a59"/>
-                </svg>
-                Databricks
-              </span>
-              <span class="tag">ETL pipelines</span>
-              <span class="tag badge"><i class="fa-solid fa-diagram-project"></i>MLflow</span>
-              <span class="tag badge badge--docker"><i class="fa-brands fa-docker"></i>Docker</span>
-              <span class="tag">Kubernetes</span>
-              <span class="tag">CI/CD</span>
-            </div>
-            <p class="card-subtext">Scalable data pipelines, model deployment, and orchestration.</p>
-          </div>
-
-          <!-- Databases & Cloud -->
-          <div class="card">
-            <h3><i class="fa-solid fa-database"></i> Databases & Cloud Platforms</h3>
-            <div class="tagrow">
-              <span class="tag badge badge--snowflake">
-                <svg viewBox="0 0 256 256" width="16" height="16" aria-hidden="true">
-                  <path fill="#29B5E8" d="M120 24h16v208h-16z"/>
-                  <path fill="#29B5E8" d="M40 64l176 128-9 12L31 76zM216 64L40 192l9 12 176-128z"/>
-                </svg>
-                Snowflake
-              </span>
-              <span class="tag">MySQL</span>
-              <span class="tag">PostgreSQL</span>
-              <span class="tag badge badge--aws"><i class="fa-brands fa-aws"></i> AWS</span>
-              <span class="tag badge badge--azure"><i class="fa-brands fa-microsoft"></i> Azure</span>
-              <span class="tag">GCP</span>
-              <span class="tag">BigQuery</span>
-              <span class="tag">Redshift</span>
-            </div>
-            <p class="card-subtext">Data integration, warehousing, and cloud-native analytics.</p>
-          </div>
-
-          <!-- Tools & Collaboration -->
-          <div class="card">
-            <h3><i class="fa-solid fa-briefcase"></i> Tools & Collaboration</h3>
-            <div class="tagrow">
-              <span class="tag badge badge--git"><i class="fa-brands fa-git-alt"></i>Git/GitHub</span>
-              <span class="tag">JIRA</span>
-              <span class="tag">Confluence</span>
-              <span class="tag">Excel (VBA)</span>
-              <span class="tag">Streamlit</span>
-              <span class="tag">FastAPI</span>
-            </div>
-            <p class="card-subtext">Version control, agile teamwork, and rapid prototyping.</p>
-          </div>
+      <div class="titem">
+        <h3>Cox Copy Center — Support <span class="pill">Part-time</span></h3>
+        <div class="date">SMU Cox School of Business · Sep 2024 – May 2025 · Dallas, TX · On-site</div>
+        <ul class="xp-list">
+          <li>Maintained secure access to confidential materials (exam papers, keys, staff resources).</li>
+          <li>Handled high-volume print/copy requests under tight deadlines for professors and staff.</li>
+          <li>Point-of-contact for real-time staff support in a fast-paced academic environment.</li>
+          <li>Assisted with building security procedures and safe closing operations after hours.</li>
+          <li>Supported exam proctoring while upholding academic integrity.</li>
+        </ul>
+        <div class="skill-tags">
+          <span class="tag">Communication</span><span class="tag">Customer Service</span><span class="tag">Team Coordination</span><span class="tag">Time Management</span>
         </div>
       </div>
-    </section>
 
-    <!-- ========================= PROJECTS ========================= -->
-    <section id="projects" class="section">
-      <div class="container fade-in">
-        <div class="section-kicker">Selected Work</div>
-        <h2 class="section-title">Featured Projects</h2>
-        <div class="projects">
-          <article class="project">
-            <h3>Consumer Affairs Lead Conversion Case Study</h3>
-            <p>Built a predictive modeling pipeline (Logistic Regression, XGBoost), achieving ROC-AUC ≈ 0.68 and 2.3–2.4× lift in top-decile leads; shipped Power BI dashboards for stakeholders.</p>
-            <div class="stack">Python · Scikit-learn · XGBoost · Power BI</div>
-          </article>
-
-          <article class="project">
-            <h3>AI Assignments – Intelligent Agent Systems</h3>
-            <p>Designed AI agents for search & optimization (maze, n-Queens, Connect-4) using BFS/DFS/A*, Hill-Climbing, Simulated Annealing, and Minimax+Alpha-Beta. Benchmarked heuristics and decision efficiency under adversarial settings.</p>
-            <div class="stack">Python · NumPy · Matplotlib · AI Search</div>
-          </article>
-
-          <article class="project">
-            <h3>ML Assignments – Predictive Modeling & Neural Nets</h3>
-            <p>Compared supervised learners (LogReg, PCA+MLP, CNN, Wide & Deep). Tuned optimizers (RMSProp, AdaDelta) and evaluated across structured, image, and text datasets.</p>
-            <div class="stack">Python · scikit-learn · TensorFlow · Keras</div>
-          </article>
-
-          <article class="project">
-            <h3>Revenue Growth Campaign Optimization</h3>
-            <p>Designed A/B tests (Google vs Facebook), analyzed KPIs, and improved marketing ROI by 22% with budget allocation recommendations.</p>
-            <div class="stack">Python · A/B Testing · KPI Analysis</div>
-          </article>
-
-          <article class="project">
-            <h3>Stock Price Time-Series Forecasting</h3>
-            <p>Forecasted Shopify & Alibaba using ARIMA & exponential smoothing to support investor risk profiling.</p>
-            <div class="stack">Python · ARIMA · Forecasting</div>
-          </article>
-
-          <article class="project">
-            <h3>Super Bowl Ad Analysis</h3>
-            <p>Performed data wrangling, EDA, and visualization on Super Bowl commercials to uncover trends in ad spending, brand presence, celebrity appearances, and viewer engagement.</p>
-            <div class="stack">Python · pandas · numpy · Seaborn · Matplotlib · Plotly · Jupyter</div>
-          </article>
-
-          <article class="project">
-            <h3>Columbus Trash & Recycling RAG Assistant</h3>
-            <p>Developed an end-to-end Retrieval-Augmented Generation (RAG) system using LangChain and OpenAI LLMs to deliver context-aware answers from Columbus city waste management PDFs and HTML pages, with ChromaDB vector retrieval for source-backed Q&amp;A.</p>
-            <div class="stack">Python · LangChain · OpenAI API · ChromaDB · RAG · LLMs</div>
-          </article>
-
-          <article class="project">
-            <h3>Financial Education LLM — TinyLlama Fine-Tune</h3>
-            <p>Built an end-to-end pipeline to ingest CFPB financial guides, generate Q&amp;A pairs, and fine-tune TinyLlama with LoRA; evaluated against baseline and deployed a CLI/Streamlit chatbot explaining credit scores, loans, and savings.</p>
-            <div class="stack">Python · PyTorch · HF Transformers · PEFT (LoRA) · TinyLlama · Streamlit</div>
-          </article>
-
-          <article class="project">
-            <h3>Python Fundamentals & Job-Market Analytics (Capstone)</h3>
-            <p>Captured my Python learning path and a final project analyzing job-market data with pandas/NumPy wrangling and Matplotlib/Seaborn visualisation, cleaning raw postings, engineering skills features, and exploring demand and salary ranges.</p>
-            <div class="stack">Python · Pandas · NumPy · Matplotlib · Seaborn · Jupyter · EDA</div>
-          </article>
-
-          <article class="project">
-            <h3>NYC Taxi Demand Forecasting</h3>
-            <p>Predicted hourly demand (92%+ accuracy) with weather &amp; trip features using tuned LightGBM, XGBoost, and CatBoost models for operational planning.</p>
-            <div class="stack">Python · LightGBM · XGBoost · CatBoost</div>
-          </article>
-
-          <article class="project">
-            <h3>Vendor Sales & Inventory Optimization</h3>
-            <p>Reduced holding cost by 72% and optimized $2.7M unsold stock through Power BI dashboards and Python analytics workflows for inventory decisions.</p>
-            <div class="stack">Power BI · Python · Inventory Analytics</div>
-          </article>
-
-          <article class="project">
-            <h3>AI-Powered News Research Assistant</h3>
-            <p>Cut research time by 40% with a LangChain/FAISS assistant enabling semantic search and summarisation across financial news articles and documents.</p>
-            <div class="stack">Python · LangChain · FAISS · OpenAI</div>
-          </article>
+      <div class="titem">
+        <h3>Student Ambassador — RLSH SMU <span class="pill">Part-time</span></h3>
+        <div class="date">Southern Methodist University · Sep 2023 – Aug 2024 · Dallas, TX · On-site</div>
+        <ul class="xp-list">
+          <li>Front-desk representative supporting student engagement and housing operations.</li>
+          <li>Maintained accurate housing records and ensured policy clarity through consistent documentation.</li>
+          <li>Resolved routine and urgent concerns with confidentiality and professionalism.</li>
+          <li>Led one-on-one and group engagement to improve residential experience.</li>
+          <li>Served as interim Program Coordinator for a Dorm Leadership Team.</li>
+        </ul>
+        <div class="skill-tags">
+          <span class="tag">Leadership</span><span class="tag">Event Planning</span><span class="tag">Problem Solving</span><span class="tag">Slack</span>
         </div>
       </div>
-    </section>
 
-    <!-- ========================= EXPERIENCE ========================= -->
-    <section id="experience" class="section">
-      <div class="container fade-in">
-        <div class="section-kicker">Career</div>
-        <h2 class="section-title">Experience</h2>
-        <div class="timeline">
-          <div class="titem">
-            <h3>Data Scientist — PioneerSoft Corporation <span class="pill">Full-time</span></h3>
-            <div class="date">Aug 2025 – Present · United States</div>
-            <ul class="xp-list">
-              <li>Built and evaluated <b>machine learning models</b> for business use cases; deployed production-ready <b>data pipelines</b> and dashboards.</li>
-              <li>Partnered with <b>product and business teams</b> to define KPIs, run experiments, and translate insights into measurable outcomes.</li>
-              <li>Designed and automated <b>ETL workflows</b> using <b>Python, SQL, and Airflow</b> for efficient model training and data delivery.</li>
-              <li>Implemented <b>MLOps pipelines</b> for versioning, reproducibility, and continuous improvement using <b>MLflow</b> and <b>Docker</b>.</li>
-              <li>Collaborated cross-functionally to improve <b>data reliability</b> and reduce model deployment latency through CI/CD automation.</li>
-            </ul>
-            <div class="skill-tags">
-              <span class="tag">Python</span><span class="tag">SQL</span><span class="tag">Airflow</span>
-              <span class="tag">MLOps</span><span class="tag">MLflow</span><span class="tag">Docker</span>
-              <span class="tag">CI/CD</span><span class="tag">Data Pipelines</span>
-            </div>
-          </div>
-
-          <div class="titem">
-            <h3>Cox Copy Center — Support <span class="pill">Part-time</span></h3>
-            <div class="date">SMU Cox School of Business · Sep 2024 – May 2025 · Dallas, TX · On-site</div>
-            <ul class="xp-list">
-              <li>Maintained secure access to confidential materials (exam papers, keys, staff resources).</li>
-              <li>Handled high-volume print/copy requests under tight deadlines for professors and staff.</li>
-              <li>Point-of-contact for real-time staff support in a fast-paced academic environment.</li>
-              <li>Assisted with building security procedures and safe closing operations after hours.</li>
-              <li>Supported exam proctoring while upholding academic integrity.</li>
-            </ul>
-            <div class="skill-tags">
-              <span class="tag">Communication</span><span class="tag">Customer Service</span><span class="tag">Time Management</span><span class="tag">Attention to Detail</span>
-            </div>
-          </div>
-
-          <div class="titem">
-            <h3>Student Ambassador — RLSH SMU <span class="pill">Part-time</span></h3>
-            <div class="date">Southern Methodist University · Sep 2023 – Aug 2024 · Dallas, TX · On-site</div>
-            <ul class="xp-list">
-              <li>Front-desk representative supporting student engagement and housing operations.</li>
-              <li>Maintained accurate housing records and ensured policy clarity through consistent documentation.</li>
-              <li>Resolved routine and urgent concerns with confidentiality and professionalism.</li>
-              <li>Led one-on-one and group engagement to improve residential experience.</li>
-              <li>Served as interim Program Coordinator for a Dorm Leadership Team.</li>
-            </ul>
-            <div class="skill-tags">
-              <span class="tag">Leadership</span><span class="tag">Event Planning</span><span class="tag">Problem Solving</span><span class="tag">Collaboration</span>
-            </div>
-          </div>
-
-          <div class="titem">
-            <h3>Data Analyst — Yogin</h3>
-            <div class="date">Jan 2021 – May 2023 · 2 yrs 5 mos · India · Hybrid</div>
-            <ul class="xp-list">
-              <li>Partnered with cross-functional teams across <b>finance, healthcare, media, and retail</b> to deliver data-driven insights and solutions.</li>
-              <li>Developed and maintained <b>ETL/ELT pipelines</b> using <b>dbt</b> and <b>Airflow</b> on <b>Snowflake</b>; implemented validation and QA checks.</li>
-              <li>Built interactive <b>Power BI</b> and <b>Tableau dashboards</b> for KPI tracking, campaign analysis, and executive reporting.</li>
-              <li>Engineered and tuned <b>ML models</b> (classification, regression, clustering, forecasting) for churn, demand, and fraud prediction.</li>
-              <li>Processed and transformed large datasets using <b>Databricks</b> and <b>PySpark</b>; leveraged <b>AWS (S3, Glue)</b> and <b>GCP (BigQuery)</b> for scalability.</li>
-              <li>Deployed models and workflows with <b>MLflow</b> and <b>Docker</b>, ensuring retraining automation and version control.</li>
-              <li>Collaborated within <b>Agile teams</b> using <b>JIRA</b> for sprint planning, reporting, and workflow documentation.</li>
-            </ul>
-            <div class="skill-tags">
-              <span class="tag">Python</span><span class="tag">SQL</span><span class="tag">dbt</span>
-              <span class="tag">Airflow</span><span class="tag">Snowflake</span><span class="tag">Databricks</span>
-              <span class="tag">PySpark</span><span class="tag">Power BI</span><span class="tag">Tableau</span>
-              <span class="tag">MLflow</span><span class="tag">Docker</span><span class="tag">AWS</span>
-              <span class="tag">GCP</span><span class="tag">JIRA</span>
-            </div>
-          </div>
+      <div class="titem">
+        <h3>Data Analyst — Yogin</h3>
+        <div class="date">Jan 2021 – May 2023 · 2 yrs 5 mos · India · Hybrid</div>
+        <ul class="xp-list">
+          <li>Partnered with cross-functional teams across <b>finance, healthcare, media, and retail</b> to deliver data-driven insights and solutions.</li>
+          <li>Developed and maintained <b>ETL/ELT pipelines</b> using <b>dbt</b> and <b>Airflow</b> on <b>Snowflake</b>; implemented validation and QA checks.</li>
+          <li>Built interactive <b>Power BI</b> and <b>Tableau dashboards</b> for KPI tracking, campaign analysis, and executive reporting.</li>
+          <li>Engineered and tuned <b>ML models</b> (classification, regression, clustering, forecasting) for churn, demand, and fraud prediction.</li>
+          <li>Processed and transformed large datasets using <b>Databricks</b> and <b>PySpark</b>; leveraged <b>AWS (S3, Glue)</b> and <b>GCP (BigQuery)</b> for scalability.</li>
+          <li>Deployed models and workflows with <b>MLflow</b> and <b>Docker</b>, ensuring retraining automation and version control.</li>
+          <li>Collaborated within <b>Agile teams</b> using <b>JIRA</b> for sprint planning, reporting, and workflow documentation.</li>
+        </ul>
+        <div class="skill-tags">
+          <span class="tag">Python</span><span class="tag">SQL</span><span class="tag">dbt</span>
+          <span class="tag">Airflow</span><span class="tag">Snowflake</span><span class="tag">Databricks</span>
+          <span class="tag">PySpark</span><span class="tag">Power BI</span><span class="tag">Tableau</span>
+          <span class="tag">MLflow</span><span class="tag">Docker</span><span class="tag">AWS</span>
+          <span class="tag">GCP</span><span class="tag">JIRA</span>
         </div>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
 
-    <!-- ========================= EDUCATION & ACHIEVEMENTS ========================= -->
-    <section id="education" class="section" aria-labelledby="edu-title">
-      <div class="container fade-in">
-        <div class="section-kicker">Background</div>
-        <h2 id="edu-title" class="section-title">Education & Achievements</h2>
+<!-- ================= EDUCATION & ACHIEVEMENTS ================= -->
+<section id="education" class="section" aria-labelledby="edu-title">
+  <div class="container fade-in">
+    <h2 id="edu-title" class="section-title">Education &amp; Achievements</h2>
 
-        <div class="cards-edu" style="margin-bottom:1.4rem" aria-label="Education timeline">
-          <div class="timeline">
-            <div class="titem">
-              <h3>B.Tech (Computer Engineering)</h3>
-              <div class="date">2019 – 2023</div>
-              <p>CVR College of Engineering — Hyderabad</p>
-            </div>
-            <div class="titem">
-              <h3>Masters (Computer Science — AI/ML)</h3>
-              <div class="date">2023 – 2025</div>
-              <p>Southern Methodist University — Dallas</p>
-            </div>
-          </div>
+    <div class="timeline" style="margin-bottom:1.4rem" aria-label="Education timeline">
+      <div class="titem">
+        <h3>B.Tech (Computer Engineering)</h3>
+        <div class="date">2019 – 2023</div>
+        <p>CVR College of Engineering — Hyderabad</p>
+      </div>
+      <div class="titem">
+        <h3>Masters (Computer Science — AI/ML)</h3>
+        <div class="date">2023 – 2025</div>
+        <p>Southern Methodist University — Dallas</p>
+      </div>
+    </div>
 
-          <div class="cards" aria-label="Achievements">
-            <div class="card" aria-labelledby="leadership-title">
-              <h3 id="leadership-title"><i class="fa-solid fa-users"></i> Leadership Roles</h3>
-              <ul class="xp-list">
-                <li>Coordinator Head for the college annual fest; drove cross-team collaboration and seamless execution.</li>
-                <li>Program Coordinator for the SMU residential leadership team; led peer engagement and strengthened community culture.</li>
-                <li>Coordinator for Street Cause at CVR College of Engineering; managed volunteers and executed social impact campaigns.</li>
-                <li>Board Member, SMU International Student Board; represented student interests and fostered global inclusivity.</li>
-              </ul>
-            </div>
+    <div class="cards" aria-label="Achievements">
+      <div class="card" aria-labelledby="leadership-title">
+        <h3 id="leadership-title"><i class="fa-solid fa-users"></i> Leadership Roles</h3>
+        <ul class="xp-list">
+          <li>Coordinator Head for the college annual fest; drove cross-team collaboration and seamless execution.</li>
+          <li>Program Coordinator for the SMU residential leadership team; led peer engagement and strengthened community culture.</li>
+          <li>Coordinator for Street Cause at CVR College of Engineering; managed volunteers and executed social impact campaigns.</li>
+          <li>Board Member, SMU International Student Board; represented student interests and fostered global inclusivity.</li>
+        </ul>
+      </div>
 
-            <div class="card" aria-labelledby="recognition-title">
-              <h3 id="recognition-title"><i class="fa-solid fa-award"></i> Recognition</h3>
-              <ul class="xp-list">
-                <li>Nominee, Unsung Hero Award — SMU RLSH Year-End Student Banquet.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
+      <div class="card" aria-labelledby="recognition-title">
+        <h3 id="recognition-title"><i class="fa-solid fa-award"></i> Recognition</h3>
+        <ul class="xp-list">
+          <li>Nominee, Unsung Hero Award — SMU RLSH Year-End Student Banquet.</li>
+        </ul>
+      </div>
 
-        <div class="cards" aria-label="Certifications and Events">
-          <div class="card" aria-labelledby="certs-title">
-            <h3 id="certs-title"><i class="fa-solid fa-certificate"></i> Certifications</h3>
-            <div class="tagrow" role="list">
-              <a class="tag" role="listitem" href="https://www.theforage.com/" target="_blank" rel="noopener">
-                British Airways — Data Science (Forage, May 2025)
-              </a>
-              <a class="tag" role="listitem" href="https://www.theforage.com/" target="_blank" rel="noopener">
-                Deloitte AU — Data Analytics (Forage, May 2025)
-              </a>
-              <a class="tag" role="listitem" href="https://www.theforage.com/" target="_blank" rel="noopener">
-                Quantium — Data Analytics (Forage, May 2025)
-              </a>
-              <a class="tag" role="listitem" href="https://www.theforage.com/" target="_blank" rel="noopener">
-                Tata — Data Visualisation (Forage, May 2025)
-              </a>
-              <a class="tag" role="listitem" href="https://oneroadmap.com/" target="_blank" rel="noopener">
-                Data Analyst Certification — OneRoadmap (Apr 2025)
-              </a>
-              <a class="tag" role="listitem" href="https://www.coursera.org/" target="_blank" rel="noopener">
-                Google Project Management — Coursera
-              </a>
-            </div>
-          </div>
-
-          <div class="card" aria-labelledby="events-title">
-            <h3 id="events-title"><i class="fa-solid fa-trophy"></i> Hackathons & Events</h3>
-            <div class="tagrow" role="list">
-              <span class="tag" role="listitem">Hackathon — SMU</span>
-              <span class="tag" role="listitem">Career Development Programme (Oracle) — CVR</span>
-            </div>
-          </div>
+      <div class="card" aria-labelledby="certs-title">
+        <h3 id="certs-title"><i class="fa-solid fa-certificate"></i> Certifications</h3>
+        <div class="tagrow" role="list">
+          <span class="tag" role="listitem">
+            British Airways — Data Science (Forage, May 2025)
+          </span>
+          <span class="tag" role="listitem">
+            Deloitte AU — Data Analytics (Forage, May 2025)
+          </span>
+          <span class="tag" role="listitem">
+            Quantium — Data Analytics (Forage, May 2025)
+          </span>
+          <span class="tag" role="listitem">
+            Tata — Data Visualisation (Forage, May 2025)
+          </span>
+          <span class="tag" role="listitem">
+            Data Analyst Certification — OneRoadmap (Apr 2025)
+          </span>
+          <span class="tag" role="listitem">
+            Google Project Management — Coursera
+          </span>
         </div>
       </div>
-    </section>
 
-    <!-- ========================= CONTACT ========================= -->
-    <section id="contact" class="section contact-wrap" role="region" aria-labelledby="contact-title">
-      <div class="container">
-        <div class="section-kicker">Next Steps</div>
-        <h2 class="contact-title" id="contact-title">Let's Connect</h2>
-        <p class="contact-subtitle">
-          I'm actively seeking opportunities in Data Science and AI. Feel free to reach out if you'd like to discuss how I can contribute to your team, collaborate on a project, or explore research-focused work.
-        </p>
-
-        <div class="contact-grid" role="list">
-          <a class="contact-card" role="listitem"
-             href="mailto:avikshith.y@gmail.com"
-             aria-label="Email Avikshith at avikshith.y@gmail.com"
-             rel="noopener noreferrer">
-            <div class="contact-icon" aria-hidden="true"><i class="fa-regular fa-envelope"></i></div>
-            <div class="contact-meta">
-              <div class="contact-label">Email</div>
-              <div class="contact-value">avikshith.y@gmail.com</div>
-            </div>
-          </a>
-
-          <a class="contact-card" role="listitem"
-             href="tel:+19459983967"
-             aria-label="Call Avikshith at plus one nine four five nine nine eight three nine six seven"
-             rel="noopener noreferrer">
-            <div class="contact-icon" aria-hidden="true"><i class="fa-solid fa-phone"></i></div>
-            <div class="contact-meta">
-              <div class="contact-label">Phone</div>
-              <div class="contact-value">+1 (945) 998-3967</div>
-            </div>
-          </a>
-
-          <a class="contact-card" role="listitem"
-             target="_blank" rel="noopener noreferrer"
-             href="https://www.linkedin.com/in/avikshith-reddy-y-1a4272234/"
-             aria-label="Open Avikshith's LinkedIn profile in a new tab">
-            <div class="contact-icon" aria-hidden="true"><i class="fa-brands fa-linkedin"></i></div>
-            <div class="contact-meta">
-              <div class="contact-label">LinkedIn</div>
-              <div class="contact-value">Connect on LinkedIn</div>
-            </div>
-          </a>
-
-          <a class="contact-card" role="listitem"
-             target="_blank" rel="noopener noreferrer"
-             href="https://github.com/AvikshithReddy"
-             aria-label="Open Avikshith's GitHub repositories in a new tab">
-            <div class="contact-icon" aria-hidden="true"><i class="fa-brands fa-github"></i></div>
-            <div class="contact-meta">
-              <div class="contact-label">GitHub</div>
-              <div class="contact-value">View my repositories</div>
-            </div>
-          </a>
-        </div>
-
-        <div class="contact-cta" role="group" aria-label="Contact quick actions">
-          <a class="btn btn-primary" href="mailto:avikshith.y@gmail.com">
-            <i class="fa-regular fa-paper-plane" aria-hidden="true"></i> Send Email
-          </a>
-          <a class="btn btn-outline" target="_blank" rel="noopener noreferrer"
-             href="https://www.linkedin.com/in/avikshith-reddy-y-1a4272234/">
-            <i class="fa-brands fa-linkedin" aria-hidden="true"></i> LinkedIn Profile
-          </a>
-          <a class="btn btn-outline" target="_blank" rel="noopener noreferrer"
-             href="https://drive.google.com/file/d/15OgyD3Mt1Cw2GniVsf2hnq-zT_Y71VUR/view?usp=drive_link">
-            <i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i> View Resume
-          </a>
+      <div class="card" aria-labelledby="events-title">
+        <h3 id="events-title"><i class="fa-solid fa-trophy"></i> Hackathons &amp; Events</h3>
+        <div class="tagrow" role="list">
+          <span class="tag" role="listitem">Hackathon — SMU</span>
+          <span class="tag" role="listitem">Career Development Programme (Oracle) — CVR</span>
         </div>
       </div>
-    </section>
-  </main>
+    </div>
+  </div>
+</section>
 
-  <a href="#home" class="to-top" id="toTop" aria-label="Back to top"><i class="fa-solid fa-arrow-up"></i></a>
+<!-- ================= CONTACT ================= -->
+<section id="contact" class="section contact-wrap" role="region" aria-labelledby="contact-title">
+  <div class="container">
+    <h2 class="contact-title" id="contact-title">Let's Connect</h2>
+    <p class="contact-subtitle">
+      I'm actively seeking opportunities in Data Science and AI. Let's discuss how I can contribute to your team.
+    </p>
 
-  <script>
-    /* ===== Reveal on scroll ===== */
-    function handleReveal(){
-      document.querySelectorAll('.fade-in').forEach(el=>{
-        const r = el.getBoundingClientRect();
-        if(r.top < window.innerHeight - 130){
-          el.classList.add('visible');
-        }
-      });
-    }
-    document.addEventListener('scroll', handleReveal, {passive:true});
-    window.addEventListener('load', handleReveal);
+    <div class="contact-grid" role="list">
+      <a class="contact-card" role="listitem"
+         href="mailto:avikshith.y@gmail.com"
+         aria-label="Email Avikshith at avikshith.y@gmail.com"
+         rel="noopener noreferrer">
+        <div class="contact-icon" aria-hidden="true"><i class="fa-regular fa-envelope"></i></div>
+        <div class="contact-meta">
+          <div class="contact-label">Email</div>
+          <div class="contact-value">avikshith.y@gmail.com</div>
+        </div>
+      </a>
 
-    /* ===== Back to top visibility ===== */
-    const toTop = document.getElementById('toTop');
-    function toggleTop(){
-      if(window.scrollY > 600){
-        toTop.style.display = 'grid';
-      }else{
-        toTop.style.display = 'none';
-      }
-    }
-    document.addEventListener('scroll', toggleTop, {passive:true});
-    window.addEventListener('load', toggleTop);
+      <a class="contact-card" role="listitem"
+         href="tel:+19459983967"
+         aria-label="Call Avikshith at plus one nine four five nine nine eight three nine six seven"
+         rel="noopener noreferrer">
+        <div class="contact-icon" aria-hidden="true"><i class="fa-solid fa-phone"></i></div>
+        <div class="contact-meta">
+          <div class="contact-label">Phone</div>
+          <div class="contact-value">+1 (945) 998-3967</div>
+        </div>
+      </a>
 
-    /* ===== Typing effect for hero title ===== */
-    const phrases = [
-      'From raw data to decisions',
-      'Reliable models. Real business impact.',
-      'Data Science · Machine Learning · Analytics'
-    ];
-    const typingEl = document.getElementById('typing');
-    let p = 0, i = 0, deleting = false;
+      <a class="contact-card" role="listitem"
+         target="_blank" rel="noopener noreferrer"
+         href="https://www.linkedin.com/in/avikshith-reddy-y-1a4272234/"
+         aria-label="Open Avikshith's LinkedIn profile in a new tab">
+        <div class="contact-icon" aria-hidden="true"><i class="fa-brands fa-linkedin"></i></div>
+        <div class="contact-meta">
+          <div class="contact-label">LinkedIn</div>
+          <div class="contact-value">Connect on LinkedIn</div>
+        </div>
+      </a>
 
-    function type() {
-      if(!typingEl) return;
-      const current = phrases[p];
-      typingEl.textContent = current.slice(0, i);
-      if(!deleting && i < current.length){
-        i++;
-      } else if(deleting && i > 0){
-        i--;
-      } else if(!deleting && i === current.length){
-        deleting = true;
-        setTimeout(type, 1300);
-        return;
-      } else{
-        deleting = false;
-        p = (p+1) % phrases.length;
-      }
-      setTimeout(type, deleting ? 28 : 42);
-    }
-    setTimeout(type, 700);
-  </script>
+      <a class="contact-card" role="listitem"
+         target="_blank" rel="noopener noreferrer"
+         href="https://github.com/AvikshithReddy"
+         aria-label="Open Avikshith's GitHub repositories in a new tab">
+        <div class="contact-icon" aria-hidden="true"><i class="fa-brands fa-github"></i></div>
+        <div class="contact-meta">
+          <div class="contact-label">GitHub</div>
+          <div class="contact-value">View my repositories</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="contact-cta" role="group" aria-label="Contact quick actions">
+      <a class="btn" href="mailto:avikshith.y@gmail.com">
+        <i class="fa-regular fa-paper-plane" aria-hidden="true"></i> Send Email
+      </a>
+      <a class="btn secondary" target="_blank" rel="noopener noreferrer"
+         href="https://www.linkedin.com/in/avikshith-reddy-y-1a4272234/">
+        <i class="fa-brands fa-linkedin" aria-hidden="true"></i> LinkedIn Profile
+      </a>
+      <a class="btn secondary" target="_blank" rel="noopener noreferrer"
+         href="https://drive.google.com/file/d/15OgyD3Mt1Cw2GniVsf2hnq-zT_Y71VUR/view?usp=drive_link">
+        <i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i> View Resume
+      </a>
+    </div>
+  </div>
+</section>
+
+<a href="#hero" class="to-top" id="toTop" aria-label="Back to top">
+  <i class="fa-solid fa-arrow-up"></i>
+</a>
+
+<script>
+  // Reveal on scroll
+  const reveals = () => {
+    document.querySelectorAll('.fade-in').forEach(el=>{
+      const r = el.getBoundingClientRect();
+      if(r.top < window.innerHeight - 130) el.classList.add('visible');
+    });
+  };
+  document.addEventListener('scroll', reveals, {passive:true});
+  window.addEventListener('load', reveals);
+
+  // Back to top visibility
+  const toTop = document.getElementById('toTop');
+  const showTop = () => {
+    toTop.style.display = (window.scrollY > 600) ? 'grid' : 'none';
+  };
+  document.addEventListener('scroll', showTop, {passive:true});
+  window.addEventListener('load', showTop);
+</script>
 </body>
 </html>

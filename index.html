@@ -125,7 +125,7 @@
       color:var(--muted);
     }
 
-    /* Right: now empty but kept for layout balance */
+    /* Right: empty (for layout balance) */
     .brand-right{
       flex:1;
       display:flex;
@@ -234,29 +234,6 @@
       height:100%;
       display:block;
       object-fit:cover;
-    }
-    .hero-chip{
-      position:absolute;
-      bottom:1.3rem;
-      left:50%;
-      transform:translateX(-50%);
-      padding:.35rem .9rem;
-      border-radius:999px;
-      background:rgba(16,24,40,.92);
-      color:#e5f7f8;
-      font-size:.7rem;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      display:inline-flex;
-      align-items:center;
-      gap:.45rem;
-      box-shadow:0 18px 36px rgba(15,23,42,.6);
-    }
-    .hero-chip-dot{
-      width:8px;height:8px;
-      border-radius:999px;
-      background:#22c55e;
-      box-shadow:0 0 0 4px rgba(34,197,94,.32);
     }
 
     @media(max-width:900px){
@@ -631,9 +608,16 @@
       <a class="brand-pill" href="https://drive.google.com/file/d/15OgyD3Mt1Cw2GniVsf2hnq-zT_Y71VUR/view?usp=drive_link" target="_blank" title="Resume (PDF)">
         <i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i>
       </a>
-      <a class="brand-pill" href="#contact" title="Contact">
+
+      <!-- EMAIL ICON -> OPEN GMAIL COMPOSE -->
+      <a class="brand-pill"
+         href="https://mail.google.com/mail/?view=cm&fs=1&to=avikshith.y@gmail.com"
+         target="_blank"
+         rel="noopener noreferrer"
+         title="Email Avikshith">
         <i class="fa-regular fa-envelope" aria-hidden="true"></i>
       </a>
+
       <a class="brand-pill" href="https://github.com/AvikshithReddy" target="_blank" title="GitHub">
         <i class="fa-brands fa-github" aria-hidden="true"></i>
       </a>
@@ -648,7 +632,7 @@
       <span class="brand-tagline">DATA SCIENTIST · MACHINE LEARNING · ANALYTICS</span>
     </div>
 
-    <!-- Right: empty (scroll text removed) -->
+    <!-- Right: empty  -->
     <div class="brand-right"></div>
   </div>
 </header>
@@ -657,8 +641,12 @@
 <section id="hero" class="hero">
   <div class="hero-grid fade-in">
     <div>
-      <div class="hero-kicker">Portfolio · Data Science · Machine Learning</div>
-      <h1 class="hero-title">Data Science · Machine Learning · Analytics</h1>
+      <!-- OLD STYLE KICKER TEXT -->
+      <div class="hero-kicker">DATA SCIENCE · MACHINE LEARNING</div>
+
+      <!-- Rotating text goes here -->
+      <h1 class="hero-title" id="typing">Data Science · Machine Learning · Analytics</h1>
+
       <p class="hero-body">
         I build end-to-end data products—from ingestion and modeling to deployment and dashboards—focused on
         reliability, scalability, and measurable outcomes that drive smarter decisions.
@@ -679,10 +667,7 @@
         <!-- Make sure this file exists next to index.html -->
         <img src="avatar.jpg" alt="Portrait of Avikshith Yelakonda" />
       </div>
-      <div class="hero-chip">
-        <span class="hero-chip-dot"></span>
-        END-TO-END ML &amp; ANALYTICS
-      </div>
+      <!-- HERO CHIP REMOVED (no text on photo now) -->
     </div>
   </div>
 </section>
@@ -1157,6 +1142,38 @@
   };
   document.addEventListener('scroll', showTop, {passive:true});
   window.addEventListener('load', showTop);
+
+  // Typing effect for hero title
+  const typingEl = document.getElementById('typing');
+  if (typingEl) {
+    const phrases = [
+      'From raw data to decisions',
+      'Reliable models. Real business impact.',
+      'Data Science · Machine Learning · Analytics'
+    ];
+    let p = 0, i = 0, deleting = false;
+
+    function type() {
+      const current = phrases[p];
+      typingEl.textContent = current.slice(0, i);
+
+      if (!deleting && i < current.length) {
+        i++;
+      } else if (deleting && i > 0) {
+        i--;
+      } else if (!deleting && i === current.length) {
+        deleting = true;
+        setTimeout(type, 1400);
+        return;
+      } else {
+        deleting = false;
+        p = (p + 1) % phrases.length;
+      }
+      setTimeout(type, deleting ? 30 : 45);
+    }
+
+    setTimeout(type, 600);
+  }
 </script>
 </body>
 </html>

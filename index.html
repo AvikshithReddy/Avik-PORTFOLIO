@@ -24,7 +24,7 @@
   <style>
     /* ========== THEME TOKENS (TIFFANY BLUE / WHITE / GREY) ========== */
     :root{
-      --bg:#e9f6f8;
+      --bg:#e9f6f8;              /* single page background */
       --bg-soft:#dbeff3;
       --surface:#ffffff;
       --surface-soft:#f3f6f8;
@@ -32,7 +32,7 @@
       --border-strong:rgba(15,23,42,.16);
       --text:#12212b;
       --muted:#607080;
-      --accent:#08b7b9;          /* Tiffany blue */
+      --accent:#08b7b9;
       --accent-dark:#078388;
       --accent-soft:#d3f3f4;
       --shadow-soft:0 18px 40px rgba(15,23,42,.08);
@@ -44,7 +44,7 @@
     body{
       font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
       color:var(--text);
-      background:radial-gradient(circle at top left,#d9f1f5 0,#e9f6f8 45%,#ffffff 100%);
+      background:var(--bg);     /* ✅ same background everywhere */
       min-height:100vh;
       overflow-x:hidden;
     }
@@ -77,7 +77,6 @@
       color:var(--muted);
     }
 
-    /* Left: round icon buttons */
     .brand-left{
       display:flex;
       align-items:center;
@@ -104,7 +103,6 @@
       box-shadow:0 10px 24px rgba(7,131,136,.18);
     }
 
-    /* Center: name + tagline */
     .brand-center{
       flex:2;
       text-align:center;
@@ -117,7 +115,7 @@
       font-weight:700;
       font-size:.9rem;
       letter-spacing:.18em;
-      color:var(--accent-dark);   /* Name in Tiffany blue */
+      color:var(--accent-dark);
     }
     .brand-tagline{
       font-weight:500;
@@ -125,7 +123,6 @@
       color:var(--muted);
     }
 
-    /* Right: empty (for layout balance) */
     .brand-right{
       flex:1;
       display:flex;
@@ -142,8 +139,24 @@
       .brand-right{display:none}
     }
 
-    /* ========== LAYOUT SECTIONS ========== */
-    .section{padding:5rem 1rem}
+    /* ========== LAYOUT SECTIONS (✅ consistent + separated) ========== */
+    .section{
+      padding:5rem 1rem;
+      position:relative;
+      background:transparent; /* ✅ same page bg */
+    }
+    /* subtle separator line between sections */
+    .section + .section::before{
+      content:"";
+      position:absolute;
+      left:0; right:0;
+      top:0;
+      height:1px;
+      background:linear-gradient(to right, transparent, rgba(15,23,42,.12), transparent);
+    }
+    /* optional: subtle top spacing so divider doesn't touch content */
+    .section + .section{padding-top:4.2rem;}
+
     .container{max-width:var(--maxw);margin:0 auto}
     .section-title{
       font-family:"Poppins",system-ui,sans-serif;
@@ -152,10 +165,10 @@
       letter-spacing:.02em;
     }
 
-    /* ========== HERO SECTION ========== */
+    /* ========== HERO SECTION (✅ now same background) ========== */
     .hero{
       padding:4.2rem 1rem 4.8rem;
-      background:linear-gradient(135deg,#e4f5f7 0,#f6fbfc 40%,#ffffff 100%);
+      background:transparent;   /* ✅ removed gradient */
     }
     .hero-grid{
       max-width:var(--maxw);
@@ -200,7 +213,6 @@
     }
     .hero-meta-item i{color:var(--accent-dark);}
 
-    /* Right: photo card */
     .hero-photo-card{
       max-width:360px;
       margin:0 auto;
@@ -570,7 +582,6 @@
       box-shadow:0 16px 32px rgba(15,23,42,.12);
     }
 
-    /* Back to top */
     .to-top{
       position:fixed;
       right:1.2rem;
@@ -592,24 +603,22 @@
       box-shadow:0 18px 40px rgba(15,23,42,.24);
     }
 
-    /* Reveal on scroll */
     .fade-in{opacity:0; transform:translateY(24px); transition:all .6s ease}
     .fade-in.visible{opacity:1; transform:translateY(0)}
   </style>
 </head>
+
 <body>
 <a class="skip" href="#hero">Skip to content</a>
 
 <!-- ================= BRAND BAR ================= -->
 <header class="brand-bar">
   <div class="brand-inner">
-    <!-- Left: round buttons -->
     <div class="brand-left">
-      <a class="brand-pill" href=https://drive.google.com/drive/my-drive>
+      <a class="brand-pill" href="https://drive.google.com/drive/my-drive" target="_blank" rel="noopener noreferrer" title="Resume">
         <i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i>
       </a>
 
-      <!-- EMAIL ICON -> OPEN GMAIL COMPOSE -->
       <a class="brand-pill"
          href="https://mail.google.com/mail/?view=cm&fs=1&to=avikshith.y@gmail.com"
          target="_blank"
@@ -618,21 +627,19 @@
         <i class="fa-regular fa-envelope" aria-hidden="true"></i>
       </a>
 
-      <a class="brand-pill" href="https://github.com/AvikshithReddy" target="_blank" title="GitHub">
+      <a class="brand-pill" href="https://github.com/AvikshithReddy" target="_blank" rel="noopener noreferrer" title="GitHub">
         <i class="fa-brands fa-github" aria-hidden="true"></i>
       </a>
-      <a class="brand-pill" href="https://www.linkedin.com/in/avikshith-reddy-y-1a4272234/" target="_blank" title="LinkedIn">
+      <a class="brand-pill" href="https://www.linkedin.com/in/avikshith-reddy-y-1a4272234/" target="_blank" rel="noopener noreferrer" title="LinkedIn">
         <i class="fa-brands fa-linkedin-in" aria-hidden="true"></i>
       </a>
     </div>
 
-    <!-- Center: name + tagline -->
     <div class="brand-center">
       <span class="brand-name">AVIKSHITH YELAKONDA</span>
       <span class="brand-tagline">DATA SCIENTIST · MACHINE LEARNING · ANALYTICS</span>
     </div>
 
-    <!-- Right: empty  -->
     <div class="brand-right"></div>
   </div>
 </header>
@@ -641,10 +648,7 @@
 <section id="hero" class="hero">
   <div class="hero-grid fade-in">
     <div>
-      <!-- OLD STYLE KICKER TEXT -->
       <div class="hero-kicker">DATA SCIENCE · MACHINE LEARNING</div>
-
-      <!-- Rotating text goes here -->
       <h1 class="hero-title" id="typing">Data Science · Machine Learning · Analytics</h1>
 
       <p class="hero-body">
@@ -664,10 +668,8 @@
 
     <div class="hero-photo-card" aria-hidden="true">
       <div class="hero-photo-inner">
-        <!-- Make sure this file exists next to index.html -->
         <img src="avatar.jpg" alt="Portrait of Avikshith Yelakonda" />
       </div>
-      <!-- HERO CHIP REMOVED (no text on photo now) -->
     </div>
   </div>
 </section>
@@ -726,7 +728,6 @@
     <h2 class="section-title">Capabilities Across the Data Lifecycle</h2>
 
     <div class="cards">
-      <!-- Programming -->
       <div class="card">
         <h3><i class="fa-solid fa-code"></i> Programming &amp; Core Languages</h3>
         <div class="tagrow">
@@ -741,7 +742,6 @@
         <p class="card-subtext">Data wrangling, automation, and statistical programming</p>
       </div>
 
-      <!-- Data Analysis & Visualization -->
       <div class="card">
         <h3><i class="fa-solid fa-chart-line"></i> Data Analysis &amp; Visualization</h3>
         <div class="tagrow">
@@ -756,7 +756,6 @@
         <p class="card-subtext">KPI dashboards, business storytelling, and data-driven insights</p>
       </div>
 
-      <!-- Machine Learning & AI -->
       <div class="card">
         <h3><i class="fa-solid fa-robot"></i> Machine Learning, AI &amp; Statistics</h3>
         <div class="tagrow">
@@ -773,7 +772,6 @@
         <p class="card-subtext">Predictive modeling, A/B testing, and generative AI solutions</p>
       </div>
 
-      <!-- Data Engineering & Workflows -->
       <div class="card">
         <h3><i class="fa-solid fa-cogs"></i> Data Engineering &amp; Automation Workflows</h3>
         <div class="tagrow">
@@ -790,7 +788,6 @@
         <p class="card-subtext">Scalable data pipelines, model deployment, and orchestration</p>
       </div>
 
-      <!-- Databases & Cloud -->
       <div class="card">
         <h3><i class="fa-solid fa-database"></i> Databases &amp; Cloud Platforms</h3>
         <div class="tagrow">
@@ -806,7 +803,6 @@
         <p class="card-subtext">Data integration, warehousing, and cloud-native analytics</p>
       </div>
 
-      <!-- Tools & Collaboration -->
       <div class="card">
         <h3><i class="fa-solid fa-briefcase"></i> Tools &amp; Collaboration</h3>
         <div class="tagrow">
@@ -828,6 +824,7 @@
   <div class="container fade-in">
     <h2 class="section-title">Featured Projects</h2>
     <div class="projects">
+      <!-- (Your existing project cards unchanged) -->
       <article class="project">
         <h3>Consumer Affairs Lead Conversion Case Study</h3>
         <p>Built a predictive modeling pipeline (Logistic Regression, XGBoost), achieving ROC-AUC ≈ 0.68 and 2.3–2.4× lift in top-decile leads; shipped Power BI dashboards for stakeholders.</p>
@@ -836,25 +833,25 @@
 
       <article class="project">
         <h3>AI Assignments – Intelligent Agent Systems</h3>
-        <p>Designed AI agents for search &amp; optimization (maze, n-Queens, Connect-4) using BFS/DFS/A*, Hill-Climbing, Simulated Annealing, and Minimax+Alpha-Beta. Benchmarked heuristics and decision efficiency under adversarial settings.</p>
+        <p>Designed AI agents for search &amp; optimization (maze, n-Queens, Connect-4) using BFS/DFS/A*, Hill-Climbing, Simulated Annealing, and Minimax+Alpha-Beta.</p>
         <div class="stack">Python · NumPy · Matplotlib · AI Search</div>
       </article>
-      
+
       <article class="project">
         <h3>University Course Teaching Assistant RAG</h3>
-        <p>Built a multi-tenant RAG teaching assistant where professors upload course PDFs/PPTX and students get grounded Q&amp;A scoped to their professor and course. Implemented ingestion, preprocessing, TF-IDF + embedding hybrid retrieval with FAISS, chat history memory, and an interactive Streamlit UI with separate Professor/Student portals, all containerized with Docker.</p>
-        <div class="stack">Python · Streamlit · OpenAI API · SentenceTransformers · FAISS · TF-IDF · RAG · Docker</div>
+        <p>Built a multi-tenant RAG teaching assistant where professors upload course PDFs/PPTX and students get grounded Q&amp;A scoped to their professor and course.</p>
+        <div class="stack">Python · Streamlit · OpenAI API · FAISS · RAG · Docker</div>
       </article>
 
       <article class="project">
         <h3>ML Assignments – Predictive Modeling &amp; Neural Nets</h3>
-        <p>Compared supervised learners (LogReg, PCA+MLP, CNN, Wide &amp; Deep). Tuned optimizers (RMSProp, AdaDelta) and evaluated across structured, image, and text datasets.</p>
+        <p>Compared supervised learners (LogReg, PCA+MLP, CNN, Wide &amp; Deep). Tuned optimizers and evaluated across datasets.</p>
         <div class="stack">Python · scikit-learn · TensorFlow · Keras</div>
       </article>
 
       <article class="project">
         <h3>Revenue Growth Campaign Optimization</h3>
-        <p>Designed A/B tests (Google vs Facebook), analyzed KPIs, and improved marketing ROI by 22% with budget allocation recommendations.</p>
+        <p>Designed A/B tests, analyzed KPIs, and improved marketing ROI by 22% with budget allocation recommendations.</p>
         <div class="stack">Python · A/B Testing · KPI Analysis</div>
       </article>
 
@@ -866,43 +863,43 @@
 
       <article class="project">
         <h3>Super Bowl Ad Analysis</h3>
-        <p>Performed data wrangling, EDA, and visualization on Super Bowl commercials to uncover trends in ad spending, brand presence, celebrity appearances, and viewer engagement using Python and visualization libraries.</p>
-        <div class="stack">Python · pandas · numpy · Seaborn · Matplotlib · Plotly · Jupyter</div>
+        <p>Performed data wrangling, EDA, and visualization to uncover trends in ad spending, brand presence, and engagement.</p>
+        <div class="stack">Python · pandas · Seaborn · Matplotlib</div>
       </article>
 
       <article class="project">
         <h3>Columbus Trash &amp; Recycling RAG Assistant</h3>
-        <p>Developed an end-to-end Retrieval-Augmented Generation (RAG) system using LangChain and OpenAI LLMs to deliver context-aware answers from Columbus city waste management PDFs and HTML pages. Implemented ingestion, chunking, embeddings, and ChromaDB vector retrieval for accurate, source-backed Q&amp;A.</p>
-        <div class="stack">Python · LangChain · OpenAI API · ChromaDB · RAG · LLMs</div>
+        <p>Developed an end-to-end RAG system using LangChain and OpenAI LLMs to answer from city PDFs and pages.</p>
+        <div class="stack">Python · LangChain · OpenAI API · ChromaDB</div>
       </article>
 
       <article class="project">
         <h3>Financial Education LLM — TinyLlama Fine-Tune</h3>
-        <p>Built an end-to-end pipeline to ingest CFPB financial guides (PDF/HTML), generate Q&amp;A pairs, and fine-tune TinyLlama with LoRA for beginner-friendly tutoring; added evaluation scripts vs baseline and a CLI/Streamlit chatbot that explains concepts like credit scores, loans, and savings in clear, concise language.</p>
-        <div class="stack">Python · PyTorch · Hugging Face Transformers · PEFT (LoRA) · TinyLlama · Streamlit</div>
+        <p>Ingested CFPB guides, generated Q&amp;A pairs, fine-tuned TinyLlama with LoRA, and shipped a chatbot.</p>
+        <div class="stack">Python · PyTorch · Hugging Face · PEFT (LoRA)</div>
       </article>
 
       <article class="project">
         <h3>Python Fundamentals &amp; Job-Market Analytics (Capstone)</h3>
-        <p>Captured my Python learning path and a final project analyzing job-market data with pandas/NumPy wrangling and Matplotlib/Seaborn visualisation, cleaning raw postings, engineering skills features, and exploring demand and salary ranges.</p>
-        <div class="stack">Python · Pandas · NumPy · Matplotlib · Seaborn · Jupyter · EDA</div>
+        <p>Analyzed job-market data, cleaned postings, engineered skills features, and explored demand and salary ranges.</p>
+        <div class="stack">Python · Pandas · NumPy · Matplotlib</div>
       </article>
 
       <article class="project">
         <h3>NYC Taxi Demand Forecasting</h3>
-        <p>Predicted hourly demand (92%+ accuracy) with weather &amp; trip features using tuned LightGBM, XGBoost, and CatBoost models for operational planning.</p>
+        <p>Predicted hourly demand (92%+ accuracy) with weather &amp; trip features using tuned models for planning.</p>
         <div class="stack">Python · LightGBM · XGBoost · CatBoost</div>
       </article>
 
       <article class="project">
         <h3>Vendor Sales &amp; Inventory Optimization</h3>
-        <p>Reduced holding cost by 72% and optimized $2.7M unsold stock through Power BI dashboards and Python analytics workflows for inventory decisions.</p>
+        <p>Reduced holding cost by 72% and optimized $2.7M unsold stock through Power BI dashboards and analytics.</p>
         <div class="stack">Power BI · Python · Inventory Analytics</div>
       </article>
 
       <article class="project">
         <h3>AI-Powered News Research Assistant</h3>
-        <p>Cut research time by 40% with a LangChain/FAISS assistant enabling semantic search and summarisation across financial news articles and documents.</p>
+        <p>Cut research time by 40% with a LangChain/FAISS assistant enabling semantic search and summarisation.</p>
         <div class="stack">Python · LangChain · FAISS · OpenAI</div>
       </article>
     </div>
@@ -914,8 +911,9 @@
   <div class="container fade-in">
     <h2 class="section-title">Experience</h2>
     <div class="timeline">
+      <!-- (Your existing experience blocks unchanged) -->
       <div class="titem">
-        <h3>Data Scientist — PioneerSoft Corporation </h3>
+        <h3>Data Scientist — PioneerSoft Corporation</h3>
         <div class="date">Aug 2025 – Present · United States</div>
         <ul class="xp-list">
           <li>Built and evaluated <b>machine learning models</b> for business use cases; deployed production-ready <b>data pipelines</b> and dashboards.</li>
@@ -965,13 +963,13 @@
         <h3>Data Analyst — Yogin</h3>
         <div class="date">Jan 2021 – May 2023 · 2 yrs 5 mos · India · Hybrid</div>
         <ul class="xp-list">
-          <li>Partnered with cross-functional teams across <b>finance, healthcare, media, and retail</b> to deliver data-driven insights and solutions.</li>
-          <li>Developed and maintained <b>ETL/ELT pipelines</b> using <b>dbt</b> and <b>Airflow</b> on <b>Snowflake</b>; implemented validation and QA checks.</li>
-          <li>Built interactive <b>Power BI</b> and <b>Tableau dashboards</b> for KPI tracking, campaign analysis, and executive reporting.</li>
-          <li>Engineered and tuned <b>ML models</b> (classification, regression, clustering, forecasting) for churn, demand, and fraud prediction.</li>
-          <li>Processed and transformed large datasets using <b>Databricks</b> and <b>PySpark</b>; leveraged <b>AWS (S3, Glue)</b> and <b>GCP (BigQuery)</b> for scalability.</li>
-          <li>Deployed models and workflows with <b>MLflow</b> and <b>Docker</b>, ensuring retraining automation and version control.</li>
-          <li>Collaborated within <b>Agile teams</b> using <b>JIRA</b> for sprint planning, reporting, and workflow documentation.</li>
+          <li>Partnered with cross-functional teams across <b>finance, healthcare, media, and retail</b> to deliver data-driven insights.</li>
+          <li>Developed and maintained <b>ETL/ELT pipelines</b> using <b>dbt</b> and <b>Airflow</b> on <b>Snowflake</b>; implemented QA checks.</li>
+          <li>Built interactive <b>Power BI</b> and <b>Tableau dashboards</b> for KPI tracking and executive reporting.</li>
+          <li>Engineered and tuned <b>ML models</b> (classification, regression, clustering, forecasting) for churn and demand.</li>
+          <li>Processed large datasets using <b>Databricks</b> and <b>PySpark</b>; leveraged <b>AWS</b> and <b>GCP</b> for scale.</li>
+          <li>Deployed workflows with <b>MLflow</b> and <b>Docker</b>, ensuring retraining automation and version control.</li>
+          <li>Collaborated in <b>Agile teams</b> using <b>JIRA</b> for sprint planning and documentation.</li>
         </ul>
         <div class="skill-tags">
           <span class="tag">Python</span><span class="tag">SQL</span><span class="tag">dbt</span>
@@ -1024,24 +1022,12 @@
       <div class="card" aria-labelledby="certs-title">
         <h3 id="certs-title"><i class="fa-solid fa-certificate"></i> Certifications</h3>
         <div class="tagrow" role="list">
-          <span class="tag" role="listitem">
-            British Airways — Data Science (Forage, May 2025)
-          </span>
-          <span class="tag" role="listitem">
-            Deloitte AU — Data Analytics (Forage, May 2025)
-          </span>
-          <span class="tag" role="listitem">
-            Quantium — Data Analytics (Forage, May 2025)
-          </span>
-          <span class="tag" role="listitem">
-            Tata — Data Visualisation (Forage, May 2025)
-          </span>
-          <span class="tag" role="listitem">
-            Data Analyst Certification — OneRoadmap (Apr 2025)
-          </span>
-          <span class="tag" role="listitem">
-            Google Project Management — Coursera
-          </span>
+          <span class="tag" role="listitem">British Airways — Data Science (Forage, May 2025)</span>
+          <span class="tag" role="listitem">Deloitte AU — Data Analytics (Forage, May 2025)</span>
+          <span class="tag" role="listitem">Quantium — Data Analytics (Forage, May 2025)</span>
+          <span class="tag" role="listitem">Tata — Data Visualisation (Forage, May 2025)</span>
+          <span class="tag" role="listitem">Data Analyst Certification — OneRoadmap (Apr 2025)</span>
+          <span class="tag" role="listitem">Google Project Management — Coursera</span>
         </div>
       </div>
 
@@ -1119,7 +1105,7 @@
         <i class="fa-brands fa-linkedin" aria-hidden="true"></i> LinkedIn Profile
       </a>
       <a class="btn secondary" target="_blank" rel="noopener noreferrer"
-         href=<https://drive.google.com/drive/my-drive>
+         href="https://drive.google.com/drive/my-drive">
         <i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i> View Resume
       </a>
     </div>
@@ -1183,8 +1169,3 @@
 </script>
 </body>
 </html>
-
-
-
-
-

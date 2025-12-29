@@ -1,0 +1,46 @@
+{
+  "name": "Avikshith Yelakonda",
+  "title": "ML/AI Professional | Data Scientist",
+  "bio": "Specialized in machine learning, data analysis, and automation workflows with measurable business impact.",
+  "github": "avikshithreddy",
+  "items": [
+    {
+      "id": "project-1",
+      "title": "ML Pipeline Optimization",
+      "description": "Built end-to-end machine learning pipeline with automated feature engineering, model selection, and deployment. Achieved 40% improvement in inference speed using optimization techniques. Tech stack: Python, Scikit-learn, MLflow, Docker.",
+      "skills": ["ML", "Python", "Pipeline", "Optimization"]
+    },
+    {
+      "id": "project-2", 
+      "title": "Data Analytics Dashboard",
+      "description": "Developed real-time analytics dashboard analyzing 10M+ data points. Implemented efficient data aggregation reducing query time by 75%. Used PostgreSQL, Grafana, and custom Python API.",
+      "skills": ["SQL", "Analytics", "Visualization", "Backend"]
+    },
+    {
+      "id": "project-3",
+      "title": "NLP Classification Model",
+      "description": "Created text classification model using transformer-based architectures (BERT). Achieved 94% accuracy on multi-label classification task. Deployed with FastAPI and containerized with Docker.",
+      "skills": ["NLP", "Deep Learning", "PyTorch", "FastAPI"]
+    },
+    {
+      "id": "project-4",
+      "title": "RAG Chatbot System",
+      "description": "Implemented Retrieval-Augmented Generation system using OpenAI APIs, pgvector embeddings, and FastAPI. Demonstrates advanced LLM integration, semantic search, and conversation memory management.",
+      "skills": ["RAG", "LLM", "Vector DB", "FastAPI", "OpenAI"]
+    }
+  ],
+  "skills": {
+    "core": ["Python", "Machine Learning", "Deep Learning", "NLP", "Computer Vision"],
+    "backend": ["FastAPI", "Django", "PostgreSQL", "Redis", "Docker", "Kubernetes"],
+    "data": ["SQL", "Pandas", "Scikit-learn", "PyTorch", "TensorFlow", "PySpark"],
+    "tools": ["Git", "MLflow", "Jupyter", "Airflow", "AWS", "GCP", "Tableau"]
+  },
+  "experience": [
+    {
+      "company": "Portfolio Company",
+      "role": "ML/AI Engineer",
+      "duration": "2022 - Present",
+      "description": "Leading ML initiatives, building production-grade systems, mentoring junior engineers"
+    }
+  ]
+}

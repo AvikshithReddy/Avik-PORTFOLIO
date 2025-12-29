@@ -7,7 +7,7 @@ import requests
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-import openai
+from openai import OpenAI
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
@@ -29,8 +29,9 @@ app.add_middleware(
 openai_api_key = os.getenv("OPENAI_API_KEY", "")
 if not openai_api_key:
     print("⚠️  WARNING: OPENAI_API_KEY not set!")
+    client = None
 else:
-    openai.api_key = openai_api_key
+    client = OpenAI(api_key=openai_api_key)
 
 # In-memory session storage
 sessions = {}
@@ -345,8 +346,11 @@ async def chat(request: ChatRequest):
     messages.append({"role": "user", "content": request.query})
     
     try:
-        # Call OpenAI API
-        response = openai.ChatCompletion.create(
+        # Call OpenAI API using new client
+        if not client:
+            raise HTTPException(status_code=500, detail="OpenAI client not initialized")
+        
+        response = client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=messages,
             temperature=0.7,

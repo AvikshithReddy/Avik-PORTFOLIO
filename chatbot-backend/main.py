@@ -534,6 +534,18 @@ async def health_check():
     return {"status": "healthy"}
 
 
+def should_include_resume(query):
+    """Detect if query is about skills, resume, or credentials"""
+    resume_keywords = [
+        "skill", "resume", "cv", "credential", "qualification", 
+        "experience", "education", "certificate", "certified",
+        "expertise", "proficiency", "competency", "background",
+        "pdf", "download", "full resume", "detailed"
+    ]
+    query_lower = query.lower()
+    return any(keyword in query_lower for keyword in resume_keywords)
+
+
 @app.post("/api/chat", response_model=ChatResponse)
 async def chat(request: ChatRequest):
     """Chat endpoint using RAG with semantic search"""
@@ -562,10 +574,31 @@ async def chat(request: ChatRequest):
         # Retrieve relevant context using semantic search - ENHANCED TOP-K
         relevant_context = retrieve_relevant_context(request.query, documents, top_k=8)
         
+        # Check if user is asking about resume/skills
+        is_resume_query = should_include_resume(request.query)
+        
         # Build enhanced system prompt with retrieved context
         enhanced_system_prompt = SYSTEM_PROMPT
         if relevant_context:
             enhanced_system_prompt += f"\n\n{relevant_context}"
+        
+        # Add resume info conditionally
+        if is_resume_query:
+            enhanced_system_prompt += """
+
+╔════════════════════════════════════════════════════════════════════╗
+║                        RESUME & CREDENTIALS
+╚════════════════════════════════════════════════════════════════════╝
+
+For detailed resume information, certifications, and complete background:
+📄 Full Resume: https://avikshithreddy.github.io/Avik-PORTFOLIO/avikshithReddy_resume.pdf
+
+When answering about skills/credentials:
+- Reference the portfolio skills sections above
+- Suggest viewing the full resume for comprehensive details
+- Mention: "For a detailed breakdown, see my full resume at [link]"
+- Include the resume link in your response
+"""
         
         # Build message history for this session
         messages = [

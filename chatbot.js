@@ -250,16 +250,16 @@ class PortfolioChatbot {
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => {
     const backendUrl = window.location.hostname === 'localhost' 
-      ? 'http://localhost:8000'
-      : window.location.origin;
+      ? 'http://localhost:3003'
+      : 'https://avik-portfolio-chatbot-307408290640.us-central1.run.app';
     if (!window.portfolioChatbot) {
       window.portfolioChatbot = new PortfolioChatbot({ apiUrl: backendUrl });
     }
   });
 } else {
   const backendUrl = window.location.hostname === 'localhost' 
-    ? 'http://localhost:8000'
-    : window.location.origin;
+    ? 'http://localhost:3003'
+    : 'https://avik-portfolio-chatbot-307408290640.us-central1.run.app';
   if (!window.portfolioChatbot) {
     window.portfolioChatbot = new PortfolioChatbot({ apiUrl: backendUrl });
   }

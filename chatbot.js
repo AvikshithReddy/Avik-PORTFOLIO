@@ -1,6 +1,6 @@
 class PortfolioChatbot {
   constructor(options = {}) {
-    this.apiUrl = options.apiUrl || 'http://localhost:8000';
+    this.apiUrl = options.apiUrl || 'https://avikshithreddy.github.io/Avik-PORTFOLIO/';
     this.sessionId = this.getOrCreateSessionId();
     this.isOpen = false;
     this.isLoading = false;

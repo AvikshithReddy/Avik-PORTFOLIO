@@ -1,381 +1,284 @@
 """
-Document Processing & Chunking Module
-Implements semantic chunking, metadata extraction, and document ingestion
+Document Processor for Portfolio Data
+Extracts and chunks portfolio, resume, and experience data
 """
-import re
 from typing import List, Dict, Optional
-from dataclasses import dataclass
 
 
-@dataclass
-class DocumentChunk:
-    """Represents a chunked document segment"""
-    text: str
-    metadata: Dict
-    chunk_id: str
-    source: str
-    start_pos: int
-    end_pos: int
-
-
-class DocumentChunker:
+class DocumentProcessor:
     """
-    Advanced document chunking with semantic awareness
-    Strategies:
-    - Recursive chunking (sentences, paragraphs, sections)
-    - Sliding window with overlap
-    - Smart boundary detection
+    Process portfolio data into optimized document chunks for RAG
     """
     
-    def __init__(self, 
-                 chunk_size: int = 500,
-                 overlap: int = 100,
-                 strategy: str = "semantic"):
-        """
-        Args:
-            chunk_size: Target chunk size in characters
-            overlap: Overlap between chunks for context preservation
-            strategy: "semantic", "recursive", or "fixed"
-        """
-        self.chunk_size = chunk_size
-        self.overlap = overlap
-        self.strategy = strategy
-        
-    def chunk_text(self, text: str, metadata: Dict, source: str = "unknown") -> List[DocumentChunk]:
-        """
-        Chunk text using selected strategy
-        
-        Args:
-            text: Document text to chunk
-            metadata: Document metadata
-            source: Document source identifier
-            
-        Returns:
-            List of DocumentChunk objects
-        """
-        if self.strategy == "semantic":
-            return self._semantic_chunking(text, metadata, source)
-        elif self.strategy == "recursive":
-            return self._recursive_chunking(text, metadata, source)
-        else:
-            return self._fixed_chunking(text, metadata, source)
-    
-    def _semantic_chunking(self, text: str, metadata: Dict, source: str) -> List[DocumentChunk]:
-        """
-        Semantic chunking: respects sentence and paragraph boundaries
-        Prefers natural breakpoints over arbitrary positions
-        """
-        chunks = []
-        
-        # Split by paragraphs first
-        paragraphs = text.split('\n\n')
-        
-        current_chunk = ""
-        chunk_start = 0
-        chunk_id = 0
-        
-        for para_idx, paragraph in enumerate(paragraphs):
-            # Clean paragraph
-            paragraph = paragraph.strip()
-            if not paragraph:
-                continue
-            
-            # Check if adding this paragraph exceeds chunk size
-            test_chunk = current_chunk + " " + paragraph if current_chunk else paragraph
-            
-            if len(test_chunk) <= self.chunk_size:
-                current_chunk = test_chunk
-            else:
-                # Paragraph too large, try sentence-level chunking
-                if current_chunk:
-                    # Save current chunk
-                    chunk = DocumentChunk(
-                        text=current_chunk.strip(),
-                        metadata=metadata.copy(),
-                        chunk_id=f"{source}_chunk_{chunk_id}",
-                        source=source,
-                        start_pos=chunk_start,
-                        end_pos=chunk_start + len(current_chunk)
-                    )
-                    chunks.append(chunk)
-                    chunk_id += 1
-                    chunk_start += len(current_chunk) - self.overlap
-                
-                # Handle large paragraph with sentence chunking
-                sentences = self._split_sentences(paragraph)
-                for sent in sentences:
-                    if len(sent) < self.chunk_size:
-                        current_chunk = sent
-                    else:
-                        # Very long sentence, chunk forcefully
-                        current_chunk = sent
-                        chunk = DocumentChunk(
-                            text=current_chunk.strip(),
-                            metadata=metadata.copy(),
-                            chunk_id=f"{source}_chunk_{chunk_id}",
-                            source=source,
-                            start_pos=chunk_start,
-                            end_pos=chunk_start + len(current_chunk)
-                        )
-                        chunks.append(chunk)
-                        chunk_id += 1
-                        chunk_start += len(current_chunk) - self.overlap
-                        current_chunk = ""
-        
-        # Add remaining chunk
-        if current_chunk.strip():
-            chunk = DocumentChunk(
-                text=current_chunk.strip(),
-                metadata=metadata.copy(),
-                chunk_id=f"{source}_chunk_{chunk_id}",
-                source=source,
-                start_pos=chunk_start,
-                end_pos=chunk_start + len(current_chunk)
-            )
-            chunks.append(chunk)
-        
-        return chunks
-    
-    def _recursive_chunking(self, text: str, metadata: Dict, source: str) -> List[DocumentChunk]:
-        """
-        Recursive chunking with hierarchical breakdown
-        1. Try splitting by section headers
-        2. Then by paragraphs
-        3. Then by sentences
-        4. Finally by fixed size
-        """
-        chunks = []
-        chunk_id = 0
-        
-        # Identify section headers (##, ###, ####, etc.)
-        sections = re.split(r'\n(#{1,4}\s+[^\n]+)\n', text)
-        
-        current_text = ""
-        for i, section in enumerate(sections):
-            if i % 2 == 0:  # Content
-                current_text += section
-            else:  # Header
-                if current_text.strip():
-                    # Process accumulated content
-                    content_chunks = self._process_text_block(
-                        current_text, metadata, source, chunk_id
-                    )
-                    chunks.extend(content_chunks)
-                    chunk_id += len(content_chunks)
-                
-                # Add header as separate chunk
-                current_text = section
-        
-        # Process remaining text
-        if current_text.strip():
-            content_chunks = self._process_text_block(
-                current_text, metadata, source, chunk_id
-            )
-            chunks.extend(content_chunks)
-        
-        return chunks
-    
-    def _process_text_block(self, text: str, metadata: Dict, 
-                           source: str, start_chunk_id: int) -> List[DocumentChunk]:
-        """Process a text block and return chunks"""
-        chunks = []
-        chunk_id = start_chunk_id
-        current_chunk = ""
-        chunk_start = 0
-        
-        sentences = self._split_sentences(text)
-        
-        for sentence in sentences:
-            test_chunk = current_chunk + " " + sentence if current_chunk else sentence
-            
-            if len(test_chunk) <= self.chunk_size:
-                current_chunk = test_chunk
-            else:
-                if current_chunk.strip():
-                    chunk = DocumentChunk(
-                        text=current_chunk.strip(),
-                        metadata=metadata.copy(),
-                        chunk_id=f"{source}_chunk_{chunk_id}",
-                        source=source,
-                        start_pos=chunk_start,
-                        end_pos=chunk_start + len(current_chunk)
-                    )
-                    chunks.append(chunk)
-                    chunk_id += 1
-                    chunk_start += len(current_chunk) - self.overlap
-                
-                current_chunk = sentence
-        
-        if current_chunk.strip():
-            chunk = DocumentChunk(
-                text=current_chunk.strip(),
-                metadata=metadata.copy(),
-                chunk_id=f"{source}_chunk_{chunk_id}",
-                source=source,
-                start_pos=chunk_start,
-                end_pos=chunk_start + len(current_chunk)
-            )
-            chunks.append(chunk)
-        
-        return chunks
-    
-    def _fixed_chunking(self, text: str, metadata: Dict, source: str) -> List[DocumentChunk]:
-        """Fixed-size chunking with sliding window"""
-        chunks = []
-        chunk_id = 0
-        
-        for i in range(0, len(text), self.chunk_size - self.overlap):
-            chunk_text = text[i:i + self.chunk_size]
-            
-            if len(chunk_text.strip()) > 50:  # Minimum chunk size
-                chunk = DocumentChunk(
-                    text=chunk_text.strip(),
-                    metadata=metadata.copy(),
-                    chunk_id=f"{source}_chunk_{chunk_id}",
-                    source=source,
-                    start_pos=i,
-                    end_pos=i + len(chunk_text)
-                )
-                chunks.append(chunk)
-                chunk_id += 1
-        
-        return chunks
-    
     @staticmethod
-    def _split_sentences(text: str) -> List[str]:
-        """Split text into sentences with proper boundary detection"""
-        # Replace common abbreviations to avoid false splits
-        text = re.sub(r'\bDr\.\s', 'Dr_', text)
-        text = re.sub(r'\bMr\.\s', 'Mr_', text)
-        text = re.sub(r'\bMs\.\s', 'Ms_', text)
-        text = re.sub(r'\bi\.e\.\s', 'ie_', text)
-        text = re.sub(r'\be\.g\.\s', 'eg_', text)
+    def extract_experience_chunks(portfolio_data: Dict) -> List[Dict]:
+        """Extract experience data into document chunks"""
+        documents = []
         
-        # Split by sentence boundaries
-        sentences = re.split(r'(?<=[.!?])\s+(?=[A-Z])', text)
+        if not portfolio_data or "experience" not in portfolio_data:
+            return documents
         
-        # Restore abbreviations
-        sentences = [s.replace('Dr_', 'Dr. ').replace('Mr_', 'Mr. ')
-                     .replace('Ms_', 'Ms. ').replace('ie_', 'i.e. ')
-                     .replace('eg_', 'e.g. ') for s in sentences]
-        
-        return [s.strip() for s in sentences if s.strip()]
-
-
-class MetadataExtractor:
-    """Extract structured metadata from documents"""
-    
-    @staticmethod
-    def extract_project_metadata(project_dict: Dict) -> Dict:
-        """Extract metadata from portfolio project"""
-        return {
-            'type': 'project',
-            'title': project_dict.get('title', ''),
-            'id': project_dict.get('id', ''),
-            'skills': project_dict.get('skills', []),
-            'source_type': 'portfolio'
-        }
-    
-    @staticmethod
-    def extract_skill_metadata(category: str, skills: List[str]) -> Dict:
-        """Extract metadata from skills section"""
-        return {
-            'type': 'skill',
-            'category': category,
-            'count': len(skills),
-            'source_type': 'portfolio'
-        }
-    
-    @staticmethod
-    def extract_github_metadata(repo: Dict) -> Dict:
-        """Extract metadata from GitHub repository"""
-        return {
-            'type': 'github',
-            'repo_name': repo.get('name', ''),
-            'language': repo.get('language', 'Unknown'),
-            'stars': repo.get('stargazers_count', 0),
-            'forks': repo.get('forks_count', 0),
-            'url': repo.get('html_url', ''),
-            'source_type': 'github'
-        }
-
-
-class PortfolioDocumentBuilder:
-    """Convert portfolio data into structured documents for RAG"""
-    
-    def __init__(self, chunker: Optional[DocumentChunker] = None):
-        self.chunker = chunker or DocumentChunker(chunk_size=500, overlap=100)
-    
-    def build_documents_from_portfolio(self, portfolio_data: Dict) -> List[DocumentChunk]:
-        """Build chunked documents from portfolio data"""
-        all_chunks = []
-        
-        # Projects
-        for project in portfolio_data.get('items', []):
-            project_text = f"""
-PROJECT: {project.get('title', '')}
-
-Description: {project.get('description', '')}
-
-Technologies & Skills: {', '.join(project.get('skills', []))}
+        for exp in portfolio_data["experience"]:
+            title = exp.get("title", "")
+            company = exp.get("company", "")
+            duration = exp.get("duration", "")
+            description = exp.get("description", "")
+            skills = exp.get("skills", [])
+            location = exp.get("location", "")
+            
+            # Main experience chunk
+            is_current = "Present" in duration or "Current" in duration
+            
+            content = f"""{"CURRENT " if is_current else ""}PROFESSIONAL EXPERIENCE: {title} at {company}
+Duration: {duration}
+Location: {location}
+Role Description: {description}
+Key Skills & Technologies: {', '.join(skills)}
 """
-            metadata = MetadataExtractor.extract_project_metadata(project)
-            chunks = self.chunker.chunk_text(project_text, metadata, f"project_{project.get('id', '')}")
-            all_chunks.extend(chunks)
-        
-        # Skills by category
-        for category, skill_list in portfolio_data.get('skills', {}).items():
-            skills_text = f"""
-SKILL AREA: {category.upper()}
+            
+            documents.append({
+                "type": "experience",
+                "content": content,
+                "metadata": {
+                    "title": title,
+                    "company": company,
+                    "duration": duration,
+                    "current": is_current,
+                    "skills": skills
+                }
+            })
+            
+            # Separate chunk for skills in this role
+            if skills:
+                skills_content = f"""Skills and technologies from {company} ({title} role):
+{', '.join(skills)}
 
-Expertise: {', '.join(skill_list)}
-
-I have proficiency and hands-on experience with these technologies in production environments.
+These skills were applied in: {description[:200]}...
 """
-            metadata = MetadataExtractor.extract_skill_metadata(category, skill_list)
-            chunks = self.chunker.chunk_text(skills_text, metadata, f"skills_{category}")
-            all_chunks.extend(chunks)
+                documents.append({
+                    "type": "experience_skills",
+                    "content": skills_content,
+                    "metadata": {
+                        "company": company,
+                        "role": title
+                    }
+                })
         
-        # Experience
-        for idx, exp in enumerate(portfolio_data.get('experience', [])):
-            exp_text = f"""
-PROFESSIONAL EXPERIENCE {idx + 1}
-
-Position: {exp.get('role', '')}
-Company: {exp.get('company', '')}
-Duration: {exp.get('duration', '')}
-
-Responsibilities & Achievements:
-{exp.get('description', '')}
+        return documents
+    
+    @staticmethod
+    def extract_project_chunks(portfolio_data: Dict) -> List[Dict]:
+        """Extract project data into document chunks"""
+        documents = []
+        
+        if not portfolio_data or "projects" not in portfolio_data:
+            return documents
+        
+        for project in portfolio_data["projects"]:
+            name = project.get("name", "")
+            description = project.get("description", "")
+            technologies = project.get("technologies", [])
+            results = project.get("results", "")
+            
+            # Main project chunk
+            content = f"""PROJECT: {name}
+Description: {description}
+Technologies & Tools: {', '.join(technologies)}
+Results & Impact: {results}
 """
-            metadata = {
-                'type': 'experience',
-                'role': exp.get('role', ''),
-                'company': exp.get('company', ''),
-                'source_type': 'portfolio'
+            
+            documents.append({
+                "type": "project",
+                "content": content,
+                "metadata": {
+                    "name": name,
+                    "technologies": technologies,
+                    "results": results
+                }
+            })
+            
+            # Technology-focused chunk
+            if technologies:
+                tech_content = f"""Technical stack for project '{name}':
+Technologies used: {', '.join(technologies)}
+
+This project demonstrates proficiency in: {', '.join(technologies[:4])}
+Project outcome: {results}
+"""
+                documents.append({
+                    "type": "project_tech",
+                    "content": tech_content,
+                    "metadata": {
+                        "project": name,
+                        "tech_stack": technologies
+                    }
+                })
+        
+        return documents
+    
+    @staticmethod
+    def extract_skills_chunks(portfolio_data: Dict) -> List[Dict]:
+        """Extract skills data into document chunks"""
+        documents = []
+        
+        if not portfolio_data or "skills" not in portfolio_data:
+            return documents
+        
+        skills_obj = portfolio_data["skills"]
+        
+        # Category-wise chunks
+        for category, items in skills_obj.items():
+            if items:
+                content = f"""TECHNICAL SKILLS - {category.upper()}:
+{', '.join(items)}
+
+Expert proficiency in {category} domain with the following technologies:
+{', '.join(items)}
+"""
+                documents.append({
+                    "type": "skills",
+                    "content": content,
+                    "metadata": {
+                        "category": category,
+                        "skills": items,
+                        "count": len(items)
+                    }
+                })
+        
+        # Comprehensive skills summary
+        all_skills = []
+        for category, items in skills_obj.items():
+            all_skills.extend(items)
+        
+        if all_skills:
+            unique_skills = list(set(all_skills))
+            skills_summary = f"""COMPLETE TECHNICAL SKILL SET:
+{', '.join(unique_skills)}
+
+Broad expertise spanning {len(skills_obj)} domains with {len(unique_skills)} unique technologies.
+Primary areas: {', '.join(skills_obj.keys())}
+"""
+            documents.append({
+                "type": "all_skills",
+                "content": skills_summary,
+                "metadata": {
+                    "total_skills": len(unique_skills),
+                    "domains": list(skills_obj.keys())
+                }
+            })
+        
+        return documents
+    
+    @staticmethod
+    def extract_education_chunks(portfolio_data: Dict) -> List[Dict]:
+        """Extract education data into document chunks"""
+        documents = []
+        
+        if not portfolio_data or "education" not in portfolio_data:
+            return documents
+        
+        for edu in portfolio_data["education"]:
+            degree = edu.get("degree", "")
+            school = edu.get("school", "")
+            duration = edu.get("duration", "")
+            location = edu.get("location", "")
+            gpa = edu.get("gpa", "")
+            
+            content = f"""EDUCATION: {degree}
+Institution: {school}
+Duration: {duration}
+{f"Location: {location}" if location else ""}
+{f"GPA: {gpa}" if gpa else ""}
+"""
+            
+            documents.append({
+                "type": "education",
+                "content": content.strip(),
+                "metadata": {
+                    "degree": degree,
+                    "school": school,
+                    "duration": duration
+                }
+            })
+        
+        return documents
+    
+    @staticmethod
+    def extract_profile_chunk(portfolio_data: Dict) -> List[Dict]:
+        """Extract profile/bio data into document chunk"""
+        if not portfolio_data:
+            return []
+        
+        name = portfolio_data.get("name", "")
+        title = portfolio_data.get("title", "")
+        bio = portfolio_data.get("bio", "")
+        github = portfolio_data.get("github", "")
+        
+        content = f"""PROFESSIONAL PROFILE: {name}
+Title: {title}
+Bio: {bio}
+{f"GitHub: https://github.com/{github}" if github else ""}
+
+Summary: {name} is a {title} specializing in data science, machine learning, and AI solutions.
+"""
+        
+        return [{
+            "type": "profile",
+            "content": content.strip(),
+            "metadata": {
+                "name": name,
+                "title": title,
+                "github": github
             }
-            chunks = self.chunker.chunk_text(exp_text, metadata, f"experience_{idx}")
-            all_chunks.extend(chunks)
-        
-        return all_chunks
+        }]
     
-    def build_documents_from_github(self, repos: List[Dict]) -> List[DocumentChunk]:
-        """Build chunked documents from GitHub repositories"""
-        all_chunks = []
+    @staticmethod
+    def process_portfolio(portfolio_data: Dict) -> List[Dict]:
+        """
+        Process complete portfolio data into document chunks
         
-        for repo in repos:
-            repo_text = f"""
-GITHUB PROJECT: {repo.get('name', '')}
-
-Description: {repo.get('description', 'No description')}
-
-Language: {repo.get('language', 'Unknown')}
-Stars: {repo.get('stargazers_count', 0)}
-Forks: {repo.get('forks_count', 0)}
-URL: {repo.get('html_url', '')}
-"""
-            metadata = MetadataExtractor.extract_github_metadata(repo)
-            chunks = self.chunker.chunk_text(repo_text, metadata, f"github_{repo.get('name', '')}")
-            all_chunks.extend(chunks)
+        Returns:
+            List of document dictionaries ready for embedding
+        """
+        all_documents = []
         
-        return all_chunks
+        # Extract all document types
+        all_documents.extend(DocumentProcessor.extract_profile_chunk(portfolio_data))
+        all_documents.extend(DocumentProcessor.extract_experience_chunks(portfolio_data))
+        all_documents.extend(DocumentProcessor.extract_project_chunks(portfolio_data))
+        all_documents.extend(DocumentProcessor.extract_skills_chunks(portfolio_data))
+        all_documents.extend(DocumentProcessor.extract_education_chunks(portfolio_data))
+        
+        print(f"📄 Processed portfolio into {len(all_documents)} document chunks")
+        return all_documents
+
+
+# Quick test
+if __name__ == "__main__":
+    import json
+    import os
+    
+    # Try to load portfolio data
+    portfolio_file = "../portfolio_data.json"
+    
+    if os.path.exists(portfolio_file):
+        with open(portfolio_file, 'r') as f:
+            data = json.load(f)
+        
+        docs = DocumentProcessor.process_portfolio(data)
+        
+        print(f"\n📊 Document Statistics:")
+        doc_types = {}
+        for doc in docs:
+            doc_type = doc['type']
+            doc_types[doc_type] = doc_types.get(doc_type, 0) + 1
+        
+        for doc_type, count in sorted(doc_types.items()):
+            print(f"   {doc_type}: {count}")
+        
+        # Show sample
+        if docs:
+            print(f"\n📄 Sample document:")
+            print(docs[0]['content'][:300] + "...")
+    else:
+        print(f"⚠️  Portfolio file not found: {portfolio_file}")

@@ -73,13 +73,14 @@ def chunk_text(
                     end = space_pos
         
         # Extract chunk
-        chunk_text = text[start:end].strip()
+        chunk_text_content = text[start:end].strip()
         
-        if chunk_text:
+        if chunk_text_content:
             chunks.append({
-                "text": chunk_text,
+                "text": chunk_text_content,
                 "metadata": {
                     **metadata,
+                    "text": chunk_text_content,  # Store chunk text for snippet extraction
                     "chunk_index": chunk_index,
                     "char_start": start,
                     "char_end": end

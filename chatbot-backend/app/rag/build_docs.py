@@ -167,8 +167,7 @@ class DocumentBuilder:
                     metadata={
                         "source_type": "portfolio",
                         "source_name": "Professional Summary",
-                        "locator": settings.PORTFOLIO_JSON_PATH,
-                        "text": summary_text  # Store full text for snippet extraction
+                        "locator": settings.PORTFOLIO_JSON_PATH
                     }
                 ))
         
@@ -189,8 +188,7 @@ class DocumentBuilder:
                 metadata={
                     "source_type": "portfolio",
                     "source_name": "Technical Skills",
-                    "locator": settings.PORTFOLIO_JSON_PATH,
-                    "text": skills_text
+                    "locator": settings.PORTFOLIO_JSON_PATH
                 }
             ))
         
@@ -214,8 +212,7 @@ class DocumentBuilder:
                     metadata={
                         "source_type": "portfolio",
                         "source_name": f"Project: {project.get('name', 'Unnamed')}",
-                        "locator": settings.PORTFOLIO_JSON_PATH,
-                        "text": project_text
+                        "locator": settings.PORTFOLIO_JSON_PATH
                     }
                 ))
         
@@ -241,8 +238,7 @@ class DocumentBuilder:
                     metadata={
                         "source_type": "portfolio",
                         "source_name": f"Experience: {exp.get('company', 'Company')}",
-                        "locator": settings.PORTFOLIO_JSON_PATH,
-                        "text": exp_text
+                        "locator": settings.PORTFOLIO_JSON_PATH
                     }
                 ))
         
@@ -259,8 +255,7 @@ class DocumentBuilder:
             metadata={
                 "source_type": "resume",
                 "source_name": "Resume PDF",
-                "locator": settings.RESUME_PDF_PATH,
-                "text": resume_text
+                "locator": settings.RESUME_PDF_PATH
             }
         )
     
@@ -277,8 +272,7 @@ class DocumentBuilder:
                 metadata={
                     "source_type": "markdown",
                     "source_name": Path(filepath).name,
-                    "locator": filepath,
-                    "text": content
+                    "locator": filepath
                 }
             )
             chunks.extend(file_chunks)
@@ -314,8 +308,7 @@ class DocumentBuilder:
                 metadata={
                     "source_type": "github",
                     "source_name": repo['name'],
-                    "locator": repo.get('url', f"https://github.com/{settings.GITHUB_USERNAME}/{repo['name']}"),
-                    "text": repo_text
+                    "locator": repo.get('url', f"https://github.com/{settings.GITHUB_USERNAME}/{repo['name']}")
                 }
             )
             chunks.extend(repo_chunks)

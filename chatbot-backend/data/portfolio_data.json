@@ -1,0 +1,119 @@
+{
+  "name": "Avikshith Reddy Yelakonda",
+  "title": "Data Scientist & Machine Learning Engineer",
+  "email": "avikshith.y@gmail.com",
+  "phone": "+1 (945) 998-3967",
+  "location": "Dallas, TX, USA",
+  "linkedin": "https://www.linkedin.com/in/avikshith-yelakonda",
+  "github": "https://github.com/avikshithreddy",
+  "portfolio": "https://avikshithreddy.github.io",
+  
+  "summary": "Data Scientist with over 2 years of experience designing scalable machine learning systems, deploying models to production, and automating CI/CD workflows using Python, SQL, and platforms such as MLflow, Airflow, and Databricks. Proficient in building and optimizing models using PyTorch, TensorFlow, and advanced statistical methods across AWS, GCP, and Azure. Adept at translating data-driven insights into resilient, high-impact solutions that deliver measurable business outcomes in dynamic environments.",
+  
+  "skills": {
+    "Programming & Tools": ["Python (pandas, NumPy, scikit-learn, PyTorch, TensorFlow)", "R", "SQL", "PySpark", "Git", "Jupyter", "VSCode"],
+    "Machine Learning & Deep Learning": ["Supervised and unsupervised learning", "Regression and classification", "Clustering", "Forecasting", "Transformers", "LLM fine-tuning", "Embeddings", "Topic modeling", "NLP pipelines", "Prompt engineering", "Computer vision", "Hyperparameter tuning", "Model calibration and validation", "Feature engineering"],
+    "Statistical Modeling & Research": ["EDA", "Hypothesis testing", "Probability models", "A/B testing", "Causal inference", "Optimization", "Time-series analysis"],
+    "Data Engineering & Pipelines": ["ETL and ELT workflows", "Airflow orchestration", "PySpark and Databricks transformations", "Data ingestion", "Preprocessing", "Validation frameworks", "Metadata modeling", "Data wrangling and integration"],
+    "Cloud & Big Data": ["Azure", "AWS (S3, Lambda, Glue, Redshift)", "Snowflake", "Hadoop ecosystem", "Distributed compute", "Scalable training and inference environments"],
+    "Visualization & Reporting": ["Tableau", "Power BI", "Matplotlib", "Seaborn", "KPI dashboards", "Performance monitoring", "Insights communication"],
+    "MLOps & Software Engineering": ["Model deployment", "Reproducible pipelines", "Version control", "CI/CD automation", "Experiment tracking with MLflow", "Containerized workflows", "Docker"],
+    "Collaboration & Communication": ["Technical writing", "Analytical documentation", "Stakeholder communication", "Cross-functional collaboration", "Data storytelling"]
+  },
+  
+  "projects": [
+    {
+      "name": "Consumer Affairs Lead Conversion Case Study",
+      "description": "Built an end-to-end predictive modeling pipeline using Logistic Regression and XGBoost with ROC AUC ≈ 0.68, enabling 2.3–2.4× lift in top-decile leads and delivering actionable insights via business-ready dashboards.",
+      "technologies": ["Python", "Scikit-learn", "XGBoost", "Power BI", "Regression"],
+      "achievements": "Achieved 2.3-2.4× lift in top-decile lead conversion rates",
+      "category": "Machine Learning"
+    },
+    {
+      "name": "Financial Literacy LLM Fine-Tuning Project",
+      "description": "Fine-tuned a TinyLlama LLM with LoRA/PEFT on curated financial Q&A data, built the full training–evaluation–chat pipeline, and deployed an interactive financial tutor chatbot providing accurate credit, budgeting, and savings guidance.",
+      "technologies": ["Python", "PyTorch", "HuggingFace", "PEFT/LoRA", "TinyLlama", "OpenAI", "Streamlit"],
+      "achievements": "Deployed production-ready financial literacy chatbot with context-aware responses",
+      "category": "NLP & LLM"
+    },
+    {
+      "name": "University Course Teaching Assistant RAG System",
+      "description": "Built a full-stack multi-tenant RAG platform where professors upload PDFs/PPTX and students receive grounded answers strictly from course materials using a hybrid TF-IDF + FAISS retriever, an automated chunking/embeddings pipeline, Streamlit portals for professor/student workflows, and Dockerized deployment.",
+      "technologies": ["Python", "OpenAI", "SentenceTransformers", "FAISS", "TF-IDF", "RAG", "Docker"],
+      "achievements": "Enabled accurate, source-grounded Q&A for multiple university courses",
+      "category": "RAG & Information Retrieval"
+    },
+    {
+      "name": "City Sanitation Multi-Source RAG Assistant",
+      "description": "Built an Advanced RAG system integrating web, PDF, and CSV data using LangChain, LlamaIndex, and FAISS to deliver concise, citation-based answers on city sanitation and recycling services.",
+      "technologies": ["Python", "LangChain", "LlamaIndex", "OpenAI", "FAISS", "Streamlit", "RAG"],
+      "achievements": "Integrated multi-source data for comprehensive sanitation information retrieval",
+      "category": "RAG & Information Retrieval"
+    },
+    {
+      "name": "Machine Learning & AI with Python Course Projects",
+      "description": "Built and optimized ML & DL models (Logistic Regression, MLPs, CNNs, Transformers) using NumPy, TensorFlow, and Keras. Applied PCA, feature extraction, adaptive learning, and regularization on diverse datasets. Developed AI agents to solve search & optimization problems using BFS, DFS, A*, Hill Climbing, and Minimax.",
+      "technologies": ["Python", "NumPy", "TensorFlow", "Keras", "CNN", "Transformers"],
+      "achievements": "Comprehensive portfolio of ML/DL models and AI search algorithms",
+      "category": "Machine Learning & AI"
+    }
+  ],
+  
+  "experience": [
+    {
+      "title": "Data Scientist",
+      "company": "PioneerSoft (Client: Freddie Mac)",
+      "location": "USA",
+      "duration": "July 2025 - Present",
+      "description": "Building ML/DL models for mortgage risk analytics and credit decisioning using PyTorch, TensorFlow, and cloud platforms.",
+      "responsibilities": [
+        "Built ML/DL models using PyTorch/TensorFlow to predict borrower behavior, improving risk classification accuracy by 18%",
+        "Engineered features and cleaned large-scale loan and borrower datasets with Python and SQL to support credit analytics",
+        "Designed & evaluated supervised, unsupervised, & DL models using robust metrics to ensure stable, compliant risk outcomes",
+        "Automated ETL pipelines using Databricks and Snowflake to deliver validated, analytics-ready mortgage datasets",
+        "Integrated ML models into cloud systems using GitHub, CI/CD pipelines, and version control for reproducible deployments",
+        "Conducted EDA, statistical testing, and model validation to improve predictive reliability and housing finance alignment",
+        "Built transformer-based NLP prototypes to extract insights from servicing notes and documents for risk forecasting",
+        "Partnered with engineering and product teams to productionize ML workflows supporting scalable mortgage risk decisioning"
+      ]
+    },
+    {
+      "title": "Data Analyst",
+      "company": "Yogin",
+      "location": "India",
+      "duration": "May 2021 - May 2023",
+      "description": "Developed analytics pipelines, ML models, and automated reporting solutions to support data-driven operational decisions.",
+      "responsibilities": [
+        "Cleaned, merged, and modeled structured datasets using Python, R, and SQL to support analytics pipelines and ML readiness",
+        "Developed regression, clustering, and classification models to uncover insights and support data-driven operational decisions",
+        "Automated SQL and Python ETL workflows with Power BI and Tableau, reducing manual reporting effort by 35%",
+        "Performed EDA, hypothesis testing, and trend modeling to identify key drivers and guide data-backed recommendations",
+        "Designed dashboards to visualize KPIs, model outputs, and performance trends across multiple business functions",
+        "Validated data quality using QA scripts, anomaly detection checks, and consistency rules to ensure reliable analytics",
+        "Collaborated with cross-functional teams to refine requirements and deliver actionable, insight-driven solutions",
+        "Used Git and Docker to build reproducible analytics environments across local and cloud-based setups"
+      ]
+    }
+  ],
+  
+  "education": [
+    {
+      "degree": "Master of Science in Computer Science (AI/ML)",
+      "institution": "Southern Methodist University",
+      "location": "Dallas, TX",
+      "year": "May 2025",
+      "gpa": "3.5/4.0",
+      "details": "Focus on Artificial Intelligence and Machine Learning"
+    }
+  ],
+  
+  "certifications": [],
+  
+  "interests": [
+    "Machine Learning Research",
+    "Open Source Contributions",
+    "LLM Fine-tuning and RAG Systems",
+    "AI Ethics and Responsible ML",
+    "Cloud Architecture and MLOps"
+  ]
+}

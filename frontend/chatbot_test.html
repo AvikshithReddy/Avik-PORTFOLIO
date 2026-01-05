@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Test Page</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        .test-container {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        .test-section {
+            margin-bottom: 30px;
+        }
+        
+        .test-section h2 {
+            color: #444;
+            font-size: 18px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            transition: transform 0.2s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+        }
+        
+        .response-box {
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 15px;
+            margin-top: 15px;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .success { color: #4caf50; }
+        .error { color: #f44336; }
+        
+        .endpoint-info {
+            background: #e3f2fd;
+            padding: 10px 15px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            font-size: 13px;
+        }
+        
+        .endpoint-url {
+            font-family: 'Courier New', monospace;
+            color: #1976d2;
+        }
+        
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        .status-online {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        .status-offline {
+            background: #ffebee;
+            color: #c62828;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Portfolio Chatbot - Test Page</h1>
+        <p class="subtitle">Test the chatbot API endpoints and functionality</p>
+        
+        <!-- Health Check Section -->
+        <div class="test-section">
+            <h2>1. Health Check</h2>
+            <div class="endpoint-info">
+                <strong>GET</strong> <span class="endpoint-url">http://localhost:8000/health</span>
+            </div>
+            <button onclick="testHealth()">Test Health Endpoint</button>
+            <div id="health-response" class="response-box" style="display:none;"></div>
+        </div>
+        
+        <!-- Chat Test Section -->
+        <div class="test-section">
+            <h2>2. Chat Test</h2>
+            <div class="endpoint-info">
+                <strong>POST</strong> <span class="endpoint-url">http://localhost:8000/api/chat</span>
+            </div>
+            <input 
+                type="text" 
+                id="chat-input" 
+                placeholder="Enter your question (e.g., What projects has Avikshith worked on?)"
+                value="What are Avikshith's main technical skills?"
+            />
+            <button onclick="testChat()">Send Chat Message</button>
+            <button onclick="testChat('Tell me about Avikshith\'s experience')">Sample Question 1</button>
+            <button onclick="testChat('What programming languages does Avikshith know?')">Sample Question 2</button>
+            <div id="chat-response" class="response-box" style="display:none;"></div>
+        </div>
+        
+        <!-- Backend Status -->
+        <div class="test-section">
+            <h2>3. Backend Status</h2>
+            <p id="backend-status">Click "Check Status" to test backend connectivity</p>
+            <button onclick="checkBackendStatus()">Check Status</button>
+        </div>
+        
+        <!-- Chatbot Widget Info -->
+        <div class="test-section">
+            <h2>4. Chatbot Widget</h2>
+            <p>The chatbot widget should appear in the bottom-right corner of this page.</p>
+            <p><strong>Try these actions:</strong></p>
+            <ul style="margin-left: 20px; margin-top: 10px; line-height: 1.8;">
+                <li>Click the chat bubble to open the widget</li>
+                <li>Ask: "What projects has Avikshith worked on?"</li>
+                <li>Ask: "Tell me about Avikshith's background"</li>
+                <li>Ask: "What are his technical skills?"</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        const BACKEND_URL = 'http://localhost:8000';
+        
+        async function testHealth() {
+            const responseDiv = document.getElementById('health-response');
+            responseDiv.style.display = 'block';
+            responseDiv.innerHTML = '<span class="muted">Loading...</span>';
+            
+            try {
+                const response = await fetch(`${BACKEND_URL}/health`);
+                const data = await response.json();
+                
+                responseDiv.innerHTML = `<span class="success">✓ Success</span>\n\n${JSON.stringify(data, null, 2)}`;
+            } catch (error) {
+                responseDiv.innerHTML = `<span class="error">✗ Error</span>\n\n${error.message}`;
+            }
+        }
+        
+        async function testChat(question = null) {
+            const input = document.getElementById('chat-input');
+            const query = question || input.value;
+            
+            if (!query.trim()) {
+                alert('Please enter a question');
+                return;
+            }
+            
+            const responseDiv = document.getElementById('chat-response');
+            responseDiv.style.display = 'block';
+            responseDiv.innerHTML = '<span class="muted">Sending request...</span>';
+            
+            try {
+                const response = await fetch(`${BACKEND_URL}/api/chat`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        query: query,
+                        include_sources: true
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                
+                let output = `<span class="success">✓ Success</span>\n\n`;
+                output += `<strong>Question:</strong> ${query}\n\n`;
+                output += `<strong>Response:</strong>\n${data.response}\n\n`;
+                output += `<strong>Confidence:</strong> ${(data.confidence * 100).toFixed(1)}%\n\n`;
+                
+                if (data.sources && data.sources.length > 0) {
+                    output += `<strong>Sources (${data.sources.length}):</strong>\n`;
+                    data.sources.forEach((source, i) => {
+                        output += `${i + 1}. [${source.source_type}] ${source.source_name}\n`;
+                    });
+                }
+                
+                responseDiv.innerHTML = output;
+            } catch (error) {
+                responseDiv.innerHTML = `<span class="error">✗ Error</span>\n\n${error.message}`;
+            }
+        }
+        
+        async function checkBackendStatus() {
+            const statusP = document.getElementById('backend-status');
+            statusP.innerHTML = 'Checking backend...';
+            
+            try {
+                const response = await fetch(`${BACKEND_URL}/health`);
+                const data = await response.json();
+                
+                let html = `<span class="status-badge status-online">ONLINE</span><br><br>`;
+                html += `<strong>Status:</strong> ${data.status}<br>`;
+                html += `<strong>Version:</strong> ${data.version}<br>`;
+                html += `<strong>RAG Index Loaded:</strong> ${data.rag_index_loaded ? '✓ Yes' : '✗ No'}<br>`;
+                html += `<strong>Total Documents:</strong> ${data.total_documents}`;
+                
+                statusP.innerHTML = html;
+            } catch (error) {
+                statusP.innerHTML = `<span class="status-badge status-offline">OFFLINE</span><br><br>Cannot connect to backend: ${error.message}`;
+            }
+        }
+        
+        // Auto-check status on load
+        window.addEventListener('load', () => {
+            checkBackendStatus();
+        });
+    </script>
+    
+    <!-- Load chatbot widget -->
+    <script>
+        window.chatbotConfig = {
+            backendUrl: 'http://localhost:8000',
+            theme: 'light',
+            position: 'bottom-right',
+            includeSources: true
+        };
+    </script>
+    <script src="chatbot.js"></script>
+</body>
+</html>

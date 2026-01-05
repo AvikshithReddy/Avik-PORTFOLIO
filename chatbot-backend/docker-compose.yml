@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  chatbot-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      # OpenAI Configuration
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - CHAT_MODEL=${CHAT_MODEL:-gpt-4-turbo-preview}
+      - EMBEDDING_MODEL=${EMBEDDING_MODEL:-text-embedding-3-small}
+      
+      # RAG Configuration
+      - RAG_INDEX_DIR=/app/rag_index
+      - RAG_TOP_K=${RAG_TOP_K:-6}
+      - RAG_CHUNK_SIZE=${RAG_CHUNK_SIZE:-1200}
+      - RAG_CHUNK_OVERLAP=${RAG_CHUNK_OVERLAP:-150}
+      
+      # Source Paths
+      - PORTFOLIO_JSON_PATH=/app/data/portfolio_data.json
+      - RESUME_PDF_PATH=/app/data/avikshithReddy_resume.pdf
+      - PORTFOLIO_MD_GLOB=/app/data/*.md
+      
+      # GitHub Integration
+      - GITHUB_TOKEN=${GITHUB_TOKEN}
+      - GITHUB_USERNAME=${GITHUB_USERNAME:-avikshithreddy}
+      - GITHUB_MAX_REPOS=${GITHUB_MAX_REPOS:-20}
+      
+      # Security
+      - ADMIN_INGEST_KEY=${ADMIN_INGEST_KEY}
+      - CORS_ALLOW_ORIGINS=${CORS_ALLOW_ORIGINS:-*}
+    
+    volumes:
+      - ./rag_index:/app/rag_index
+      - ./logs:/app/logs
+    
+    restart: unless-stopped
+    
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s

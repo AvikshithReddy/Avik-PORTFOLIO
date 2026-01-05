@@ -1353,8 +1353,17 @@
   }
 </script>
 
-<!-- AI Chatbot Widget -->
-<script src="chatbot.js?v=7"></script>
+<!-- AI Chatbot Widget Configuration -->
+<script>
+  // Configure chatbot before loading the script
+  window.chatbotConfig = {
+    backendUrl: 'http://localhost:8000',  // Local development backend
+    theme: 'light',
+    position: 'bottom-right',
+    includeSources: true
+  };
+</script>
+<script src="frontend/chatbot.js"></script>
 </body>
 </html>
 

@@ -20,24 +20,25 @@
 
   <!-- Fonts & Icons -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
   <style>
     /* ========== THEME TOKENS (TIFFANY / WHITE / BLACK) ========== */
     :root{
-      --bg:#e9f6f8;
-      --bg-soft:#dbeff3;
+      --bg:#f3fbfc;
+      --bg-soft:#e7f6f7;
       --surface:#ffffff;
-      --surface-soft:#f3f6f8;
-      --border:rgba(15,23,42,.08);
-      --border-strong:rgba(15,23,42,.16);
-      --text:#0b0f12;          /* black-ish */
-      --muted:#607080;
+      --surface-soft:#f6fafb;
+      --border:rgba(11,31,37,.08);
+      --border-strong:rgba(11,31,37,.18);
+      --text:#0b1f25;          /* ink */
+      --muted:#5b6b73;
       --accent:#08b7b9;        /* tiffany */
-      --accent-dark:#078388;
-      --accent-soft:#d3f3f4;
-      --shadow-soft:0 18px 40px rgba(15,23,42,.08);
+      --accent-dark:#057c80;
+      --accent-soft:#d5f4f4;
+      --shadow-soft:0 18px 40px rgba(11,31,37,.08);
+      --shadow-strong:0 28px 60px rgba(11,31,37,.12);
       --maxw:1100px;
       --brandbar-h: 64px;
     }
@@ -45,11 +46,34 @@
     *{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth}
     body{
-      font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      font-family:"IBM Plex Sans",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
       color:var(--text);
       background:var(--bg);
       min-height:100vh;
       overflow-x:hidden;
+      position:relative;
+    }
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      background:
+        radial-gradient(900px 520px at 8% -10%, rgba(8,183,185,.18), transparent 60%),
+        radial-gradient(760px 520px at 92% 0%, rgba(11,31,37,.12), transparent 65%);
+      z-index:-2;
+      pointer-events:none;
+    }
+    body::after{
+      content:"";
+      position:fixed;
+      inset:0;
+      background-image:
+        linear-gradient(rgba(8,183,185,.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(8,183,185,.06) 1px, transparent 1px);
+      background-size:36px 36px;
+      opacity:.25;
+      z-index:-1;
+      pointer-events:none;
     }
     a{text-decoration:none;color:inherit}
 
@@ -65,6 +89,7 @@
     background:rgba(255,255,255,.92);
     backdrop-filter:blur(16px);
     border-bottom:1px solid var(--border);
+    box-shadow:0 10px 26px rgba(11,31,37,.06);
   }
 
   /* ✅ Grid layout: left icons | centered name | right nav */
@@ -120,17 +145,17 @@
     padding:.2rem 0;
   }
   .brand-name{
-    font-family:"Poppins",system-ui,sans-serif;
-    font-weight:800;
-    font-size:1rem;
-    letter-spacing:.22em;
+    font-family:"Space Grotesk",system-ui,sans-serif;
+    font-weight:700;
+    font-size:1.02rem;
+    letter-spacing:.16em;
     color:var(--text);
     line-height:1.15;
   }
   .brand-tagline{
     font-weight:700;
     font-size:.72rem;
-    letter-spacing:.20em;
+    letter-spacing:.18em;
     color:var(--accent-dark);
     line-height:1.15;
   }
@@ -210,9 +235,9 @@
       margin-bottom:1.6rem;
     }
     .section-title{
-      font-family:"Poppins",system-ui,sans-serif;
-      font-size:clamp(1.9rem,3vw,2.2rem);
-      letter-spacing:.02em;
+      font-family:"Space Grotesk",system-ui,sans-serif;
+      font-size:clamp(1.95rem,3.1vw,2.35rem);
+      letter-spacing:.01em;
     }
     .section-kicker{
       display:inline-flex;
@@ -258,9 +283,9 @@
       margin-bottom:.9rem;
     }
     .hero-title{
-      font-family:"Poppins",system-ui,sans-serif;
-      font-size: clamp(2.6rem, 4vw, 3.2rem);
-      line-height:1.08;
+      font-family:"Space Grotesk",system-ui,sans-serif;
+      font-size: clamp(2.7rem, 4.2vw, 3.4rem);
+      line-height:1.06;
       margin-bottom:1rem;
     }
     .hero-title .accent{color:var(--accent-dark);}
@@ -363,15 +388,29 @@
     /* ========== SUMMARY / SKILLS / PROJECTS / TIMELINE / CONTACT (unchanged) ========== */
     #summary.section{padding-top:4rem;padding-bottom:3.5rem}
     .summary-spotlight{
-      background:var(--surface);
+      background:linear-gradient(180deg, rgba(255,255,255,.95), rgba(255,255,255,.9));
       border-radius:26px;
       padding:2.2rem 2rem;
       border:1px solid var(--border);
       box-shadow:var(--shadow-soft);
+      position:relative;
+      overflow:hidden;
+    }
+    .summary-spotlight::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      border-radius:26px;
+      padding:1px;
+      background:linear-gradient(135deg, rgba(8,183,185,.55), rgba(11,31,37,.12));
+      -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite:xor;
+              mask-composite:exclude;
+      pointer-events:none;
     }
     .summary-title{
-      font-family:"Poppins",system-ui,sans-serif;
-      font-size:clamp(1.7rem,3vw,2rem);
+      font-family:"Space Grotesk",system-ui,sans-serif;
+      font-size:clamp(1.75rem,3vw,2.05rem);
       font-weight:700;
       margin-bottom:.55rem;
     }
@@ -510,8 +549,11 @@
       border:1px solid var(--border);
       border-radius:18px;
       padding:1.25rem 1.15rem;
-      box-shadow:0 10px 30px rgba(15,23,42,.06);
+      box-shadow:0 12px 32px rgba(11,31,37,.08);
       transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+      display:flex;
+      flex-direction:column;
+      gap:.4rem;
     }
     .project:hover{
       transform:translateY(-4px);
@@ -521,6 +563,37 @@
     .project h3{margin-bottom:.5rem;font-size:1.02rem;}
     .project p{color:var(--muted);line-height:1.6;margin-bottom:.55rem;font-size:.9rem;}
     .stack{color:var(--accent-dark);font-weight:800;font-size:.83rem;}
+    .project-footer{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:.75rem;
+      margin-top:.3rem;
+      flex-wrap:wrap;
+    }
+    .project-links{
+      display:flex;
+      gap:.45rem;
+      flex-wrap:wrap;
+    }
+    .project-link{
+      display:inline-flex;
+      align-items:center;
+      gap:.4rem;
+      padding:.35rem .7rem;
+      border-radius:999px;
+      border:1px solid rgba(8,183,185,.35);
+      background:rgba(8,183,185,.08);
+      color:var(--accent-dark);
+      font-size:.78rem;
+      font-weight:800;
+      transition:transform .16s ease, border-color .16s ease, background .16s ease;
+    }
+    .project-link:hover{
+      transform:translateY(-1px);
+      background:rgba(8,183,185,.14);
+      border-color:var(--accent);
+    }
 
     .timeline{position:relative;padding-left:1.4rem;}
     .timeline:before{
@@ -588,7 +661,7 @@
 
     .contact-wrap{padding-top:5rem;padding-bottom:5rem}
     .contact-title{
-      font-family:"Poppins",system-ui,sans-serif;
+      font-family:"Space Grotesk",system-ui,sans-serif;
       font-size:clamp(2rem,4vw,2.5rem);
       margin-bottom:.5rem;
     }
@@ -730,7 +803,7 @@
       gap:1rem;
     }
     .qi-title{
-      font-family:"Poppins",system-ui,sans-serif;
+      font-family:"Space Grotesk",system-ui,sans-serif;
       font-weight:800;
       font-size:1.05rem;
       letter-spacing:.02em;
@@ -1195,73 +1268,157 @@
       <article class="project">
         <h3>Executive Review Intelligence (Amazon Reviews 2023)</h3>
         <p>Production‑grade NLP/RAG system that clusters review issues, attaches evidence, and delivers action recommendations; includes RAGAS evaluation and Slack issue alerts.</p>
-        <div class="stack">Python · LlamaIndex · ChromaDB · RAG · Streamlit</div>
+        <div class="project-footer">
+          <div class="stack">Python · LlamaIndex · ChromaDB · RAG · Streamlit</div>
+          <div class="project-links">
+            <a class="project-link" href="https://github.com/AvikshithReddy/Amazon_Executive-review-intelligence" target="_blank" rel="noopener noreferrer" aria-label="Open Executive Review Intelligence GitHub repository">
+              <i class="fa-brands fa-github" aria-hidden="true"></i> Repo
+            </a>
+          </div>
+        </div>
       </article>
 
       <article class="project">
         <h3>AI Expense Claim Processing System</h3>
         <p>AI + computer‑vision receipt processing with FastAPI backend, ML pipeline, and Streamlit UI; supports structured extraction, confidence scoring, and analytics endpoints.</p>
-        <div class="stack">Python · FastAPI · OCR · Docling · Streamlit</div>
+        <div class="project-footer">
+          <div class="stack">Python · FastAPI · OCR · Docling · Streamlit</div>
+          <div class="project-links">
+            <a class="project-link" href="https://github.com/AvikshithReddy/AI_expense_Claim" target="_blank" rel="noopener noreferrer" aria-label="Open AI Expense Claim Processing System GitHub repository">
+              <i class="fa-brands fa-github" aria-hidden="true"></i> Repo
+            </a>
+          </div>
+        </div>
       </article>
 
       <article class="project">
         <h3>Financial Fine‑Tuned Chatbot</h3>
         <p>Fine‑tuned finance‑domain LLM with RAG to answer SEC/financial reporting questions and explain metrics with grounded responses.</p>
-        <div class="stack">Python · LLM Fine‑Tuning · RAG · FAISS</div>
+        <div class="project-footer">
+          <div class="stack">Python · LLM Fine‑Tuning · RAG · FAISS</div>
+          <div class="project-links">
+            <a class="project-link" href="https://github.com/AvikshithReddy/llm-finetune-chatbot" target="_blank" rel="noopener noreferrer" aria-label="Open Financial Fine-Tuned Chatbot GitHub repository">
+              <i class="fa-brands fa-github" aria-hidden="true"></i> Repo
+            </a>
+          </div>
+        </div>
       </article>
 
       <article class="project">
-        <h3>AI Teaching Assistant — Advanced RAG</h3>
-        <p>Multi‑tenant teaching assistant with course‑isolated vector stores, hybrid retrieval (TF‑IDF + embeddings), citations, and per‑student memory.</p>
-        <div class="stack">Python · RAG · FAISS · TF‑IDF · Streamlit</div>
+        <h3>Teaching Assistant RAG — AI Teaching Assistant</h3>
+        <p>End‑to‑end AI teaching assistant for professors and students with course‑isolated vector stores, hybrid retrieval (TF‑IDF + embeddings), citations, and per‑student memory.</p>
+        <div class="project-footer">
+          <div class="stack">Python · RAG · FAISS · TF‑IDF · Streamlit · OpenAI</div>
+          <div class="project-links">
+            <a class="project-link" href="https://github.com/AvikshithReddy/teaching-assistant-rag" target="_blank" rel="noopener noreferrer" aria-label="Open Teaching Assistant RAG GitHub repository">
+              <i class="fa-brands fa-github" aria-hidden="true"></i> Repo
+            </a>
+          </div>
+        </div>
       </article>
 
       <article class="project">
         <h3>Walmart Demand Forecasting (Time‑Series)</h3>
         <p>Built a daily revenue forecasting workflow (7–30 day horizons) with model comparison; Prophet_reg achieved test MAPE ≈ 20.8%.</p>
-        <div class="stack">Python · Prophet · LSTM · Time Series</div>
+        <div class="project-footer">
+          <div class="stack">Python · Prophet · LSTM · Time Series</div>
+          <div class="project-links">
+            <a class="project-link" href="https://github.com/AvikshithReddy/Time_Series-Demand_Forecsating" target="_blank" rel="noopener noreferrer" aria-label="Open Walmart Demand Forecasting GitHub repository">
+              <i class="fa-brands fa-github" aria-hidden="true"></i> Repo
+            </a>
+          </div>
+        </div>
       </article>
 
       <article class="project">
         <h3>A/B Testing &amp; Uplift Modeling (Criteo)</h3>
         <p>End‑to‑end experimentation with lift, power analysis, and uplift modeling; observed +65% relative conversion lift (p &lt; 0.001) and targeting insights.</p>
-        <div class="stack">Python · CausalML · Statsmodels · Uplift</div>
+        <div class="project-footer">
+          <div class="stack">Python · CausalML · Statsmodels · Uplift</div>
+          <div class="project-links">
+            <a class="project-link" href="https://github.com/AvikshithReddy/AB_test" target="_blank" rel="noopener noreferrer" aria-label="Open A/B Testing and Uplift Modeling GitHub repository">
+              <i class="fa-brands fa-github" aria-hidden="true"></i> Repo
+            </a>
+          </div>
+        </div>
       </article>
 
       <article class="project">
         <h3>Lead Conversion Modeling (Consumer Affairs)</h3>
         <p>Imbalanced classification for lead conversion; best models reached ROC‑AUC ≈ 0.683 and ~2.35× lift in top‑decile leads.</p>
-        <div class="stack">Python · scikit-learn · XGBoost · SHAP</div>
+        <div class="project-footer">
+          <div class="stack">Python · scikit-learn · XGBoost · SHAP</div>
+          <div class="project-links">
+            <a class="project-link" href="https://github.com/AvikshithReddy/Consumer-Affairs---Prediction" target="_blank" rel="noopener noreferrer" aria-label="Open Consumer Affairs Lead Conversion GitHub repository">
+              <i class="fa-brands fa-github" aria-hidden="true"></i> Repo
+            </a>
+          </div>
+        </div>
       </article>
 
       <article class="project">
         <h3>A/B Testing for Marketing Campaign Optimization</h3>
         <p>Compared Facebook vs Google Ads using hypothesis testing and regression/time‑series analysis to identify the higher‑ROI channel.</p>
-        <div class="stack">Python · Hypothesis Testing · Statsmodels</div>
+        <div class="project-footer">
+          <div class="stack">Python · Hypothesis Testing · Statsmodels</div>
+          <div class="project-links">
+            <a class="project-link" href="https://github.com/AvikshithReddy/A-B-testing-marketing-analysis" target="_blank" rel="noopener noreferrer" aria-label="Open Marketing A/B Testing GitHub repository">
+              <i class="fa-brands fa-github" aria-hidden="true"></i> Repo
+            </a>
+          </div>
+        </div>
       </article>
 
       <article class="project">
         <h3>Stock Market Time‑Series Analysis</h3>
         <p>Comparative analysis of SHOP, JD, and BABA with trend/volatility diagnostics, candlestick charts, and investor‑segment insights.</p>
-        <div class="stack">Python · yfinance · Pandas · Matplotlib</div>
+        <div class="project-footer">
+          <div class="stack">Python · yfinance · Pandas · Matplotlib</div>
+          <div class="project-links">
+            <a class="project-link" href="https://github.com/AvikshithReddy/Time-Series-Stock-market_-Analysis" target="_blank" rel="noopener noreferrer" aria-label="Open Stock Market Time-Series Analysis GitHub repository">
+              <i class="fa-brands fa-github" aria-hidden="true"></i> Repo
+            </a>
+          </div>
+        </div>
       </article>
 
       <article class="project">
         <h3>Heart Disease Risk Clustering (Health Care)</h3>
         <p>Unsupervised clustering on a heart‑disease dataset using K‑Means/DBSCAN/Hierarchical with PCA and silhouette/Davies‑Bouldin evaluation; identified four risk groups.</p>
-        <div class="stack">Python · K‑Means · DBSCAN · PCA</div>
+        <div class="project-footer">
+          <div class="stack">Python · K‑Means · DBSCAN · PCA</div>
+          <div class="project-links">
+            <a class="project-link" href="https://github.com/AvikshithReddy/Health_care" target="_blank" rel="noopener noreferrer" aria-label="Open Health Care Risk Clustering GitHub repository">
+              <i class="fa-brands fa-github" aria-hidden="true"></i> Repo
+            </a>
+          </div>
+        </div>
       </article>
 
       <article class="project">
         <h3>Tenant Matcher</h3>
         <p>Preference‑based rental property matcher with dataset‑driven ranking and automated email delivery.</p>
-        <div class="stack">Python · Pandas · Streamlit · SMTP</div>
+        <div class="project-footer">
+          <div class="stack">Python · Pandas · Streamlit · SMTP</div>
+          <div class="project-links">
+            <a class="project-link" href="https://github.com/AvikshithReddy/tenant-matcher" target="_blank" rel="noopener noreferrer" aria-label="Open Tenant Matcher GitHub repository">
+              <i class="fa-brands fa-github" aria-hidden="true"></i> Repo
+            </a>
+          </div>
+        </div>
       </article>
 
       <article class="project">
         <h3>Job Web Scraping (job_web)</h3>
         <p>Job‑focused web scraping notebook/scripts for collecting listings and related data.</p>
-        <div class="stack">Python · Web Scraping</div>
+        <div class="project-footer">
+          <div class="stack">Python · Web Scraping</div>
+          <div class="project-links">
+            <a class="project-link" href="https://github.com/AvikshithReddy/python--web-scrapping/tree/main/job_web" target="_blank" rel="noopener noreferrer" aria-label="Open Job Web Scraping GitHub repository">
+              <i class="fa-brands fa-github" aria-hidden="true"></i> Repo
+            </a>
+          </div>
+        </div>
       </article>
     </div>
   </div>

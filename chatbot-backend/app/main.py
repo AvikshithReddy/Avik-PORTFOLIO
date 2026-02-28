@@ -1,9 +1,10 @@
 """
-Main FastAPI application for the portfolio chatbot
+FastAPI application orchestrating LangGraph + LlamaIndex RAG chatbot
+for Avikshith Reddy's portfolio.
 """
 
 import uuid
-from typing import Dict
+from typing import Dict, List
 from fastapi import FastAPI, HTTPException, Header, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
@@ -15,70 +16,184 @@ from app.schemas import (
     HealthResponse,
     IngestRequest,
     IngestResponse,
-    SourceReference
+    SourceReference,
 )
-from app.llm.openai_client import OpenAIClient
-from app.rag import RAGIndex, DocumentBuilder, SYSTEM_PROMPT, build_rag_prompt, build_clarification_prompt
+from app.llm.openai_client import OpenAIClient, CohereReranker
+from app.rag import SYSTEM_PROMPT
 from app.utils.logging import app_logger
 from app.utils.text import truncate_text
 
+# LangGraph / LlamaIndex stack
+from app.rag.ingest import ingest_all
+from app.rag.graph import build_graph
+from llama_index.core import VectorStoreIndex
+from llama_index.embeddings.openai import OpenAIEmbedding
+from llama_index.vector_stores.qdrant import QdrantVectorStore
+from qdrant_client import QdrantClient
+
 # Global instances
 openai_client: OpenAIClient = None
-rag_index: RAGIndex = None
-doc_builder: DocumentBuilder = None
-
-# Session storage (in production, use Redis or similar)
-sessions: Dict[str, list] = {}
+reranker: CohereReranker = None
+graph_app = None
+retrievers: Dict[str, any] = {}
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """Startup and shutdown events"""
-    global openai_client, rag_index, doc_builder
-    
-    # Startup
-    app_logger.info("Starting Portfolio Chatbot API...")
-    
-    # Ensure directories exist
+    global openai_client, reranker, graph_app, retrievers
+
+    app_logger.info("Starting Portfolio Chatbot API (LangGraph/LlamaIndex)...")
     settings.ensure_directories()
-    
-    # Initialize OpenAI client
+
     openai_client = OpenAIClient(
         api_key=settings.OPENAI_API_KEY,
         chat_model=settings.CHAT_MODEL,
-        embedding_model=settings.EMBEDDING_MODEL
+        embedding_model=settings.EMBEDDING_MODEL,
     )
-    
-    # Initialize RAG index
-    rag_index = RAGIndex(settings.RAG_INDEX_DIR)
-    
-    # Try to load existing index
-    loaded = rag_index.load_index()
-    if loaded:
-        app_logger.info("Loaded existing RAG index")
-    else:
-        app_logger.warning("No existing RAG index found. Run /api/ingest to build index.")
-    
-    # Initialize document builder
-    doc_builder = DocumentBuilder(openai_client, rag_index)
-    
-    app_logger.info("Application startup complete")
-    
+    reranker = CohereReranker(
+        api_key=settings.COHERE_API_KEY,
+        model=settings.COHERE_RERANK_MODEL,
+    )
+
+    # Build retrievers backed by Qdrant collections
+    retrievers = _build_retrievers()
+
+    # Compile LangGraph
+    graph_app = build_graph(
+        router_fn=_route_message, retrievers=retrievers, reranker=reranker, synthesizer_fn=_synthesize
+    )
+
+    app_logger.info("Startup complete")
     yield
-    
-    # Shutdown
     app_logger.info("Shutting down Portfolio Chatbot API...")
+
+
+def _build_retrievers():
+    client = QdrantClient(url=settings.QDRANT_URL, api_key=settings.QDRANT_API_KEY)
+    embed_model = OpenAIEmbedding(model=settings.EMBEDDING_MODEL)
+    retrievers = {}
+
+    def make(collection):
+        vs = QdrantVectorStore(client=client, collection_name=collection, enable_hybrid=settings.QDRANT_HYBRID)
+        index = VectorStoreIndex.from_vector_store(vs, embed_model=embed_model)
+        return index.as_retriever(similarity_top_k=settings.RAG_RETRIEVER_TOP_K)
+
+    retrievers["resume"] = make(settings.QDRANT_RESUME_COLLECTION)
+    retrievers["github"] = make(settings.QDRANT_GITHUB_COLLECTION)
+    retrievers["portfolio"] = make(settings.QDRANT_PORTFOLIO_COLLECTION)
+    retrievers["linkedin"] = make(settings.QDRANT_LINKEDIN_COLLECTION)
+    # default fallback
+    retrievers["general"] = retrievers["portfolio"]
+    return retrievers
+
+
+def _route_message(state):
+    message = state.get("message", "").lower()
+    if any(k in message for k in ["resume", "cv", "education", "experience", "work history"]):
+        state["route"] = "resume"
+    elif any(k in message for k in ["github", "repo", "code", "pull request", "commit"]):
+        state["route"] = "github"
+    elif any(k in message for k in ["linkedin", "profile", "recommendations", "endorsements"]):
+        state["route"] = "linkedin"
+    elif any(k in message for k in ["portfolio", "website", "site", "blog"]):
+        state["route"] = "portfolio"
+    else:
+        state["route"] = "general"
+    return state
+
+
+def _format_sources(nodes: List) -> List[SourceReference]:
+    sources = []
+    for node in nodes:
+        meta = node.metadata or {}
+        source_type = meta.get("source_type", "unknown")
+        locator = meta.get("file_path") or meta.get("url") or meta.get("source", "")
+        name = (
+            meta.get("source_name")
+            or meta.get("title")
+            or meta.get("repo")
+            or meta.get("source_type", "source")
+        )
+        sources.append(
+            SourceReference(
+                source_type=source_type,
+                source_name=name,
+                locator=str(locator),
+                snippet=truncate_text(node.get_text(), max_length=200),
+                relevance_score=float(getattr(node, "score", 0.0) or 0.0),
+            )
+        )
+    return sources
+
+
+def _build_prompt(question: str, nodes: List) -> str:
+    context_blocks = []
+    per_node_limit = max(300, settings.RAG_MAX_CONTEXT_CHARS // max(1, len(nodes))) if nodes else settings.RAG_MAX_CONTEXT_CHARS
+    for idx, node in enumerate(nodes, 1):
+        meta = node.metadata or {}
+        tag = meta.get("source_type", "source")
+        node_text = truncate_text(node.get_text(), max_length=per_node_limit)
+        context_blocks.append(f"[Source {idx}: {tag}]\n{node_text}")
+    context = "\n\n".join(context_blocks)
+    if not context:
+        return f"No grounded context was found for this question. User question: {question}. Answer concisely or ask for a different question about Avikshith's work."
+    return (
+        f"CONTEXT:\n{context}\n\n"
+        f"USER QUESTION:\n{question}\n\n"
+        "Answer concisely using only the context. Add inline tags like [Source: resume] or [Source: GitHub/<repo>] to cite evidence."
+    )
+
+
+def _synthesize(state):
+    reranked = state.get("reranked", [])
+    question = state.get("message", "")
+    if not reranked:
+        answer = "I don't have that in my indexed data yet. You can ask about my resume, GitHub projects, or portfolio site."
+        state["answer"] = answer
+        state["sources"] = []
+        state["confidence"] = 0.0
+        return state
+
+    top_score = float(getattr(reranked[0], "score", 0.0) or 0.0)
+    if top_score < settings.RAG_CONFIDENCE_THRESHOLD:
+        answer = (
+            "I couldn't find strong supporting information for that yet. "
+            "Try asking about a specific project, role, or skill area, and I can look it up."
+        )
+        state["answer"] = answer
+        state["sources"] = []
+        state["confidence"] = top_score
+        return state
+
+    prompt = _build_prompt(question, reranked[: settings.RAG_TOP_K])
+    messages = [
+        {"role": "system", "content": SYSTEM_PROMPT},
+        {"role": "user", "content": prompt},
+    ]
+
+    answer = openai_client.chat_completion(
+        messages=messages,
+        temperature=settings.CHAT_TEMPERATURE,
+        max_tokens=settings.CHAT_MAX_TOKENS,
+    )
+
+    sources = _format_sources(reranked[: settings.RAG_TOP_K])
+    confidence = top_score
+
+    state["answer"] = answer
+    state["sources"] = sources
+    state["confidence"] = confidence
+    return state
 
 
 # Create FastAPI app
 app = FastAPI(
     title="Portfolio Chatbot API",
-    description="Intelligent chatbot for Avikshith Reddy's portfolio with RAG",
-    version="1.0.0",
-    lifespan=lifespan
+    description="LangGraph + LlamaIndex chatbot for Avikshith Reddy",
+    version="2.0.0",
+    lifespan=lifespan,
 )
 
-# Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.cors_origins,
@@ -90,121 +205,16 @@ app.add_middleware(
 
 @app.get("/health", response_model=HealthResponse)
 async def health_check():
-    """Health check endpoint"""
-    stats = rag_index.get_stats() if rag_index else {"loaded": False}
-    
+    loaded = graph_app is not None
     return HealthResponse(
         status="ok",
-        version="1.0.0",
-        rag_index_loaded=stats.get("loaded", False),
-        total_documents=stats.get("total_chunks", 0)
+        version="2.0.0",
+        rag_index_loaded=loaded,
+        total_documents=0,
     )
 
 
-@app.post("/api/chat", response_model=ChatResponse)
-async def chat(request: ChatRequest):
-    """
-    Chat endpoint with RAG-powered responses
-    
-    Args:
-        request: Chat request with query and optional session_id
-    
-    Returns:
-        Chat response with answer and sources
-    """
-    if not rag_index or not rag_index.loaded:
-        raise HTTPException(
-            status_code=503,
-            detail="RAG index not loaded. Please run /api/ingest first."
-        )
-    
-    try:
-        # Get or create session
-        session_id = request.session_id or str(uuid.uuid4())
-        if session_id not in sessions:
-            sessions[session_id] = []
-        
-        # Get query embedding
-        query_embedding = openai_client.create_embedding(request.query)
-        
-        # Search for relevant chunks
-        search_results = rag_index.search(
-            query_embedding,
-            top_k=settings.RAG_TOP_K
-        )
-        
-        # Calculate confidence from top result
-        confidence = search_results[0][1] if search_results else 0.0
-        
-        # Build context chunks
-        context_chunks = []
-        sources = []
-        
-        for metadata, score in search_results:
-            # Add to context
-            context_chunks.append({
-                "text": metadata.get("text", ""),
-                "metadata": metadata
-            })
-            
-            # Build source reference
-            if request.include_sources:
-                source = SourceReference(
-                    source_type=metadata.get("source_type", "unknown"),
-                    source_name=metadata.get("source_name", "unknown"),
-                    locator=metadata.get("locator", ""),
-                    snippet=truncate_text(metadata.get("text", ""), max_length=150),
-                    relevance_score=round(score, 3)
-                )
-                sources.append(source)
-        
-        # Build messages for chat completion
-        if confidence >= settings.RAG_CONFIDENCE_THRESHOLD:
-            user_prompt = build_rag_prompt(request.query, context_chunks)
-        else:
-            user_prompt = build_clarification_prompt(request.query, search_results)
-        
-        messages = [
-            {"role": "system", "content": SYSTEM_PROMPT},
-            {"role": "user", "content": user_prompt}
-        ]
-        
-        # Add conversation history (last 3 exchanges)
-        conversation_history = sessions[session_id][-6:]  # Last 3 Q&A pairs
-        for msg in conversation_history:
-            messages.insert(-1, msg)  # Insert before current user message
-        
-        # Generate response
-        response_text = openai_client.chat_completion(
-            messages=messages,
-            temperature=settings.CHAT_TEMPERATURE,
-            max_tokens=settings.CHAT_MAX_TOKENS
-        )
-        
-        # Update session history
-        sessions[session_id].append({"role": "user", "content": request.query})
-        sessions[session_id].append({"role": "assistant", "content": response_text})
-        
-        # Keep only recent history
-        if len(sessions[session_id]) > 20:
-            sessions[session_id] = sessions[session_id][-20:]
-        
-        app_logger.info(f"Chat response generated (confidence: {confidence:.3f})")
-        
-        return ChatResponse(
-            response=response_text,
-            session_id=session_id,
-            confidence=round(confidence, 3),
-            sources=sources if request.include_sources else []
-        )
-    
-    except Exception as e:
-        app_logger.error(f"Chat error: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Chat processing error: {str(e)}")
-
-
 async def verify_admin_key(x_admin_key: str = Header(None)):
-    """Verify admin key for protected endpoints"""
     if settings.ADMIN_INGEST_KEY and x_admin_key != settings.ADMIN_INGEST_KEY:
         raise HTTPException(status_code=403, detail="Invalid admin key")
     return True
@@ -212,62 +222,65 @@ async def verify_admin_key(x_admin_key: str = Header(None)):
 
 @app.post("/api/ingest", response_model=IngestResponse, dependencies=[Depends(verify_admin_key)])
 async def ingest_documents(request: IngestRequest):
-    """
-    Ingest and build RAG index from sources
-    
-    Protected endpoint requiring X-Admin-Key header
-    
-    Args:
-        request: Ingest request with sources and options
-    
-    Returns:
-        Ingestion statistics
-    """
-    if not doc_builder:
-        raise HTTPException(status_code=503, detail="Document builder not initialized")
-    
     try:
-        app_logger.info(f"Starting ingestion: sources={request.sources}, force_rebuild={request.force_rebuild}")
-        
-        result = doc_builder.build_index(
-            sources=request.sources,
-            force_rebuild=request.force_rebuild
-        )
-        
+        result = ingest_all(request.sources, force_rebuild=request.force_rebuild)
         return IngestResponse(
-            status=result["status"],
-            documents_processed=result["documents_processed"],
-            chunks_created=result["chunks_created"],
-            embeddings_generated=result["embeddings_generated"],
-            sources_ingested=result["sources_ingested"],
-            errors=result.get("errors", [])
+            status=result.get("status", "unknown"),
+            documents_processed=result.get("documents_processed", 0),
+            chunks_created=result.get("chunks_created", 0),
+            embeddings_generated=result.get("chunks_created", 0),
+            sources_ingested=request.sources,
+            errors=[],
         )
-    
     except Exception as e:
-        app_logger.error(f"Ingestion error: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Ingestion error: {str(e)}")
+        app_logger.error(f"Ingestion error: {e}")
+        raise HTTPException(status_code=500, detail=f"Ingestion error: {e}")
+
+
+@app.post("/api/chat", response_model=ChatResponse)
+async def chat(request: ChatRequest):
+    if not graph_app:
+        raise HTTPException(status_code=503, detail="RAG graph not initialized; run /api/ingest first")
+
+    session_id = request.session_id or str(uuid.uuid4())
+
+    state = graph_app.invoke(
+        {"message": request.query},
+        config={"configurable": {"thread_id": session_id}},
+    )
+
+    answer = state.get("answer", "I couldn't generate a response.")
+    sources = state.get("sources", []) if request.include_sources else []
+    confidence = float(state.get("confidence", 0.0))
+
+    return ChatResponse(
+        response=answer,
+        session_id=session_id,
+        confidence=confidence,
+        sources=sources,
+    )
 
 
 @app.get("/")
 async def root():
-    """Root endpoint"""
     return {
         "name": "Portfolio Chatbot API",
-        "version": "1.0.0",
+        "version": "2.0.0",
         "endpoints": {
             "health": "/health",
             "chat": "/api/chat",
-            "ingest": "/api/ingest (admin only)"
-        }
+            "ingest": "/api/ingest (admin only)",
+        },
     }
 
 
 if __name__ == "__main__":
     import uvicorn
+
     uvicorn.run(
         "app.main:app",
         host=settings.HOST,
         port=settings.PORT,
         reload=True,
-        log_level=settings.LOG_LEVEL
+        log_level=settings.LOG_LEVEL,
     )

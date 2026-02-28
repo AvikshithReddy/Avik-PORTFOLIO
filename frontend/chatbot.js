@@ -6,12 +6,15 @@
 class PortfolioChatbot {
     constructor(config = {}) {
         this.config = {
-            backendUrl: config.backendUrl || 'http://localhost:8000',
+            // Empty/relative default so Nginx proxy can forward to backend service
+            backendUrl: config.backendUrl ?? '',
             theme: config.theme || 'light',
             position: config.position || 'bottom-right',
             includeSources: config.includeSources !== false,
             ...config
         };
+
+        this.backendBase = this.normalizeBaseUrl(this.config.backendUrl);
         
         this.sessionId = this.loadSessionId();
         this.isOpen = false;
@@ -24,6 +27,16 @@ class PortfolioChatbot {
         this.createChatWidget();
         this.attachEventListeners();
         this.checkBackendHealth();
+    }
+
+    normalizeBaseUrl(url = '') {
+        const clean = (url || '').trim();
+        if (!clean || clean === '/') return '';
+        return clean.replace(/\/$/, '');
+    }
+
+    buildUrl(path) {
+        return this.backendBase ? `${this.backendBase}${path}` : path;
     }
     
     loadSessionId() {
@@ -128,7 +141,7 @@ class PortfolioChatbot {
     
     async checkBackendHealth() {
         try {
-            const response = await fetch(`${this.config.backendUrl}/health`);
+            const response = await fetch(this.buildUrl('/health'));
             const data = await response.json();
             
             if (!data.rag_index_loaded) {
@@ -154,7 +167,7 @@ class PortfolioChatbot {
         this.showTypingIndicator();
         
         try {
-            const response = await fetch(`${this.config.backendUrl}/api/chat`, {
+            const response = await fetch(this.buildUrl('/api/chat'), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

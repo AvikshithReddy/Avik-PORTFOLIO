@@ -1,0 +1,58 @@
+version: "3.9"
+
+services:
+  qdrant:
+    image: qdrant/qdrant:v1.12.5
+    platform: linux/arm64
+    container_name: portfolio-qdrant
+    restart: unless-stopped
+    volumes:
+      - ./chatbot-backend/qdrant_data:/qdrant/storage
+    ports:
+      - "6333:6333"
+    networks:
+      - portfolio
+
+  backend:
+    build:
+      context: ./chatbot-backend
+      dockerfile: Dockerfile
+    platform: linux/arm64
+    container_name: portfolio-backend
+    restart: unless-stopped
+    env_file:
+      - ./chatbot-backend/.env
+    environment:
+      - QDRANT_URL=http://qdrant:6333
+      - QDRANT_HYBRID=false
+      - HOST=0.0.0.0
+      - PORT=8000
+    depends_on:
+      - qdrant
+    volumes:
+      - ./chatbot-backend/data:/app/data:ro
+      - ./chatbot-backend/logs:/app/logs
+    ports:
+      - "8000:8000"
+    networks:
+      portfolio:
+        aliases:
+          - backend
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    platform: linux/arm64
+    container_name: portfolio-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "8080:80"
+    networks:
+      - portfolio
+
+networks:
+  portfolio:
+    driver: bridge

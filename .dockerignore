@@ -1,0 +1,15 @@
+# Global ignore for docker build contexts (frontend build)
+.git
+venv
+**/__pycache__
+*.pyc
+*.pyo
+*.pyd
+.DS_Store
+Thumbs.db
+chatbot-backend/venv
+chatbot-backend/logs
+chatbot-backend/qdrant_data
+chatbot-backend/rag_index
+chatbot-backend/embeddings_cache
+chatbot-backend/github_cache

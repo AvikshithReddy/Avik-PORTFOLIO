@@ -15,7 +15,7 @@ class ChatRequest(BaseModel):
 
 class SourceReference(BaseModel):
     """Reference to a source document"""
-    source_type: str = Field(..., description="Type of source: resume, portfolio, markdown, github")
+    source_type: str = Field(..., description="Type of source: resume, portfolio, linkedin, markdown, github")
     source_name: str = Field(..., description="Name of the source")
     locator: str = Field(..., description="File path or URL to the source")
     snippet: str = Field(..., description="Relevant snippet from the source")
@@ -41,7 +41,7 @@ class HealthResponse(BaseModel):
 class IngestRequest(BaseModel):
     """Request model for ingestion endpoint"""
     sources: List[str] = Field(
-        default=["portfolio", "resume", "markdown", "github"],
+        default=["resume", "portfolio", "github", "linkedin"],
         description="List of sources to ingest"
     )
     force_rebuild: bool = Field(False, description="Force rebuild even if index exists")

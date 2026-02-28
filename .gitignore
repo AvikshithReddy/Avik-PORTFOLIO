@@ -16,6 +16,11 @@ env/
 chatbot-backend/embeddings_cache/
 chatbot-backend/github_cache/
 chatbot-backend/test_embeddings_cache/
+chatbot-backend/qdrant_data/
+chatbot-backend/rag_index/
+chatbot-backend/logs/
+chatbot-backend/venv/
+chatbot-backend/.env
 
 # IDE
 .vscode/

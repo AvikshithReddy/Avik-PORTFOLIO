@@ -8,6 +8,7 @@ steps:
   
   # Build the container image
   - name: 'gcr.io/cloud-builders/docker'
+    dir: 'chatbot-backend'
     args:
       - 'build'
       - '-t'
@@ -15,7 +16,7 @@ steps:
       - '-t'
       - 'gcr.io/$PROJECT_ID/avik-portfolio-chatbot:latest'
       - '-f'
-      - 'Dockerfile.cloudrun'
+      - 'Dockerfile'
       - '.'
   
   # Push the container image to Container Registry

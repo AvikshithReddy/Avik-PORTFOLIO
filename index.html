@@ -543,75 +543,112 @@
       color:var(--accent-dark);
     }
 
-    .skills-wrap{
+    .skills-board{
       display:grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap:1.1rem;
+      grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);
+      gap:1.2rem;
     }
-    @media(max-width:900px){ .skills-wrap{grid-template-columns:1fr} }
+    @media(max-width:980px){ .skills-board{grid-template-columns:1fr} }
 
-    .skill-card{
+    .skills-primary,
+    .skills-secondary{
+      display:grid;
+      gap:1rem;
+    }
+
+    .skill-band,
+    .skill-panel{
       background:var(--surface);
       border:1px solid var(--border);
       border-radius:18px;
-      padding:1.25rem 1.2rem;
-      box-shadow:0 10px 30px rgba(15,23,42,.05);
-      transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+      padding:1.1rem 1.1rem;
+      box-shadow:0 10px 30px rgba(15,23,42,.06);
+      position:relative;
+      overflow:hidden;
     }
-    .skill-card:hover{
-      transform:translateY(-3px);
-      box-shadow:0 18px 40px rgba(15,23,42,.09);
-      border-color:var(--border-strong);
+    .skill-band::before{
+      content:"";
+      position:absolute;
+      left:0; right:0; top:0;
+      height:3px;
+      background:linear-gradient(90deg,var(--accent),var(--accent-dark));
+      opacity:.7;
     }
-    .skill-head{
+    .skill-band-head{
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:.8rem;
-      padding-bottom:.9rem;
-      margin-bottom:1rem;
-      border-bottom:1px solid rgba(15,23,42,.08);
+      margin-bottom:.3rem;
     }
-    .skill-head h3{
-      font-size:1rem;
+    .skill-band h3{
       margin:0;
+      font-size:1rem;
       display:flex;
       align-items:center;
       gap:.55rem;
     }
-    .skill-head h3 i{color:var(--accent-dark)}
-    .skill-note{
-      font-size:.78rem;
-      color:var(--muted);
-      font-weight:700;
+    .skill-band h3 i{color:var(--accent-dark)}
+    .skill-level{
+      font-size:.7rem;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      font-weight:900;
+      color:var(--accent-dark);
+      background:var(--accent-soft);
+      border:1px solid rgba(8,183,185,.25);
+      padding:.18rem .55rem;
+      border-radius:999px;
       white-space:nowrap;
     }
-
-    .skill-grid{
-      display:grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap:.65rem;
+    .skill-band-desc{
+      color:var(--muted);
+      line-height:1.55;
+      font-size:.9rem;
+      margin:.2rem 0 .75rem 0;
     }
-    @media(max-width:520px){ .skill-grid{grid-template-columns: repeat(2, minmax(0, 1fr));} }
-
-    .skill-item{
+    .skill-row{
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      gap:.5rem .65rem;
+      margin:.35rem 0;
+    }
+    .skill-row-label{
+      font-size:.68rem;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      font-weight:800;
+      color:var(--muted);
+      min-width:88px;
+    }
+    .skill-row-chips,
+    .skill-cloud{
+      display:flex;
+      flex-wrap:wrap;
+      gap:.35rem;
+    }
+    .pill-chip,
+    .skill-dot{
+      display:inline-flex;
+      align-items:center;
+      gap:.35rem;
+      padding:.3rem .6rem;
+      border-radius:999px;
+      background:var(--surface-soft);
+      border:1px solid rgba(148,163,184,.35);
+      font-size:.78rem;
+      font-weight:800;
+      color:var(--text);
+    }
+    .skill-panel h4{
+      margin:0 0 .6rem 0;
+      font-size:.95rem;
       display:flex;
       align-items:center;
       gap:.5rem;
-      padding:.55rem .6rem;
-      border-radius:14px;
-      background:var(--surface-soft);
-      border:1px solid rgba(148,163,184,.28);
-      font-size:.86rem;
-      font-weight:800;
-      color:#0b0f12;
     }
-    .skill-item i{
-      color:var(--accent-dark);
-      width:18px;
-      text-align:center;
-      flex:0 0 auto;
-    }
+    .skill-panel h4 i{color:var(--accent-dark)}
 
     .projects{
       display:grid;
@@ -1335,150 +1372,144 @@
       </span>
     </div>
 
-    <div class="skills-wrap">
-
-      <!-- Languages -->
-      <div class="skill-card">
-        <div class="skill-head">
-          <h3><i class="fa-solid fa-code"></i> Programming Languages</h3>
-          <span class="skill-note">Core</span>
+    <div class="skills-board">
+      <div class="skills-primary">
+        <div class="skill-band">
+          <div class="skill-band-head">
+            <h3><i class="fa-solid fa-chart-line"></i> Decision Science & Experimentation</h3>
+            <span class="skill-level">Core</span>
+          </div>
+          <p class="skill-band-desc">
+            Frame business problems into measurable KPIs, design experiments, and build interpretable models that guide
+            decisions and allocation.
+          </p>
+          <div class="skill-row">
+            <span class="skill-row-label">Methods</span>
+            <div class="skill-row-chips">
+              <span class="pill-chip">Regression</span>
+              <span class="pill-chip">Classification</span>
+              <span class="pill-chip">Forecasting</span>
+              <span class="pill-chip">Causal/Uplift</span>
+              <span class="pill-chip">A/B Testing</span>
+            </div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-row-label">Evidence</span>
+            <div class="skill-row-chips">
+              <span class="pill-chip">Model evaluation</span>
+              <span class="pill-chip">Calibration</span>
+              <span class="pill-chip">Explainability (SHAP)</span>
+            </div>
+          </div>
         </div>
-        <div class="skill-grid">
-          <div class="skill-item"><i class="fa-brands fa-python"></i> Python</div>
-          <div class="skill-item"><i class="fa-solid fa-database"></i> SQL</div>
-          <div class="skill-item"><i class="fa-solid fa-chart-simple"></i> R</div>
-          <div class="skill-item"><i class="fa-solid fa-c"></i> C++</div>
-          <div class="skill-item"><i class="fa-solid fa-terminal"></i> Bash</div>
-          <div class="skill-item"><i class="fa-solid fa-calculator"></i> SAS</div>
+
+        <div class="skill-band">
+          <div class="skill-band-head">
+            <h3><i class="fa-solid fa-brain"></i> ML & GenAI Systems</h3>
+            <span class="skill-level">Core</span>
+          </div>
+          <p class="skill-band-desc">
+            Build production-grade ML and LLM pipelines with retrieval, ranking, and robust evaluation to deliver
+            reliable user-facing intelligence.
+          </p>
+          <div class="skill-row">
+            <span class="skill-row-label">Methods</span>
+            <div class="skill-row-chips">
+              <span class="pill-chip">RAG</span>
+              <span class="pill-chip">Embeddings</span>
+              <span class="pill-chip">Ranking</span>
+              <span class="pill-chip">Fine-tuning</span>
+              <span class="pill-chip">Prompting</span>
+            </div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-row-label">Evidence</span>
+            <div class="skill-row-chips">
+              <span class="pill-chip">NLP pipelines</span>
+              <span class="pill-chip">Semantic search</span>
+              <span class="pill-chip">RAG eval</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="skill-band">
+          <div class="skill-band-head">
+            <h3><i class="fa-solid fa-gears"></i> Data & MLOps Engineering</h3>
+            <span class="skill-level">Core</span>
+          </div>
+          <p class="skill-band-desc">
+            Ship models into production with reproducible pipelines, monitoring, and governance-ready workflows.
+          </p>
+          <div class="skill-row">
+            <span class="skill-row-label">Systems</span>
+            <div class="skill-row-chips">
+              <span class="pill-chip">ETL/ELT</span>
+              <span class="pill-chip">Spark</span>
+              <span class="pill-chip">Airflow</span>
+              <span class="pill-chip">dbt</span>
+            </div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-row-label">Ops</span>
+            <div class="skill-row-chips">
+              <span class="pill-chip">Docker</span>
+              <span class="pill-chip">MLflow</span>
+              <span class="pill-chip">CI/CD</span>
+              <span class="pill-chip">Monitoring</span>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- ML / AI -->
-      <div class="skill-card">
-        <div class="skill-head">
-          <h3><i class="fa-solid fa-brain"></i> Machine Learning & AI</h3>
-          <span class="skill-note">Modeling</span>
+      <div class="skills-secondary">
+        <div class="skill-panel">
+          <h4><i class="fa-solid fa-code"></i> Languages</h4>
+          <div class="skill-cloud">
+            <span class="skill-dot">Python</span>
+            <span class="skill-dot">SQL</span>
+            <span class="skill-dot">R</span>
+            <span class="skill-dot">Bash</span>
+            <span class="skill-dot">C++</span>
+            <span class="skill-dot">SAS</span>
+          </div>
         </div>
-        <div class="skill-grid">
-          <div class="skill-item">Regression & Classification</div>
-          <div class="skill-item">Clustering & Segmentation</div>
-          <div class="skill-item">Time-Series Forecasting</div>
-          <div class="skill-item">Model Training & Evaluation</div>
-          <div class="skill-item">Feature Engineering</div>
-          <div class="skill-item">A/B Testing & Experimentation</div>
+
+        <div class="skill-panel">
+          <h4><i class="fa-solid fa-network-wired"></i> ML Stack</h4>
+          <div class="skill-cloud">
+            <span class="skill-dot">scikit-learn</span>
+            <span class="skill-dot">PyTorch</span>
+            <span class="skill-dot">TensorFlow</span>
+            <span class="skill-dot">Hugging Face</span>
+            <span class="skill-dot">FAISS</span>
+            <span class="skill-dot">LlamaIndex</span>
+          </div>
+        </div>
+
+        <div class="skill-panel">
+          <h4><i class="fa-solid fa-cloud"></i> Data & Cloud</h4>
+          <div class="skill-cloud">
+            <span class="skill-dot">AWS</span>
+            <span class="skill-dot">Azure</span>
+            <span class="skill-dot">GCP</span>
+            <span class="skill-dot">Databricks</span>
+            <span class="skill-dot">Snowflake</span>
+            <span class="skill-dot">BigQuery</span>
+          </div>
+        </div>
+
+        <div class="skill-panel">
+          <h4><i class="fa-solid fa-chart-line"></i> Analytics</h4>
+          <div class="skill-cloud">
+            <span class="skill-dot">Power BI</span>
+            <span class="skill-dot">Tableau</span>
+            <span class="skill-dot">Looker</span>
+            <span class="skill-dot">Matplotlib</span>
+            <span class="skill-dot">Seaborn</span>
+            <span class="skill-dot">Excel</span>
+          </div>
         </div>
       </div>
-
-      <!-- NLP / GenAI -->
-      <div class="skill-card">
-        <div class="skill-head">
-          <h3><i class="fa-solid fa-comment-dots"></i> NLP & Generative AI</h3>
-          <span class="skill-note">LLMs</span>
-        </div>
-        <div class="skill-grid">
-          <div class="skill-item">LLMs & Prompt Engineering</div>
-          <div class="skill-item">Retrieval-Augmented Generation (RAG)</div>
-          <div class="skill-item">Embeddings & Semantic Search</div>
-          <div class="skill-item">Transformer Models</div>
-          <div class="skill-item">Vector Databases</div>
-          <div class="skill-item">Unstructured Document Processing</div>
-        </div>
-      </div>
-
-      <!-- ML Frameworks -->
-      <div class="skill-card">
-        <div class="skill-head">
-          <h3><i class="fa-solid fa-network-wired"></i> ML Frameworks & Libraries</h3>
-          <span class="skill-note">Libraries</span>
-        </div>
-        <div class="skill-grid">
-          <div class="skill-item">scikit-learn</div>
-          <div class="skill-item">PyTorch</div>
-          <div class="skill-item">TensorFlow</div>
-          <div class="skill-item">Hugging Face</div>
-          <div class="skill-item">Explainability (SHAP, LIME)</div>
-          <div class="skill-item">pandas & NumPy</div>
-        </div>
-      </div>
-
-      <!-- Data Engineering -->
-      <div class="skill-card">
-        <div class="skill-head">
-          <h3><i class="fa-solid fa-gears"></i> Data Engineering</h3>
-          <span class="skill-note">Pipelines</span>
-        </div>
-        <div class="skill-grid">
-          <div class="skill-item">ETL / ELT Pipelines</div>
-          <div class="skill-item">Spark / PySpark</div>
-          <div class="skill-item">Databricks</div>
-          <div class="skill-item">Data Quality & Validation</div>
-        </div>
-      </div>
-
-      <!-- Cloud -->
-      <div class="skill-card">
-        <div class="skill-head">
-          <h3><i class="fa-solid fa-cloud"></i> Cloud & Data Platforms</h3>
-          <span class="skill-note">Scale</span>
-        </div>
-        <div class="skill-grid">
-          <div class="skill-item">AWS</div>
-          <div class="skill-item">Azure</div>
-          <div class="skill-item">GCP</div>
-          <div class="skill-item">Snowflake</div>
-          <div class="skill-item">BigQuery</div>
-          <div class="skill-item">Redshift</div>
-        </div>
-      </div>
-
-      <!-- MLOps -->
-      <div class="skill-card">
-        <div class="skill-head">
-          <h3><i class="fa-solid fa-diagram-project"></i> MLOps & Deployment</h3>
-          <span class="skill-note">Production</span>
-        </div>
-        <div class="skill-grid">
-          <div class="skill-item">Docker</div>
-          <div class="skill-item">MLflow</div>
-          <div class="skill-item">CI/CD Pipelines</div>
-          <div class="skill-item">Model Versioning & Monitoring</div>
-          <div class="skill-item">Reproducible ML Workflows</div>
-          <div class="skill-item">Batch & Inference Pipelines</div>
-        </div>
-      </div>
-
-      <!-- Analytics -->
-      <div class="skill-card">
-        <div class="skill-head">
-          <h3><i class="fa-solid fa-chart-line"></i> Analytics & Visualization</h3>
-          <span class="skill-note">Insights</span>
-        </div>
-        <div class="skill-grid">
-          <div class="skill-item">Power BI</div>
-          <div class="skill-item">Tableau</div>
-          <div class="skill-item">Looker</div>
-          <div class="skill-item">Matplotlib</div>
-          <div class="skill-item">Seaborn</div>
-          <div class="skill-item">Excel</div>
-        </div>
-      </div>
-
-      <!-- Tools -->
-      <div class="skill-card">
-        <div class="skill-head">
-          <h3><i class="fa-solid fa-toolbox"></i> Developer Tools</h3>
-          <span class="skill-note">Collaboration</span>
-        </div>
-        <div class="skill-grid">
-          <div class="skill-item">Git</div>
-          <div class="skill-item">GitHub</div>
-          <div class="skill-item">JIRA</div>
-          <div class="skill-item">Streamlit</div>
-          <div class="skill-item">REST APIs</div>
-          <div class="skill-item">Agile Workflows</div>
-        </div>
-      </div>
-
     </div>
   </div>
 </section>
@@ -2335,8 +2366,6 @@
 <script src="frontend/chatbot.js"></script>
 </body>
 </html>
-
-
 
 
 

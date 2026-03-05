@@ -257,6 +257,13 @@
     @media(max-width:620px){
       .section-head{flex-direction:column;align-items:flex-start}
     }
+    .section-note{
+      color:var(--muted);
+      max-width:75ch;
+      line-height:1.6;
+      margin:-.6rem 0 1.6rem 0;
+      font-size:.92rem;
+    }
 
     /* ========== HERO ========== */
     .hero{
@@ -563,6 +570,77 @@
     .project h3{margin-bottom:.5rem;font-size:1.02rem;}
     .project p{color:var(--muted);line-height:1.6;margin-bottom:.55rem;font-size:.9rem;}
     .stack{color:var(--accent-dark);font-weight:800;font-size:.83rem;}
+    .project-kicker{
+      font-size:.72rem;
+      letter-spacing:.2em;
+      text-transform:uppercase;
+      font-weight:900;
+      color:var(--accent-dark);
+      margin-bottom:.3rem;
+    }
+    .project-structure{
+      display:grid;
+      gap:.55rem;
+      margin:.35rem 0 .55rem 0;
+    }
+    .project-structure .label{
+      font-size:.72rem;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      font-weight:900;
+      color:var(--accent-dark);
+      margin-bottom:.15rem;
+    }
+    .project-structure .block{
+      background:var(--surface-soft);
+      border:1px solid rgba(148,163,184,.28);
+      border-radius:12px;
+      padding:.65rem .7rem;
+    }
+    .project-structure .block p{margin:0}
+    .project-arch{
+      border:1px dashed rgba(8,183,185,.5);
+      background:rgba(8,183,185,.06);
+      border-radius:12px;
+      padding:.55rem .7rem;
+      font-size:.82rem;
+      font-weight:800;
+      color:var(--accent-dark);
+      display:flex;
+      flex-direction:column;
+      gap:.35rem;
+      margin:.2rem 0 .55rem 0;
+    }
+    .project-arch .arch-label{
+      font-size:.7rem;
+      letter-spacing:.2em;
+      text-transform:uppercase;
+      color:var(--accent-dark);
+    }
+    .project-arch .arch-flow{
+      font-family:"Space Grotesk",system-ui,sans-serif;
+      color:var(--text);
+      font-weight:700;
+    }
+    .project-stats{
+      display:flex;
+      flex-wrap:wrap;
+      gap:.45rem;
+      margin:.1rem 0 .4rem 0;
+      font-size:.78rem;
+      color:var(--muted);
+    }
+    .project-stat{
+      display:inline-flex;
+      align-items:center;
+      gap:.35rem;
+      padding:.22rem .6rem;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,.35);
+      background:#fff;
+      font-weight:800;
+    }
+    .project-stat i{color:var(--accent-dark);}
     .project-footer{
       display:flex;
       align-items:center;
@@ -593,6 +671,54 @@
       transform:translateY(-1px);
       background:rgba(8,183,185,.14);
       border-color:var(--accent);
+    }
+    .project-link.disabled{
+      opacity:.55;
+      pointer-events:none;
+      background:#f2f4f6;
+      color:#6b7280;
+      border-color:#d1d5db;
+    }
+
+    /* ========== ACHIEVEMENTS ========== */
+    .achievements{
+      display:grid;
+      gap:1rem;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    }
+    .achievement-card{
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:1.2rem 1.15rem;
+      box-shadow:0 12px 28px rgba(11,31,37,.08);
+    }
+    .achievement-card h3{
+      margin-bottom:.45rem;
+      font-size:1.02rem;
+      display:flex;
+      align-items:center;
+      gap:.5rem;
+    }
+    .achievement-card h3 i{color:var(--accent-dark);}
+    .achievement-card p{
+      margin:0 0 .45rem 0;
+      color:var(--muted);
+      line-height:1.6;
+      font-size:.9rem;
+    }
+    .achievement-metric{
+      display:inline-flex;
+      align-items:center;
+      gap:.4rem;
+      margin-top:.2rem;
+      padding:.25rem .6rem;
+      border-radius:999px;
+      background:var(--accent-soft);
+      border:1px solid rgba(8,183,185,.35);
+      color:var(--accent-dark);
+      font-weight:900;
+      font-size:.78rem;
     }
 
     .timeline{position:relative;padding-left:1.4rem;}
@@ -976,6 +1102,7 @@
     <div class="brand-right">
       <nav class="nav" aria-label="Primary">
         <a href="#summary">OVERVIEW</a>
+        <a href="#achievements">ACHIEVEMENTS</a>
         <a href="#skills">SKILLS</a>
         <a href="#projects">PROJECTS</a>
         <a href="#experience">EXPERIENCE</a>
@@ -1007,6 +1134,9 @@
         </span>
         <span class="hero-meta-item">
           <i class="fa-solid fa-graduation-cap"></i> MS Computer Science — AI/ML, SMU
+        </span>
+        <span class="hero-meta-item">
+          <i class="fa-solid fa-industry"></i> Targeting Ford · Mobility &amp; Manufacturing Analytics
         </span>
       </div>
     </div>
@@ -1094,6 +1224,44 @@
         <span class="chip"><i class="fa-brands fa-docker"></i> Docker</span>
         <span class="chip"><i class="fa-solid fa-diagram-project"></i> MLflow</span>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ACHIEVEMENTS ================= -->
+<section id="achievements" class="section">
+  <div class="container fade-in">
+    <div class="section-head">
+      <h2 class="section-title">Key Achievements</h2>
+      <span class="section-kicker">
+        <i class="fa-solid fa-trophy"></i> impact
+      </span>
+    </div>
+
+    <div class="achievements">
+      <article class="achievement-card">
+        <h3><i class="fa-solid fa-bolt" aria-hidden="true"></i> Measured Uplift</h3>
+        <p>Designed A/B testing and uplift modeling to quantify causal impact and conversion lift.</p>
+        <span class="achievement-metric">+65% relative lift (p &lt; 0.001)</span>
+      </article>
+
+      <article class="achievement-card">
+        <h3><i class="fa-solid fa-wave-square" aria-hidden="true"></i> Forecasting Accuracy</h3>
+        <p>Built time‑series forecasting workflows with model comparison and error diagnostics.</p>
+        <span class="achievement-metric">MAPE ≈ 20.8%</span>
+      </article>
+
+      <article class="achievement-card">
+        <h3><i class="fa-solid fa-layer-group" aria-hidden="true"></i> Conversion Lift</h3>
+        <p>Handled imbalanced prediction with calibrated ranking to surface high‑value leads.</p>
+        <span class="achievement-metric">ROC‑AUC ≈ 0.683 · 2.35× top‑decile lift</span>
+      </article>
+
+      <article class="achievement-card">
+        <h3><i class="fa-solid fa-road" aria-hidden="true"></i> Ford‑Ready Focus</h3>
+        <p>Targeting mobility and manufacturing analytics: warranty cost prediction, quality analytics, supply‑chain risk, and customer feedback intelligence.</p>
+        <span class="achievement-metric">Problem → Approach → Impact</span>
+      </article>
     </div>
   </div>
 </section>
@@ -1263,159 +1431,628 @@
       <h2 class="section-title">Featured Projects</h2>
       <span class="section-kicker"><i class="fa-solid fa-folder-open"></i> work</span>
     </div>
+    <p class="section-note">Each project is structured for recruiter scan speed: Problem → Approach → Impact, followed by architecture and GitHub stats.</p>
 
     <div class="projects">
-      <article class="project">
+      <article class="project" data-gh-repo="AvikshithReddy/Amazon_Executive-review-intelligence">
+        <div class="project-kicker">NLP · RAG · Reviews Intelligence</div>
         <h3>Executive Review Intelligence (Amazon Reviews 2023)</h3>
-        <p>Production‑grade NLP/RAG system that clusters review issues, attaches evidence, and delivers action recommendations; includes RAGAS evaluation and Slack issue alerts.</p>
+        <div class="project-stats" aria-label="GitHub stats">
+          <span class="project-stat"><i class="fa-solid fa-star"></i> <span data-gh-stars>—</span></span>
+          <span class="project-stat"><i class="fa-solid fa-box-archive"></i> <span data-gh-size>—</span></span>
+          <span class="project-stat"><i class="fa-solid fa-clock-rotate-left"></i> <span data-gh-updated>—</span></span>
+        </div>
+        <div class="project-structure">
+          <div class="block">
+            <div class="label">Problem</div>
+            <p>Large review volumes hide recurring product issues and make executive triage slow and noisy.</p>
+          </div>
+          <div class="block">
+            <div class="label">Approach</div>
+            <p>Cluster review themes, attach evidence with RAG, score outputs with RAGAS, and push issue alerts to Slack.</p>
+          </div>
+          <div class="block">
+            <div class="label">Impact</div>
+            <p>Executive‑ready issue clusters with citations and recommendations for faster decisions.</p>
+          </div>
+        </div>
+        <div class="project-arch">
+          <span class="arch-label">Architecture</span>
+          <div class="arch-flow">Reviews → Cleaning → Embeddings → Topic Clustering → RAG Evidence → RAGAS Eval → Slack Alerts</div>
+        </div>
         <div class="project-footer">
           <div class="stack">Python · LlamaIndex · ChromaDB · RAG · Streamlit</div>
           <div class="project-links">
             <a class="project-link" href="https://github.com/AvikshithReddy/Amazon_Executive-review-intelligence" target="_blank" rel="noopener noreferrer" aria-label="Open Executive Review Intelligence GitHub repository">
-              <i class="fa-brands fa-github" aria-hidden="true"></i> Repo
+              <i class="fa-brands fa-github" aria-hidden="true"></i> View Code
+            </a>
+            <a class="project-link" href="https://github.com/AvikshithReddy/Amazon_Executive-review-intelligence" target="_blank" rel="noopener noreferrer" aria-label="Open Executive Review Intelligence demo in README">
+              <i class="fa-solid fa-play" aria-hidden="true"></i> View Demo
             </a>
           </div>
         </div>
       </article>
 
-      <article class="project">
+      <article class="project" data-gh-repo="AvikshithReddy/AI_expense_Claim">
+        <div class="project-kicker">OCR · CV · Automation</div>
         <h3>AI Expense Claim Processing System</h3>
-        <p>AI + computer‑vision receipt processing with FastAPI backend, ML pipeline, and Streamlit UI; supports structured extraction, confidence scoring, and analytics endpoints.</p>
+        <div class="project-stats" aria-label="GitHub stats">
+          <span class="project-stat"><i class="fa-solid fa-star"></i> <span data-gh-stars>—</span></span>
+          <span class="project-stat"><i class="fa-solid fa-box-archive"></i> <span data-gh-size>—</span></span>
+          <span class="project-stat"><i class="fa-solid fa-clock-rotate-left"></i> <span data-gh-updated>—</span></span>
+        </div>
+        <div class="project-structure">
+          <div class="block">
+            <div class="label">Problem</div>
+            <p>Manual expense processing is slow, inconsistent, and difficult to audit at scale.</p>
+          </div>
+          <div class="block">
+            <div class="label">Approach</div>
+            <p>OCR + extraction pipeline with confidence scoring, FastAPI services, and a Streamlit review UI.</p>
+          </div>
+          <div class="block">
+            <div class="label">Impact</div>
+            <p>Structured claims data and analytics endpoints to accelerate review and approvals.</p>
+          </div>
+        </div>
+        <div class="project-arch">
+          <span class="arch-label">Architecture</span>
+          <div class="arch-flow">Receipts → OCR → Field Extraction → Validation → API → Review UI</div>
+        </div>
         <div class="project-footer">
           <div class="stack">Python · FastAPI · OCR · Docling · Streamlit</div>
           <div class="project-links">
             <a class="project-link" href="https://github.com/AvikshithReddy/AI_expense_Claim" target="_blank" rel="noopener noreferrer" aria-label="Open AI Expense Claim Processing System GitHub repository">
-              <i class="fa-brands fa-github" aria-hidden="true"></i> Repo
+              <i class="fa-brands fa-github" aria-hidden="true"></i> View Code
+            </a>
+            <a class="project-link" href="https://github.com/AvikshithReddy/AI_expense_Claim" target="_blank" rel="noopener noreferrer" aria-label="Open AI Expense Claim demo in README">
+              <i class="fa-solid fa-play" aria-hidden="true"></i> View Demo
             </a>
           </div>
         </div>
       </article>
 
-      <article class="project">
+      <article class="project" data-gh-repo="AvikshithReddy/llm-finetune-chatbot">
+        <div class="project-kicker">LLM · RAG · Finance</div>
         <h3>Financial Fine‑Tuned Chatbot</h3>
-        <p>Fine‑tuned finance‑domain LLM with RAG to answer SEC/financial reporting questions and explain metrics with grounded responses.</p>
+        <div class="project-stats" aria-label="GitHub stats">
+          <span class="project-stat"><i class="fa-solid fa-star"></i> <span data-gh-stars>—</span></span>
+          <span class="project-stat"><i class="fa-solid fa-box-archive"></i> <span data-gh-size>—</span></span>
+          <span class="project-stat"><i class="fa-solid fa-clock-rotate-left"></i> <span data-gh-updated>—</span></span>
+        </div>
+        <div class="project-structure">
+          <div class="block">
+            <div class="label">Problem</div>
+            <p>Finance teams need fast, grounded answers across SEC filings and reporting metrics.</p>
+          </div>
+          <div class="block">
+            <div class="label">Approach</div>
+            <p>Fine‑tuned LLM with a RAG layer over filings, plus retrieval via FAISS.</p>
+          </div>
+          <div class="block">
+            <div class="label">Impact</div>
+            <p>Grounded Q&amp;A that explains metrics with source‑backed responses.</p>
+          </div>
+        </div>
+        <div class="project-arch">
+          <span class="arch-label">Architecture</span>
+          <div class="arch-flow">Filings → Chunking → Embeddings → FAISS → LLM → Cited Answer</div>
+        </div>
         <div class="project-footer">
           <div class="stack">Python · LLM Fine‑Tuning · RAG · FAISS</div>
           <div class="project-links">
             <a class="project-link" href="https://github.com/AvikshithReddy/llm-finetune-chatbot" target="_blank" rel="noopener noreferrer" aria-label="Open Financial Fine-Tuned Chatbot GitHub repository">
-              <i class="fa-brands fa-github" aria-hidden="true"></i> Repo
+              <i class="fa-brands fa-github" aria-hidden="true"></i> View Code
+            </a>
+            <a class="project-link" href="https://github.com/AvikshithReddy/llm-finetune-chatbot" target="_blank" rel="noopener noreferrer" aria-label="Open Financial Fine-Tuned Chatbot demo in README">
+              <i class="fa-solid fa-play" aria-hidden="true"></i> View Demo
             </a>
           </div>
         </div>
       </article>
 
-      <article class="project">
+      <article class="project" data-gh-repo="AvikshithReddy/teaching-assistant-rag">
+        <div class="project-kicker">RAG · Education · Search</div>
         <h3>Teaching Assistant RAG — AI Teaching Assistant</h3>
-        <p>End‑to‑end AI teaching assistant for professors and students with course‑isolated vector stores, hybrid retrieval (TF‑IDF + embeddings), citations, and per‑student memory.</p>
+        <div class="project-stats" aria-label="GitHub stats">
+          <span class="project-stat"><i class="fa-solid fa-star"></i> <span data-gh-stars>—</span></span>
+          <span class="project-stat"><i class="fa-solid fa-box-archive"></i> <span data-gh-size>—</span></span>
+          <span class="project-stat"><i class="fa-solid fa-clock-rotate-left"></i> <span data-gh-updated>—</span></span>
+        </div>
+        <div class="project-structure">
+          <div class="block">
+            <div class="label">Problem</div>
+            <p>Students need course‑specific answers without hallucination across multiple classes.</p>
+          </div>
+          <div class="block">
+            <div class="label">Approach</div>
+            <p>Course‑isolated vector stores, hybrid retrieval (TF‑IDF + embeddings), and per‑student memory.</p>
+          </div>
+          <div class="block">
+            <div class="label">Impact</div>
+            <p>Cited, personalized responses for students and faculty with traceable sources.</p>
+          </div>
+        </div>
+        <div class="project-arch">
+          <span class="arch-label">Architecture</span>
+          <div class="arch-flow">Syllabus/Notes → TF‑IDF + Embeddings → Vector Store → RAG → Streamlit UI</div>
+        </div>
         <div class="project-footer">
           <div class="stack">Python · RAG · FAISS · TF‑IDF · Streamlit · OpenAI</div>
           <div class="project-links">
             <a class="project-link" href="https://github.com/AvikshithReddy/teaching-assistant-rag" target="_blank" rel="noopener noreferrer" aria-label="Open Teaching Assistant RAG GitHub repository">
-              <i class="fa-brands fa-github" aria-hidden="true"></i> Repo
+              <i class="fa-brands fa-github" aria-hidden="true"></i> View Code
+            </a>
+            <a class="project-link" href="https://github.com/AvikshithReddy/teaching-assistant-rag" target="_blank" rel="noopener noreferrer" aria-label="Open Teaching Assistant RAG demo in README">
+              <i class="fa-solid fa-play" aria-hidden="true"></i> View Demo
             </a>
           </div>
         </div>
       </article>
 
-      <article class="project">
+      <article class="project" data-gh-repo="AvikshithReddy/Time_Series-Demand_Forecsating">
+        <div class="project-kicker">Forecasting · Retail</div>
         <h3>Walmart Demand Forecasting (Time‑Series)</h3>
-        <p>Built a daily revenue forecasting workflow (7–30 day horizons) with model comparison; Prophet_reg achieved test MAPE ≈ 20.8%.</p>
+        <div class="project-stats" aria-label="GitHub stats">
+          <span class="project-stat"><i class="fa-solid fa-star"></i> <span data-gh-stars>—</span></span>
+          <span class="project-stat"><i class="fa-solid fa-box-archive"></i> <span data-gh-size>—</span></span>
+          <span class="project-stat"><i class="fa-solid fa-clock-rotate-left"></i> <span data-gh-updated>—</span></span>
+        </div>
+        <div class="project-structure">
+          <div class="block">
+            <div class="label">Problem</div>
+            <p>Retail planning requires reliable short‑horizon demand forecasts for staffing and inventory.</p>
+          </div>
+          <div class="block">
+            <div class="label">Approach</div>
+            <p>Compared Prophet and LSTM models with rolling evaluation across 7–30 day horizons.</p>
+          </div>
+          <div class="block">
+            <div class="label">Impact</div>
+            <p>Best model achieved test MAPE ≈ 20.8% for planning‑grade forecasts.</p>
+          </div>
+        </div>
+        <div class="project-arch">
+          <span class="arch-label">Architecture</span>
+          <div class="arch-flow">Sales Data → Feature Engineering → Model Compare → Forecast → Error Tracking</div>
+        </div>
         <div class="project-footer">
           <div class="stack">Python · Prophet · LSTM · Time Series</div>
           <div class="project-links">
             <a class="project-link" href="https://github.com/AvikshithReddy/Time_Series-Demand_Forecsating" target="_blank" rel="noopener noreferrer" aria-label="Open Walmart Demand Forecasting GitHub repository">
-              <i class="fa-brands fa-github" aria-hidden="true"></i> Repo
+              <i class="fa-brands fa-github" aria-hidden="true"></i> View Code
+            </a>
+            <a class="project-link disabled" href="#" aria-disabled="true">
+              <i class="fa-solid fa-play" aria-hidden="true"></i> View Demo
             </a>
           </div>
         </div>
       </article>
 
-      <article class="project">
+      <article class="project" data-gh-repo="AvikshithReddy/AB_test">
+        <div class="project-kicker">Experimentation · Causal Inference</div>
         <h3>A/B Testing &amp; Uplift Modeling (Criteo)</h3>
-        <p>End‑to‑end experimentation with lift, power analysis, and uplift modeling; observed +65% relative conversion lift (p &lt; 0.001) and targeting insights.</p>
+        <div class="project-stats" aria-label="GitHub stats">
+          <span class="project-stat"><i class="fa-solid fa-star"></i> <span data-gh-stars>—</span></span>
+          <span class="project-stat"><i class="fa-solid fa-box-archive"></i> <span data-gh-size>—</span></span>
+          <span class="project-stat"><i class="fa-solid fa-clock-rotate-left"></i> <span data-gh-updated>—</span></span>
+        </div>
+        <div class="project-structure">
+          <div class="block">
+            <div class="label">Problem</div>
+            <p>Marketing teams need to measure incremental impact and target high‑lift customers.</p>
+          </div>
+          <div class="block">
+            <div class="label">Approach</div>
+            <p>Power analysis, lift diagnostics, and uplift modeling to identify responsive segments.</p>
+          </div>
+          <div class="block">
+            <div class="label">Impact</div>
+            <p>Observed +65% relative conversion lift (p &lt; 0.001) and targeting insights.</p>
+          </div>
+        </div>
+        <div class="project-arch">
+          <span class="arch-label">Architecture</span>
+          <div class="arch-flow">Experiment Data → Power/Lift → Uplift Model → Segment Targeting</div>
+        </div>
         <div class="project-footer">
           <div class="stack">Python · CausalML · Statsmodels · Uplift</div>
           <div class="project-links">
             <a class="project-link" href="https://github.com/AvikshithReddy/AB_test" target="_blank" rel="noopener noreferrer" aria-label="Open A/B Testing and Uplift Modeling GitHub repository">
-              <i class="fa-brands fa-github" aria-hidden="true"></i> Repo
+              <i class="fa-brands fa-github" aria-hidden="true"></i> View Code
+            </a>
+            <a class="project-link disabled" href="#" aria-disabled="true">
+              <i class="fa-solid fa-play" aria-hidden="true"></i> View Demo
             </a>
           </div>
         </div>
       </article>
 
-      <article class="project">
+      <article class="project" data-gh-repo="AvikshithReddy/Consumer-Affairs---Prediction">
+        <div class="project-kicker">Classification · Lead Scoring</div>
         <h3>Lead Conversion Modeling (Consumer Affairs)</h3>
-        <p>Imbalanced classification for lead conversion; best models reached ROC‑AUC ≈ 0.683 and ~2.35× lift in top‑decile leads.</p>
+        <div class="project-stats" aria-label="GitHub stats">
+          <span class="project-stat"><i class="fa-solid fa-star"></i> <span data-gh-stars>—</span></span>
+          <span class="project-stat"><i class="fa-solid fa-box-archive"></i> <span data-gh-size>—</span></span>
+          <span class="project-stat"><i class="fa-solid fa-clock-rotate-left"></i> <span data-gh-updated>—</span></span>
+        </div>
+        <div class="project-structure">
+          <div class="block">
+            <div class="label">Problem</div>
+            <p>Leads are imbalanced, and teams need a reliable ranking to prioritize outreach.</p>
+          </div>
+          <div class="block">
+            <div class="label">Approach</div>
+            <p>Feature‑engineered XGBoost models with calibration and SHAP for interpretability.</p>
+          </div>
+          <div class="block">
+            <div class="label">Impact</div>
+            <p>Best models reached ROC‑AUC ≈ 0.683 and ~2.35× lift in top‑decile leads.</p>
+          </div>
+        </div>
+        <div class="project-arch">
+          <span class="arch-label">Architecture</span>
+          <div class="arch-flow">Leads → Feature Engineering → Model → SHAP → Ranked Outreach</div>
+        </div>
         <div class="project-footer">
-          <div class="stack">Python · scikit-learn · XGBoost · SHAP</div>
+          <div class="stack">Python · scikit‑learn · XGBoost · SHAP</div>
           <div class="project-links">
             <a class="project-link" href="https://github.com/AvikshithReddy/Consumer-Affairs---Prediction" target="_blank" rel="noopener noreferrer" aria-label="Open Consumer Affairs Lead Conversion GitHub repository">
-              <i class="fa-brands fa-github" aria-hidden="true"></i> Repo
+              <i class="fa-brands fa-github" aria-hidden="true"></i> View Code
+            </a>
+            <a class="project-link disabled" href="#" aria-disabled="true">
+              <i class="fa-solid fa-play" aria-hidden="true"></i> View Demo
             </a>
           </div>
         </div>
       </article>
 
-      <article class="project">
+      <article class="project" data-gh-repo="AvikshithReddy/A-B-testing-marketing-analysis">
+        <div class="project-kicker">A/B Testing · Marketing Mix</div>
         <h3>A/B Testing for Marketing Campaign Optimization</h3>
-        <p>Compared Facebook vs Google Ads using hypothesis testing and regression/time‑series analysis to identify the higher‑ROI channel.</p>
+        <div class="project-stats" aria-label="GitHub stats">
+          <span class="project-stat"><i class="fa-solid fa-star"></i> <span data-gh-stars>—</span></span>
+          <span class="project-stat"><i class="fa-solid fa-box-archive"></i> <span data-gh-size>—</span></span>
+          <span class="project-stat"><i class="fa-solid fa-clock-rotate-left"></i> <span data-gh-updated>—</span></span>
+        </div>
+        <div class="project-structure">
+          <div class="block">
+            <div class="label">Problem</div>
+            <p>Choose the higher‑ROI ad channel while controlling for temporal effects.</p>
+          </div>
+          <div class="block">
+            <div class="label">Approach</div>
+            <p>Hypothesis testing with regression and time‑series analysis to compare channel impact.</p>
+          </div>
+          <div class="block">
+            <div class="label">Impact</div>
+            <p>Identified the more cost‑effective channel for budget allocation decisions.</p>
+          </div>
+        </div>
+        <div class="project-arch">
+          <span class="arch-label">Architecture</span>
+          <div class="arch-flow">Channel Spend → Experiment → Statistical Test → ROI Decision</div>
+        </div>
         <div class="project-footer">
           <div class="stack">Python · Hypothesis Testing · Statsmodels</div>
           <div class="project-links">
             <a class="project-link" href="https://github.com/AvikshithReddy/A-B-testing-marketing-analysis" target="_blank" rel="noopener noreferrer" aria-label="Open Marketing A/B Testing GitHub repository">
-              <i class="fa-brands fa-github" aria-hidden="true"></i> Repo
+              <i class="fa-brands fa-github" aria-hidden="true"></i> View Code
+            </a>
+            <a class="project-link disabled" href="#" aria-disabled="true">
+              <i class="fa-solid fa-play" aria-hidden="true"></i> View Demo
             </a>
           </div>
         </div>
       </article>
 
-      <article class="project">
+      <article class="project" data-gh-repo="AvikshithReddy/Movie_Recommendation-Ranking-">
+        <div class="project-kicker">Ranking · Recommenders</div>
+        <h3>Movie Recommendation &amp; Ranking</h3>
+        <div class="project-stats" aria-label="GitHub stats">
+          <span class="project-stat"><i class="fa-solid fa-star"></i> <span data-gh-stars>—</span></span>
+          <span class="project-stat"><i class="fa-solid fa-box-archive"></i> <span data-gh-size>—</span></span>
+          <span class="project-stat"><i class="fa-solid fa-clock-rotate-left"></i> <span data-gh-updated>—</span></span>
+        </div>
+        <div class="project-structure">
+          <div class="block">
+            <div class="label">Problem</div>
+            <p>Users need personalized rankings to improve engagement and discovery.</p>
+          </div>
+          <div class="block">
+            <div class="label">Approach</div>
+            <p>Built ranking features and recommendation logic using user‑item interactions.</p>
+          </div>
+          <div class="block">
+            <div class="label">Impact</div>
+            <p>Generated ranked recommendations to support personalization experiments.</p>
+          </div>
+        </div>
+        <div class="project-arch">
+          <span class="arch-label">Architecture</span>
+          <div class="arch-flow">User Events → Feature Engineering → Ranking Model → Top‑N Recommendations</div>
+        </div>
+        <div class="project-footer">
+          <div class="stack">Python · Recommendation Systems · Ranking</div>
+          <div class="project-links">
+            <a class="project-link" href="https://github.com/AvikshithReddy/Movie_Recommendation-Ranking-" target="_blank" rel="noopener noreferrer" aria-label="Open Movie Recommendation GitHub repository">
+              <i class="fa-brands fa-github" aria-hidden="true"></i> View Code
+            </a>
+            <a class="project-link disabled" href="#" aria-disabled="true">
+              <i class="fa-solid fa-play" aria-hidden="true"></i> View Demo
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <article class="project" data-gh-repo="AvikshithReddy/Customer-Churn-and-Segmentation">
+        <div class="project-kicker">Churn · Segmentation</div>
+        <h3>Customer Churn &amp; Segmentation</h3>
+        <div class="project-stats" aria-label="GitHub stats">
+          <span class="project-stat"><i class="fa-solid fa-star"></i> <span data-gh-stars>—</span></span>
+          <span class="project-stat"><i class="fa-solid fa-box-archive"></i> <span data-gh-size>—</span></span>
+          <span class="project-stat"><i class="fa-solid fa-clock-rotate-left"></i> <span data-gh-updated>—</span></span>
+        </div>
+        <div class="project-structure">
+          <div class="block">
+            <div class="label">Problem</div>
+            <p>Retention teams need to identify churn risk and high‑value segments.</p>
+          </div>
+          <div class="block">
+            <div class="label">Approach</div>
+            <p>Built churn predictors and segmentation using behavioral features and clustering.</p>
+          </div>
+          <div class="block">
+            <div class="label">Impact</div>
+            <p>Produced churn scores and segment insights to guide retention tactics.</p>
+          </div>
+        </div>
+        <div class="project-arch">
+          <span class="arch-label">Architecture</span>
+          <div class="arch-flow">Customer Data → Feature Engineering → Churn Model → Segmentation → Retention Playbooks</div>
+        </div>
+        <div class="project-footer">
+          <div class="stack">Python · Classification · Segmentation</div>
+          <div class="project-links">
+            <a class="project-link" href="https://github.com/AvikshithReddy/Customer-Churn-and-Segmentation" target="_blank" rel="noopener noreferrer" aria-label="Open Customer Churn and Segmentation GitHub repository">
+              <i class="fa-brands fa-github" aria-hidden="true"></i> View Code
+            </a>
+            <a class="project-link disabled" href="#" aria-disabled="true">
+              <i class="fa-solid fa-play" aria-hidden="true"></i> View Demo
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <article class="project" data-gh-repo="AvikshithReddy/Fraud_detection">
+        <div class="project-kicker">Risk · Fraud Detection</div>
+        <h3>Fraud Detection Modeling</h3>
+        <div class="project-stats" aria-label="GitHub stats">
+          <span class="project-stat"><i class="fa-solid fa-star"></i> <span data-gh-stars>—</span></span>
+          <span class="project-stat"><i class="fa-solid fa-box-archive"></i> <span data-gh-size>—</span></span>
+          <span class="project-stat"><i class="fa-solid fa-clock-rotate-left"></i> <span data-gh-updated>—</span></span>
+        </div>
+        <div class="project-structure">
+          <div class="block">
+            <div class="label">Problem</div>
+            <p>High‑risk transactions must be flagged quickly with minimal false positives.</p>
+          </div>
+          <div class="block">
+            <div class="label">Approach</div>
+            <p>Built classification pipelines with feature engineering and imbalance handling.</p>
+          </div>
+          <div class="block">
+            <div class="label">Impact</div>
+            <p>Generated risk scores to prioritize manual review and investigation.</p>
+          </div>
+        </div>
+        <div class="project-arch">
+          <span class="arch-label">Architecture</span>
+          <div class="arch-flow">Transactions → Feature Engineering → Fraud Model → Risk Scoring → Review Queue</div>
+        </div>
+        <div class="project-footer">
+          <div class="stack">Python · Classification · Imbalanced Learning</div>
+          <div class="project-links">
+            <a class="project-link" href="https://github.com/AvikshithReddy/Fraud_detection" target="_blank" rel="noopener noreferrer" aria-label="Open Fraud Detection GitHub repository">
+              <i class="fa-brands fa-github" aria-hidden="true"></i> View Code
+            </a>
+            <a class="project-link disabled" href="#" aria-disabled="true">
+              <i class="fa-solid fa-play" aria-hidden="true"></i> View Demo
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <article class="project" data-gh-repo="AvikshithReddy/EHR">
+        <div class="project-kicker">Healthcare · EHR Analytics</div>
+        <h3>EHR Analytics &amp; Predictive Modeling</h3>
+        <div class="project-stats" aria-label="GitHub stats">
+          <span class="project-stat"><i class="fa-solid fa-star"></i> <span data-gh-stars>—</span></span>
+          <span class="project-stat"><i class="fa-solid fa-box-archive"></i> <span data-gh-size>—</span></span>
+          <span class="project-stat"><i class="fa-solid fa-clock-rotate-left"></i> <span data-gh-updated>—</span></span>
+        </div>
+        <div class="project-structure">
+          <div class="block">
+            <div class="label">Problem</div>
+            <p>Clinical records are noisy and heterogeneous, making prediction and analysis difficult.</p>
+          </div>
+          <div class="block">
+            <div class="label">Approach</div>
+            <p>Cleaned and standardized EHR features to build predictive baselines and insights.</p>
+          </div>
+          <div class="block">
+            <div class="label">Impact</div>
+            <p>Delivered structured risk insights to support healthcare decision‑making.</p>
+          </div>
+        </div>
+        <div class="project-arch">
+          <span class="arch-label">Architecture</span>
+          <div class="arch-flow">EHR Data → Cleaning → Feature Engineering → Predictive Model → Clinical Insights</div>
+        </div>
+        <div class="project-footer">
+          <div class="stack">Python · EDA · Predictive Modeling</div>
+          <div class="project-links">
+            <a class="project-link" href="https://github.com/AvikshithReddy/EHR" target="_blank" rel="noopener noreferrer" aria-label="Open EHR GitHub repository">
+              <i class="fa-brands fa-github" aria-hidden="true"></i> View Code
+            </a>
+            <a class="project-link disabled" href="#" aria-disabled="true">
+              <i class="fa-solid fa-play" aria-hidden="true"></i> View Demo
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <article class="project" data-gh-repo="AvikshithReddy/Time-Series-Stock-market_-Analysis">
+        <div class="project-kicker">Time Series · Finance</div>
         <h3>Stock Market Time‑Series Analysis</h3>
-        <p>Comparative analysis of SHOP, JD, and BABA with trend/volatility diagnostics, candlestick charts, and investor‑segment insights.</p>
+        <div class="project-stats" aria-label="GitHub stats">
+          <span class="project-stat"><i class="fa-solid fa-star"></i> <span data-gh-stars>—</span></span>
+          <span class="project-stat"><i class="fa-solid fa-box-archive"></i> <span data-gh-size>—</span></span>
+          <span class="project-stat"><i class="fa-solid fa-clock-rotate-left"></i> <span data-gh-updated>—</span></span>
+        </div>
+        <div class="project-structure">
+          <div class="block">
+            <div class="label">Problem</div>
+            <p>Investors need comparative diagnostics on trend, volatility, and regime shifts.</p>
+          </div>
+          <div class="block">
+            <div class="label">Approach</div>
+            <p>Computed indicators and visual diagnostics across SHOP, JD, and BABA.</p>
+          </div>
+          <div class="block">
+            <div class="label">Impact</div>
+            <p>Produced comparative insights to inform portfolio analysis.</p>
+          </div>
+        </div>
+        <div class="project-arch">
+          <span class="arch-label">Architecture</span>
+          <div class="arch-flow">Price Data → Indicators → Diagnostics → Visualization</div>
+        </div>
         <div class="project-footer">
           <div class="stack">Python · yfinance · Pandas · Matplotlib</div>
           <div class="project-links">
             <a class="project-link" href="https://github.com/AvikshithReddy/Time-Series-Stock-market_-Analysis" target="_blank" rel="noopener noreferrer" aria-label="Open Stock Market Time-Series Analysis GitHub repository">
-              <i class="fa-brands fa-github" aria-hidden="true"></i> Repo
+              <i class="fa-brands fa-github" aria-hidden="true"></i> View Code
+            </a>
+            <a class="project-link disabled" href="#" aria-disabled="true">
+              <i class="fa-solid fa-play" aria-hidden="true"></i> View Demo
             </a>
           </div>
         </div>
       </article>
 
-      <article class="project">
+      <article class="project" data-gh-repo="AvikshithReddy/Health_care">
+        <div class="project-kicker">Clustering · Healthcare</div>
         <h3>Heart Disease Risk Clustering (Health Care)</h3>
-        <p>Unsupervised clustering on a heart‑disease dataset using K‑Means/DBSCAN/Hierarchical with PCA and silhouette/Davies‑Bouldin evaluation; identified four risk groups.</p>
+        <div class="project-stats" aria-label="GitHub stats">
+          <span class="project-stat"><i class="fa-solid fa-star"></i> <span data-gh-stars>—</span></span>
+          <span class="project-stat"><i class="fa-solid fa-box-archive"></i> <span data-gh-size>—</span></span>
+          <span class="project-stat"><i class="fa-solid fa-clock-rotate-left"></i> <span data-gh-updated>—</span></span>
+        </div>
+        <div class="project-structure">
+          <div class="block">
+            <div class="label">Problem</div>
+            <p>Identify patient risk groups when labels are limited or uncertain.</p>
+          </div>
+          <div class="block">
+            <div class="label">Approach</div>
+            <p>K‑Means/DBSCAN/Hierarchical clustering with PCA and silhouette evaluation.</p>
+          </div>
+          <div class="block">
+            <div class="label">Impact</div>
+            <p>Discovered four risk groups for targeted clinical analysis.</p>
+          </div>
+        </div>
+        <div class="project-arch">
+          <span class="arch-label">Architecture</span>
+          <div class="arch-flow">Clinical Data → PCA → Clustering → Risk Groups</div>
+        </div>
         <div class="project-footer">
           <div class="stack">Python · K‑Means · DBSCAN · PCA</div>
           <div class="project-links">
             <a class="project-link" href="https://github.com/AvikshithReddy/Health_care" target="_blank" rel="noopener noreferrer" aria-label="Open Health Care Risk Clustering GitHub repository">
-              <i class="fa-brands fa-github" aria-hidden="true"></i> Repo
+              <i class="fa-brands fa-github" aria-hidden="true"></i> View Code
+            </a>
+            <a class="project-link disabled" href="#" aria-disabled="true">
+              <i class="fa-solid fa-play" aria-hidden="true"></i> View Demo
             </a>
           </div>
         </div>
       </article>
 
-      <article class="project">
+      <article class="project" data-gh-repo="AvikshithReddy/tenant-matcher">
+        <div class="project-kicker">Matching · Ranking</div>
         <h3>Tenant Matcher</h3>
-        <p>Preference‑based rental property matcher with dataset‑driven ranking and automated email delivery.</p>
+        <div class="project-stats" aria-label="GitHub stats">
+          <span class="project-stat"><i class="fa-solid fa-star"></i> <span data-gh-stars>—</span></span>
+          <span class="project-stat"><i class="fa-solid fa-box-archive"></i> <span data-gh-size>—</span></span>
+          <span class="project-stat"><i class="fa-solid fa-clock-rotate-left"></i> <span data-gh-updated>—</span></span>
+        </div>
+        <div class="project-structure">
+          <div class="block">
+            <div class="label">Problem</div>
+            <p>Match renters to properties using preferences and availability data.</p>
+          </div>
+          <div class="block">
+            <div class="label">Approach</div>
+            <p>Preference‑based scoring with dataset‑driven ranking and automated delivery.</p>
+          </div>
+          <div class="block">
+            <div class="label">Impact</div>
+            <p>Ranked property matches with automated email recommendations.</p>
+          </div>
+        </div>
+        <div class="project-arch">
+          <span class="arch-label">Architecture</span>
+          <div class="arch-flow">Preferences → Scoring → Ranking → Email Delivery</div>
+        </div>
         <div class="project-footer">
           <div class="stack">Python · Pandas · Streamlit · SMTP</div>
           <div class="project-links">
             <a class="project-link" href="https://github.com/AvikshithReddy/tenant-matcher" target="_blank" rel="noopener noreferrer" aria-label="Open Tenant Matcher GitHub repository">
-              <i class="fa-brands fa-github" aria-hidden="true"></i> Repo
+              <i class="fa-brands fa-github" aria-hidden="true"></i> View Code
+            </a>
+            <a class="project-link" href="https://github.com/AvikshithReddy/tenant-matcher" target="_blank" rel="noopener noreferrer" aria-label="Open Tenant Matcher demo in README">
+              <i class="fa-solid fa-play" aria-hidden="true"></i> View Demo
             </a>
           </div>
         </div>
       </article>
 
-      <article class="project">
+      <article class="project" data-gh-repo="AvikshithReddy/python--web-scrapping">
+        <div class="project-kicker">Data Collection · Scraping</div>
         <h3>Job Web Scraping (job_web)</h3>
-        <p>Job‑focused web scraping notebook/scripts for collecting listings and related data.</p>
+        <div class="project-stats" aria-label="GitHub stats">
+          <span class="project-stat"><i class="fa-solid fa-star"></i> <span data-gh-stars>—</span></span>
+          <span class="project-stat"><i class="fa-solid fa-box-archive"></i> <span data-gh-size>—</span></span>
+          <span class="project-stat"><i class="fa-solid fa-clock-rotate-left"></i> <span data-gh-updated>—</span></span>
+        </div>
+        <div class="project-structure">
+          <div class="block">
+            <div class="label">Problem</div>
+            <p>Gather job market data at scale for analysis and tracking.</p>
+          </div>
+          <div class="block">
+            <div class="label">Approach</div>
+            <p>Reusable scraping notebooks and scripts to extract listings and metadata.</p>
+          </div>
+          <div class="block">
+            <div class="label">Impact</div>
+            <p>Clean datasets for downstream trend and demand analysis.</p>
+          </div>
+        </div>
+        <div class="project-arch">
+          <span class="arch-label">Architecture</span>
+          <div class="arch-flow">Sites → Scraper → Normalization → Dataset</div>
+        </div>
         <div class="project-footer">
           <div class="stack">Python · Web Scraping</div>
           <div class="project-links">
             <a class="project-link" href="https://github.com/AvikshithReddy/python--web-scrapping/tree/main/job_web" target="_blank" rel="noopener noreferrer" aria-label="Open Job Web Scraping GitHub repository">
-              <i class="fa-brands fa-github" aria-hidden="true"></i> Repo
+              <i class="fa-brands fa-github" aria-hidden="true"></i> View Code
+            </a>
+            <a class="project-link disabled" href="#" aria-disabled="true">
+              <i class="fa-solid fa-play" aria-hidden="true"></i> View Demo
             </a>
           </div>
         </div>
@@ -1849,6 +2486,35 @@
   qiClose?.addEventListener('click', closeQI);
   qiBackdrop?.addEventListener('click', closeQI);
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeQI(); });
+
+  // GitHub stats (stars / size / last updated)
+  const ghCards = document.querySelectorAll('[data-gh-repo]');
+  const formatUpdated = (iso) => {
+    if (!iso) return '—';
+    const d = new Date(iso);
+    return d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+  };
+  ghCards.forEach(async (card) => {
+    const repo = card.getAttribute('data-gh-repo');
+    if (!repo) return;
+    try {
+      const res = await fetch(`https://api.github.com/repos/${repo}`);
+      if (!res.ok) return;
+      const data = await res.json();
+      const starsEl = card.querySelector('[data-gh-stars]');
+      const sizeEl = card.querySelector('[data-gh-size]');
+      const updatedEl = card.querySelector('[data-gh-updated]');
+      if (starsEl) starsEl.textContent = `${data.stargazers_count ?? 0} stars`;
+      if (sizeEl) {
+        const sizeKb = data.size ?? 0;
+        const sizeText = sizeKb >= 1024 ? `${(sizeKb / 1024).toFixed(1)} MB` : `${sizeKb} KB`;
+        sizeEl.textContent = sizeText;
+      }
+      if (updatedEl) updatedEl.textContent = `Updated ${formatUpdated(data.updated_at)}`;
+    } catch (e) {
+      // fail silently
+    }
+  });
 </script>
 
 <!-- AI Chatbot Widget Configuration -->

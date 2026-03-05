@@ -99,8 +99,8 @@
     display:grid;
     grid-template-columns: 1fr auto 1fr;  /* left | center | right */
     align-items:center;
-    column-gap:2.4rem;                    /* space around name block */
-    padding:.95rem 1.6rem;                /* more breathing room */
+    column-gap:2.8rem;
+    padding:1.05rem 1.6rem;
     font-size:.8rem;
     letter-spacing:.12em;
     text-transform:uppercase;
@@ -116,8 +116,8 @@
   }
 
   .brand-pill{
-    width:34px;
-    height:34px;
+    width:36px;
+    height:36px;
     border-radius:999px;
     border:1px solid var(--border-strong);
     background:var(--surface);
@@ -141,21 +141,21 @@
     text-align:center;
     display:flex;
     flex-direction:column;
-    gap:.25rem;
+    gap:.35rem;
     padding:.2rem 0;
   }
   .brand-name{
     font-family:"Space Grotesk",system-ui,sans-serif;
-    font-weight:700;
-    font-size:1.02rem;
-    letter-spacing:.16em;
+    font-weight:800;
+    font-size:.98rem;
+    letter-spacing:.22em;
     color:var(--text);
-    line-height:1.15;
+    line-height:1.05;
   }
   .brand-tagline{
-    font-weight:700;
-    font-size:.72rem;
-    letter-spacing:.18em;
+    font-weight:800;
+    font-size:.66rem;
+    letter-spacing:.24em;
     color:var(--accent-dark);
     line-height:1.15;
   }
@@ -169,10 +169,10 @@
 
   .nav{
     display:flex;
-    gap:1.15rem;          /* more spacing between items */
+    gap:1.05rem;
     align-items:center;
-    font-size:.72rem;
-    letter-spacing:.18em;
+    font-size:.7rem;
+    letter-spacing:.2em;
     color:var(--muted);
     white-space:nowrap;
   }
@@ -1095,7 +1095,7 @@
     </div>
 
     <div class="brand-center">
-      <span class="brand-name">AVIKSHITH REDDY YELAKONDA</span>
+      <span class="brand-name">AVIKSHITH<br>REDDY<br>YELAKONDA</span>
       <span class="brand-tagline">DATA SCIENCE · MACHINE LEARNING · AI</span>
     </div>
 
@@ -1134,9 +1134,6 @@
         </span>
         <span class="hero-meta-item">
           <i class="fa-solid fa-graduation-cap"></i> MS Computer Science — AI/ML, SMU
-        </span>
-        <span class="hero-meta-item">
-          <i class="fa-solid fa-industry"></i> Targeting Ford · Mobility &amp; Manufacturing Analytics
         </span>
       </div>
     </div>
@@ -1431,7 +1428,6 @@
       <h2 class="section-title">Featured Projects</h2>
       <span class="section-kicker"><i class="fa-solid fa-folder-open"></i> work</span>
     </div>
-    <p class="section-note">Each project is structured for recruiter scan speed: Problem → Approach → Impact, followed by architecture and GitHub stats.</p>
 
     <div class="projects">
       <article class="project" data-gh-repo="AvikshithReddy/Amazon_Executive-review-intelligence">
@@ -1444,16 +1440,7 @@
         </div>
         <div class="project-structure">
           <div class="block">
-            <div class="label">Problem</div>
-            <p>Large review volumes hide recurring product issues and make executive triage slow and noisy.</p>
-          </div>
-          <div class="block">
-            <div class="label">Approach</div>
-            <p>Cluster review themes, attach evidence with RAG, score outputs with RAGAS, and push issue alerts to Slack.</p>
-          </div>
-          <div class="block">
-            <div class="label">Impact</div>
-            <p>Executive‑ready issue clusters with citations and recommendations for faster decisions.</p>
+            <p>Clusters review themes, attaches RAG evidence, scores outputs with RAGAS, and delivers executive‑ready issue clusters with recommendations and Slack alerts.</p>
           </div>
         </div>
         <div class="project-arch">
@@ -1483,16 +1470,7 @@
         </div>
         <div class="project-structure">
           <div class="block">
-            <div class="label">Problem</div>
-            <p>Manual expense processing is slow, inconsistent, and difficult to audit at scale.</p>
-          </div>
-          <div class="block">
-            <div class="label">Approach</div>
-            <p>OCR + extraction pipeline with confidence scoring, FastAPI services, and a Streamlit review UI.</p>
-          </div>
-          <div class="block">
-            <div class="label">Impact</div>
-            <p>Structured claims data and analytics endpoints to accelerate review and approvals.</p>
+            <p>Automates receipt OCR and extraction with confidence scoring, FastAPI services, and a Streamlit review UI to accelerate approvals and analytics.</p>
           </div>
         </div>
         <div class="project-arch">
@@ -1522,16 +1500,7 @@
         </div>
         <div class="project-structure">
           <div class="block">
-            <div class="label">Problem</div>
-            <p>Finance teams need fast, grounded answers across SEC filings and reporting metrics.</p>
-          </div>
-          <div class="block">
-            <div class="label">Approach</div>
-            <p>Fine‑tuned LLM with a RAG layer over filings, plus retrieval via FAISS.</p>
-          </div>
-          <div class="block">
-            <div class="label">Impact</div>
-            <p>Grounded Q&amp;A that explains metrics with source‑backed responses.</p>
+            <p>Fine‑tuned LLM with RAG over SEC filings delivers grounded, cited answers and metric explanations.</p>
           </div>
         </div>
         <div class="project-arch">
@@ -1561,16 +1530,7 @@
         </div>
         <div class="project-structure">
           <div class="block">
-            <div class="label">Problem</div>
-            <p>Students need course‑specific answers without hallucination across multiple classes.</p>
-          </div>
-          <div class="block">
-            <div class="label">Approach</div>
-            <p>Course‑isolated vector stores, hybrid retrieval (TF‑IDF + embeddings), and per‑student memory.</p>
-          </div>
-          <div class="block">
-            <div class="label">Impact</div>
-            <p>Cited, personalized responses for students and faculty with traceable sources.</p>
+            <p>Course‑isolated vector stores with hybrid retrieval and per‑student memory deliver cited, personalized answers in a Streamlit UI.</p>
           </div>
         </div>
         <div class="project-arch">
@@ -1600,16 +1560,7 @@
         </div>
         <div class="project-structure">
           <div class="block">
-            <div class="label">Problem</div>
-            <p>Retail planning requires reliable short‑horizon demand forecasts for staffing and inventory.</p>
-          </div>
-          <div class="block">
-            <div class="label">Approach</div>
-            <p>Compared Prophet and LSTM models with rolling evaluation across 7–30 day horizons.</p>
-          </div>
-          <div class="block">
-            <div class="label">Impact</div>
-            <p>Best model achieved test MAPE ≈ 20.8% for planning‑grade forecasts.</p>
+            <p>Compared Prophet and LSTM models across 7–30 day horizons to deliver planning‑grade forecasts with MAPE ≈ 20.8%.</p>
           </div>
         </div>
         <div class="project-arch">
@@ -1639,16 +1590,7 @@
         </div>
         <div class="project-structure">
           <div class="block">
-            <div class="label">Problem</div>
-            <p>Marketing teams need to measure incremental impact and target high‑lift customers.</p>
-          </div>
-          <div class="block">
-            <div class="label">Approach</div>
-            <p>Power analysis, lift diagnostics, and uplift modeling to identify responsive segments.</p>
-          </div>
-          <div class="block">
-            <div class="label">Impact</div>
-            <p>Observed +65% relative conversion lift (p &lt; 0.001) and targeting insights.</p>
+            <p>Power analysis, lift diagnostics, and uplift modeling quantified +65% relative conversion lift (p &lt; 0.001) and identified responsive segments.</p>
           </div>
         </div>
         <div class="project-arch">
@@ -1678,16 +1620,7 @@
         </div>
         <div class="project-structure">
           <div class="block">
-            <div class="label">Problem</div>
-            <p>Leads are imbalanced, and teams need a reliable ranking to prioritize outreach.</p>
-          </div>
-          <div class="block">
-            <div class="label">Approach</div>
-            <p>Feature‑engineered XGBoost models with calibration and SHAP for interpretability.</p>
-          </div>
-          <div class="block">
-            <div class="label">Impact</div>
-            <p>Best models reached ROC‑AUC ≈ 0.683 and ~2.35× lift in top‑decile leads.</p>
+            <p>Feature‑engineered XGBoost with calibration and SHAP reached ROC‑AUC ≈ 0.683 and ~2.35× top‑decile lift for lead ranking.</p>
           </div>
         </div>
         <div class="project-arch">
@@ -1717,16 +1650,7 @@
         </div>
         <div class="project-structure">
           <div class="block">
-            <div class="label">Problem</div>
-            <p>Choose the higher‑ROI ad channel while controlling for temporal effects.</p>
-          </div>
-          <div class="block">
-            <div class="label">Approach</div>
-            <p>Hypothesis testing with regression and time‑series analysis to compare channel impact.</p>
-          </div>
-          <div class="block">
-            <div class="label">Impact</div>
-            <p>Identified the more cost‑effective channel for budget allocation decisions.</p>
+            <p>Hypothesis testing with regression/time‑series analysis compared channels and identified the higher‑ROI option for budget allocation.</p>
           </div>
         </div>
         <div class="project-arch">
@@ -1756,16 +1680,7 @@
         </div>
         <div class="project-structure">
           <div class="block">
-            <div class="label">Problem</div>
-            <p>Users need personalized rankings to improve engagement and discovery.</p>
-          </div>
-          <div class="block">
-            <div class="label">Approach</div>
-            <p>Built ranking features and recommendation logic using user‑item interactions.</p>
-          </div>
-          <div class="block">
-            <div class="label">Impact</div>
-            <p>Generated ranked recommendations to support personalization experiments.</p>
+            <p>Built ranking features from user–item interactions to generate Top‑N recommendations for personalization experiments.</p>
           </div>
         </div>
         <div class="project-arch">
@@ -1795,16 +1710,7 @@
         </div>
         <div class="project-structure">
           <div class="block">
-            <div class="label">Problem</div>
-            <p>Retention teams need to identify churn risk and high‑value segments.</p>
-          </div>
-          <div class="block">
-            <div class="label">Approach</div>
-            <p>Built churn predictors and segmentation using behavioral features and clustering.</p>
-          </div>
-          <div class="block">
-            <div class="label">Impact</div>
-            <p>Produced churn scores and segment insights to guide retention tactics.</p>
+            <p>Churn predictors and segmentation from behavioral features produced risk scores and segment insights for retention.</p>
           </div>
         </div>
         <div class="project-arch">
@@ -1834,16 +1740,7 @@
         </div>
         <div class="project-structure">
           <div class="block">
-            <div class="label">Problem</div>
-            <p>High‑risk transactions must be flagged quickly with minimal false positives.</p>
-          </div>
-          <div class="block">
-            <div class="label">Approach</div>
-            <p>Built classification pipelines with feature engineering and imbalance handling.</p>
-          </div>
-          <div class="block">
-            <div class="label">Impact</div>
-            <p>Generated risk scores to prioritize manual review and investigation.</p>
+            <p>Imbalance‑aware classification generates fraud risk scores to prioritize review while controlling false positives.</p>
           </div>
         </div>
         <div class="project-arch">
@@ -1873,16 +1770,7 @@
         </div>
         <div class="project-structure">
           <div class="block">
-            <div class="label">Problem</div>
-            <p>Clinical records are noisy and heterogeneous, making prediction and analysis difficult.</p>
-          </div>
-          <div class="block">
-            <div class="label">Approach</div>
-            <p>Cleaned and standardized EHR features to build predictive baselines and insights.</p>
-          </div>
-          <div class="block">
-            <div class="label">Impact</div>
-            <p>Delivered structured risk insights to support healthcare decision‑making.</p>
+            <p>Cleaned and standardized EHR data to build predictive baselines and deliver clinical risk insights.</p>
           </div>
         </div>
         <div class="project-arch">
@@ -1912,16 +1800,7 @@
         </div>
         <div class="project-structure">
           <div class="block">
-            <div class="label">Problem</div>
-            <p>Investors need comparative diagnostics on trend, volatility, and regime shifts.</p>
-          </div>
-          <div class="block">
-            <div class="label">Approach</div>
-            <p>Computed indicators and visual diagnostics across SHOP, JD, and BABA.</p>
-          </div>
-          <div class="block">
-            <div class="label">Impact</div>
-            <p>Produced comparative insights to inform portfolio analysis.</p>
+            <p>Computed indicators and visual diagnostics across SHOP, JD, and BABA to compare trend and volatility.</p>
           </div>
         </div>
         <div class="project-arch">
@@ -1951,16 +1830,7 @@
         </div>
         <div class="project-structure">
           <div class="block">
-            <div class="label">Problem</div>
-            <p>Identify patient risk groups when labels are limited or uncertain.</p>
-          </div>
-          <div class="block">
-            <div class="label">Approach</div>
-            <p>K‑Means/DBSCAN/Hierarchical clustering with PCA and silhouette evaluation.</p>
-          </div>
-          <div class="block">
-            <div class="label">Impact</div>
-            <p>Discovered four risk groups for targeted clinical analysis.</p>
+            <p>PCA with K‑Means/DBSCAN/Hierarchical clustering revealed four patient risk groups for targeted analysis.</p>
           </div>
         </div>
         <div class="project-arch">
@@ -1990,16 +1860,7 @@
         </div>
         <div class="project-structure">
           <div class="block">
-            <div class="label">Problem</div>
-            <p>Match renters to properties using preferences and availability data.</p>
-          </div>
-          <div class="block">
-            <div class="label">Approach</div>
-            <p>Preference‑based scoring with dataset‑driven ranking and automated delivery.</p>
-          </div>
-          <div class="block">
-            <div class="label">Impact</div>
-            <p>Ranked property matches with automated email recommendations.</p>
+            <p>Preference‑based scoring ranks properties and automates email recommendations.</p>
           </div>
         </div>
         <div class="project-arch">
@@ -2029,16 +1890,7 @@
         </div>
         <div class="project-structure">
           <div class="block">
-            <div class="label">Problem</div>
-            <p>Gather job market data at scale for analysis and tracking.</p>
-          </div>
-          <div class="block">
-            <div class="label">Approach</div>
-            <p>Reusable scraping notebooks and scripts to extract listings and metadata.</p>
-          </div>
-          <div class="block">
-            <div class="label">Impact</div>
-            <p>Clean datasets for downstream trend and demand analysis.</p>
+            <p>Reusable scraping pipelines collect listings and normalize them into analysis‑ready datasets.</p>
           </div>
         </div>
         <div class="project-arch">

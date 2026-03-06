@@ -309,6 +309,18 @@
       max-width:52ch;
       margin-bottom:1.3rem;
     }
+    .hero-stack{
+      display:flex;
+      flex-wrap:wrap;
+      gap:.35rem .6rem;
+      font-size:.78rem;
+      font-weight:900;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color:var(--accent-dark);
+      margin:-.4rem 0 1.1rem 0;
+    }
+    .hero-stack .dot{color:var(--muted);}
     .hero-meta{
       display:flex;
       flex-wrap:wrap;
@@ -1207,13 +1219,24 @@
     <div>
       <div class="hero-kicker">DATA SCIENCE · MACHINE LEARNING</div>
 
-      <h1 class="hero-title" id="typing">
-        Reliable models. <span class="accent">Real business impact.</span>
+      <h1 class="hero-title">
+        I design end-to-end machine learning and generative AI systems—RAG pipelines,<br>
+        NLP workflows, and predictive models—from data ingestion and experimentation<br>
+        to scalable deployment and monitoring.
       </h1>
 
       <p class="hero-body">
-        I build end-to-end ML and AI systems—RAG pipelines, NLP workflows, and chatbots—from data ingestion and evaluation to deployment—focused on reliability, scalability, and measurable business impact.
+        Focused on reliability, scalability, and measurable business impact across the full ML lifecycle.
       </p>
+
+      <div class="hero-stack" aria-label="Core stack">
+        <span>Python</span><span class="dot">•</span>
+        <span>SQL</span><span class="dot">•</span>
+        <span>LLMs</span><span class="dot">•</span>
+        <span>RAG</span><span class="dot">•</span>
+        <span>ML Pipelines</span><span class="dot">•</span>
+        <span>MLOps</span>
+      </div>
 
       <div class="hero-meta">
         <span class="hero-meta-item">
@@ -1254,12 +1277,11 @@
       <div class="summary-layout">
         <div class="summary-left">
           <h3 id="summary-title" class="summary-title">
-            I build production-ready systems across Data Science, ML, and AI
+            I design and deploy machine learning and AI systems that transform large datasets into decision-ready insights.
           </h3>
 
           <p class="summary-lead">
-            I deliver end-to-end ML solutions — from data preparation and modeling to deployment, monitoring,
-            and decision support — combining statistical rigor with modern ML, NLP, and GenAI workflows.
+            My work focuses on predictive modeling, experimentation, and LLM systems such as RAG pipelines and NLP workflows.
           </p>
 
           <div class="summary-subhead">What I Deliver</div>
@@ -1525,7 +1547,7 @@
     <div class="projects">
       <article class="project" data-gh-repo="AvikshithReddy/Amazon_Executive-review-intelligence">
         <div class="project-kicker">NLP · RAG · Reviews Intelligence</div>
-        <h3>Executive Review Intelligence (Amazon Reviews 2023)</h3>
+        <h3>Executive Review Intelligence (LLM + RAG)</h3>
         <div class="project-structure">
           <div class="block">
             <p>Surfaces recurring issues in large review volumes for executive triage. Clusters themes, attaches RAG evidence, scores outputs with RAGAS, and pushes Slack alerts to accelerate decisions.</p>
@@ -1550,7 +1572,7 @@
 
       <article class="project" data-gh-repo="AvikshithReddy/AI_expense_Claim">
         <div class="project-kicker">OCR · CV · Automation</div>
-        <h3>AI Expense Claim Processing System</h3>
+        <h3>AI Expense Claim Processing (OCR + automation)</h3>
         <div class="project-structure">
           <div class="block">
             <p>Manual expense processing is slow, inconsistent, and hard to audit at scale. Automates receipt OCR and extraction with confidence scoring, FastAPI services, and a Streamlit review UI to speed approvals and analytics.</p>
@@ -1575,7 +1597,7 @@
 
       <article class="project" data-gh-repo="AvikshithReddy/llm-finetune-chatbot">
         <div class="project-kicker">LLM · RAG · Finance</div>
-        <h3>Financial Fine‑Tuned Chatbot</h3>
+        <h3>Financial LLM Chatbot</h3>
         <div class="project-structure">
           <div class="block">
             <p>Finance teams need fast, grounded answers across SEC filings and reporting metrics. A fine‑tuned LLM with RAG over filings delivers cited responses and metric explanations.</p>
@@ -1600,7 +1622,7 @@
 
       <article class="project" data-gh-repo="AvikshithReddy/teaching-assistant-rag">
         <div class="project-kicker">RAG · Education · Search</div>
-        <h3>Teaching Assistant RAG — AI Teaching Assistant</h3>
+        <h3>Teaching Assistant RAG</h3>
         <div class="project-structure">
           <div class="block">
             <p>Students need course‑specific answers without hallucinations across multiple classes. Course‑isolated vector stores with hybrid retrieval and per‑student memory deliver cited, personalized answers in a Streamlit UI.</p>
@@ -1623,34 +1645,9 @@
         </div>
       </article>
 
-      <article class="project" data-gh-repo="AvikshithReddy/Time_Series-Demand_Forecsating">
-        <div class="project-kicker">Forecasting · Retail</div>
-        <h3>Walmart Demand Forecasting (Time‑Series)</h3>
-        <div class="project-structure">
-          <div class="block">
-            <p>Retail planning needs reliable short‑horizon demand forecasts for staffing and inventory. Compared Prophet and LSTM models across 7–30 day horizons, achieving MAPE ≈ 20.8% on the best model.</p>
-          </div>
-        </div>
-        <div class="project-arch">
-          <span class="arch-label">Architecture</span>
-          <div class="arch-flow">Sales Data → Feature Engineering → Model Compare → Forecast → Error Tracking</div>
-        </div>
-        <div class="project-footer">
-          <div class="stack">Python · Prophet · LSTM · Time Series</div>
-          <div class="project-links">
-            <a class="project-link" href="https://github.com/AvikshithReddy/Time_Series-Demand_Forecsating" target="_blank" rel="noopener noreferrer" aria-label="Open Walmart Demand Forecasting GitHub repository">
-              <i class="fa-brands fa-github" aria-hidden="true"></i> View Code
-            </a>
-            <a class="project-link disabled" href="#" aria-disabled="true">
-              <i class="fa-solid fa-play" aria-hidden="true"></i> View Demo
-            </a>
-          </div>
-        </div>
-      </article>
-
       <article class="project" data-gh-repo="AvikshithReddy/AB_test">
         <div class="project-kicker">Experimentation · Causal Inference</div>
-        <h3>A/B Testing &amp; Uplift Modeling (Criteo)</h3>
+        <h3>A/B Testing &amp; Uplift Modeling</h3>
         <div class="project-structure">
           <div class="block">
             <p>Marketing teams need to measure incremental impact and target high‑lift customers. Power analysis, lift diagnostics, and uplift modeling quantified +65% relative conversion lift (p &lt; 0.001) and identified responsive segments.</p>
@@ -1664,6 +1661,31 @@
           <div class="stack">Python · CausalML · Statsmodels · Uplift</div>
           <div class="project-links">
             <a class="project-link" href="https://github.com/AvikshithReddy/AB_test" target="_blank" rel="noopener noreferrer" aria-label="Open A/B Testing and Uplift Modeling GitHub repository">
+              <i class="fa-brands fa-github" aria-hidden="true"></i> View Code
+            </a>
+            <a class="project-link disabled" href="#" aria-disabled="true">
+              <i class="fa-solid fa-play" aria-hidden="true"></i> View Demo
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <article class="project" data-gh-repo="AvikshithReddy/Time_Series-Demand_Forecsating">
+        <div class="project-kicker">Forecasting · Retail</div>
+        <h3>Walmart Demand Forecasting</h3>
+        <div class="project-structure">
+          <div class="block">
+            <p>Retail planning needs reliable short‑horizon demand forecasts for staffing and inventory. Compared Prophet and LSTM models across 7–30 day horizons, achieving MAPE ≈ 20.8% on the best model.</p>
+          </div>
+        </div>
+        <div class="project-arch">
+          <span class="arch-label">Architecture</span>
+          <div class="arch-flow">Sales Data → Feature Engineering → Model Compare → Forecast → Error Tracking</div>
+        </div>
+        <div class="project-footer">
+          <div class="stack">Python · Prophet · LSTM · Time Series</div>
+          <div class="project-links">
+            <a class="project-link" href="https://github.com/AvikshithReddy/Time_Series-Demand_Forecsating" target="_blank" rel="noopener noreferrer" aria-label="Open Walmart Demand Forecasting GitHub repository">
               <i class="fa-brands fa-github" aria-hidden="true"></i> View Code
             </a>
             <a class="project-link disabled" href="#" aria-disabled="true">
@@ -2366,9 +2388,6 @@
 <script src="frontend/chatbot.js"></script>
 </body>
 </html>
-
-
-
 
 
 

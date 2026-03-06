@@ -303,6 +303,14 @@
       margin-bottom:1rem;
     }
     .hero-title .accent{color:var(--accent-dark);}
+    .hero-rotate{
+      display:inline-block;
+      transition:opacity .3s ease, transform .3s ease;
+    }
+    .hero-rotate.fade-out{
+      opacity:0;
+      transform:translateY(6px);
+    }
     .hero-body{
       color:var(--muted);
       line-height:1.7;
@@ -1220,9 +1228,7 @@
       <div class="hero-kicker">DATA SCIENCE · MACHINE LEARNING</div>
 
       <h1 class="hero-title">
-        I design end-to-end machine learning and generative AI systems—RAG pipelines,<br>
-        NLP workflows, and predictive models—from data ingestion and experimentation<br>
-        to scalable deployment and monitoring.
+        <span class="hero-rotate" id="heroRotate">DATA SCIENCE · MACHINE LEARNING · AI SYSTEMS</span>
       </h1>
 
       <p class="hero-body">
@@ -2321,35 +2327,26 @@
   document.addEventListener('scroll', showTop, {passive:true});
   window.addEventListener('load', showTop);
 
-  // Typing effect for hero title
-  const typingEl = document.getElementById('typing');
-  if (typingEl) {
+  // Rotating hero title
+  const heroRotate = document.getElementById('heroRotate');
+  if (heroRotate) {
     const phrases = [
-      'Reliable models. Real business impact.',
-      'From raw data to decisions.',
-      'Data Science · Machine Learning · AI'
+      'DATA SCIENCE · MACHINE LEARNING · AI SYSTEMS',
+      'Building production ML and AI systems from raw data',
+      'From data to production AI systems'
     ];
-    let p = 0, i = 0, deleting = false;
+    let p = 0;
 
-    function type() {
-      const current = phrases[p];
-      const shown = current.slice(0, i);
-      // keep accent for "Real business impact." on first phrase style only
-      if (current.includes('Real business impact.')) {
-        const parts = shown.split('Real business impact.');
-        typingEl.innerHTML = `${parts[0]}${shown.includes('Real business impact.') ? '<span class="accent">Real business impact.</span>' : ''}`;
-      } else {
-        typingEl.textContent = shown;
-      }
+    const rotate = () => {
+      heroRotate.classList.add('fade-out');
+      setTimeout(() => {
+        p = (p + 1) % phrases.length;
+        heroRotate.textContent = phrases[p];
+        heroRotate.classList.remove('fade-out');
+      }, 260);
+    };
 
-      if (!deleting && i < current.length) i++;
-      else if (deleting && i > 0) i--;
-      else if (!deleting && i === current.length) { deleting = true; setTimeout(type, 1400); return; }
-      else { deleting = false; p = (p + 1) % phrases.length; }
-
-      setTimeout(type, deleting ? 30 : 45);
-    }
-    setTimeout(type, 600);
+    setInterval(rotate, 2600);
   }
 
   // ✅ Quick Info modal open/close
@@ -2388,4 +2385,3 @@
 <script src="frontend/chatbot.js"></script>
 </body>
 </html>
-

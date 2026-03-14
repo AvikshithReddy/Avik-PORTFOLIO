@@ -23,6 +23,11 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
+  <!-- Chart.js for Data Visualizations -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Three.js for 3D visualizations -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
+
   <style>
     /* ========== THEME TOKENS (TIFFANY / WHITE / BLACK) ========== */
     :root{
@@ -354,6 +359,11 @@
       border:1px solid rgba(15,23,42,.06);
       position:relative;
       overflow:hidden;
+      transform-style: preserve-3d;
+      transition: transform 0.3s ease;
+    }
+    .hero-photo-card:hover {
+      transform: rotateY(5deg) rotateX(5deg) translateZ(20px);
     }
     .hero-photo-card::before{
       content:"";
@@ -399,13 +409,12 @@
       overflow:hidden;
       background:#000;
       aspect-ratio: 16 / 10;
+      position:relative;
     }
-    .hero-photo-inner img{
+    .hero-photo-inner canvas{
       width:100%;
       height:100%;
       display:block;
-      object-fit:cover;
-      filter:grayscale(100%);
     }
 
     /* ✅ You asked to remove skills stack below the photo — no chips area here. */
@@ -670,10 +679,120 @@
     }
     .skill-panel h4 i{color:var(--accent-dark)}
 
+    /* ========== DATA INSIGHTS ========== */
+    .insights-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+      gap:1.5rem;
+      perspective: 1000px;
+    }
+    .insight-card{
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:1.5rem;
+      box-shadow:0 10px 30px rgba(15,23,42,.06);
+      transition:transform .16s ease, box-shadow .16s ease;
+    }
+    .insight-card:hover{
+      transform:translateY(-2px) rotateX(1deg);
+      box-shadow:0 15px 40px rgba(15,23,42,.1);
+    }
+    .insight-card h3{
+      font-family:"Space Grotesk",system-ui,sans-serif;
+      font-size:1.1rem;
+      margin-bottom:1rem;
+      color:var(--text);
+    }
+
+    /* ========== AI DEMO ========== */
+    .ai-grid{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:1.4rem;
+      align-items:start;
+    }
+    @media(max-width:900px){
+      .ai-grid{grid-template-columns:1fr}
+    }
+    .ai-card{
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:1.4rem;
+      box-shadow:0 12px 36px rgba(15,23,42,.07);
+      position:relative;
+      overflow:hidden;
+    }
+    .ai-card h3{
+      font-family:"Space Grotesk",system-ui,sans-serif;
+      font-size:1.1rem;
+      margin-bottom:1.1rem;
+    }
+    .ai-form{
+      display:flex;
+      flex-direction:column;
+      gap:1rem;
+    }
+    .ai-form textarea{
+      width:100%;
+      min-height:120px;
+      padding:1rem;
+      border-radius:14px;
+      border:1px solid rgba(15,23,42,.15);
+      background:rgba(239,249,250,.8);
+      font-family:inherit;
+      font-size:.95rem;
+      resize:vertical;
+    }
+    .ai-form button{
+      width:max-content;
+      align-self:flex-start;
+      padding:.8rem 1.2rem;
+      border-radius:999px;
+      border:1px solid var(--accent);
+      background:linear-gradient(135deg,var(--accent),var(--accent-dark));
+      color:#fff;
+      font-weight:800;
+      cursor:pointer;
+      transition:transform .16s ease, box-shadow .16s ease;
+    }
+    .ai-form button:hover{transform:translateY(-1px);box-shadow:0 12px 20px rgba(8,183,185,.25);}
+
+    .ai-output{
+      margin-top:1rem;
+      padding:1rem;
+      border-radius:16px;
+      background:rgba(8,183,185,.05);
+      border:1px solid rgba(8,183,185,.25);
+      font-size:.93rem;
+      line-height:1.5;
+      color:var(--text);
+      min-height:120px;
+      white-space:pre-wrap;
+    }
+
+    .ai-tags{
+      display:flex;
+      flex-wrap:wrap;
+      gap:.5rem;
+      margin-top:1rem;
+    }
+    .ai-tag{
+      padding:.35rem .75rem;
+      border-radius:999px;
+      border:1px solid rgba(8,183,185,.35);
+      background:var(--surface-soft);
+      color:var(--accent-dark);
+      font-weight:800;
+      font-size:.85rem;
+    }
+
     .projects{
       display:grid;
       gap:1.1rem;
       grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+      perspective: 1000px;
     }
     .project{
       position:relative;
@@ -689,7 +808,7 @@
       gap:.4rem;
     }
     .project:hover{
-      transform:translateY(-4px);
+      transform:translateY(-4px) rotateX(2deg);
       border-color:var(--border-strong);
       box-shadow:0 18px 42px rgba(15,23,42,.12);
     }
@@ -1211,6 +1330,8 @@
         <a href="#summary">OVERVIEW</a>
         <a href="#achievements">ACHIEVEMENTS</a>
         <a href="#skills">SKILLS</a>
+        <a href="#insights">INSIGHTS</a>
+        <a href="#ai-demo">AI DEMO</a>
         <a href="#projects">PROJECTS</a>
         <a href="#experience">EXPERIENCE</a>
         <a href="#education">EDUCATION</a>
@@ -1261,7 +1382,7 @@
       </div>
 
       <div class="hero-photo-inner">
-        <img src="avatar.jpg" alt="Portrait of Avikshith Yelakonda" />
+        <canvas id="hero3d" aria-label="3D interactive portfolio visual" role="img"></canvas>
       </div>
 
       <!-- ✅ Removed skills stack below the photo entirely -->
@@ -1537,6 +1658,69 @@
             <span class="skill-dot">Excel</span>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= DATA INSIGHTS ================= -->
+<section id="insights" class="section">
+  <div class="container fade-in">
+    <div class="section-head">
+      <h2 class="section-title">Data Insights</h2>
+      <span class="section-kicker"><i class="fa-solid fa-chart-line"></i> analytics</span>
+    </div>
+    <p class="section-note">Interactive visualizations showcasing my technical expertise and project impacts through data.</p>
+
+    <div class="insights-grid">
+      <div class="insight-card">
+        <h3>Skills Proficiency</h3>
+        <canvas id="skillsChart" width="400" height="300"></canvas>
+      </div>
+      <div class="insight-card">
+        <h3>Project Impact Metrics</h3>
+        <canvas id="impactChart" width="400" height="300"></canvas>
+      </div>
+      <div class="insight-card">
+        <h3>Technology Stack Distribution</h3>
+        <canvas id="techChart" width="400" height="300"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= AI DEMO ================= -->
+<section id="ai-demo" class="section">
+  <div class="container fade-in">
+    <div class="section-head">
+      <h2 class="section-title">AI Demo</h2>
+      <span class="section-kicker"><i class="fa-solid fa-robot"></i> interactive</span>
+    </div>
+    <p class="section-note">Experiment with a lightweight AI demo that demonstrates inference logic and ML thinking — no backend required.</p>
+
+    <div class="ai-grid">
+      <div class="ai-card">
+        <h3>Try a quick AI prediction</h3>
+        <form class="ai-form" id="aiForm">
+          <label for="aiPrompt">Describe a data problem or ask a question:</label>
+          <textarea id="aiPrompt" placeholder="e.g. Forecast sales for next quarter, classify customer feedback, or detect named entities."></textarea>
+          <button type="submit">Run demo</button>
+        </form>
+        <div class="ai-output" id="aiOutput">Enter a prompt and click “Run demo” to see the AI response.</div>
+        <div class="ai-tags" aria-label="Example prompts">
+          <span class="ai-tag">Extract entities</span>
+          <span class="ai-tag">Time-series forecast</span>
+          <span class="ai-tag">Sentiment analysis</span>
+          <span class="ai-tag">Topic clustering</span>
+        </div>
+      </div>
+
+      <div class="ai-card">
+        <h3>What this shows</h3>
+        <p>This demo emulates an ML pipeline by:<br>
+          <strong>➜</strong> parsing your input, <strong>➜</strong> selecting a model type, and <strong>➜</strong> producing a structured prediction with confidence scores.
+        </p>
+        <p>It is purely client-side — no API keys — and it’s designed to show how an AI system can parse intent and map to a model output.</p>
       </div>
     </div>
   </div>
@@ -2370,6 +2554,235 @@
   qiClose?.addEventListener('click', closeQI);
   qiBackdrop?.addEventListener('click', closeQI);
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeQI(); });
+
+  // Initialize Data Insights Charts
+  document.addEventListener('DOMContentLoaded', function() {
+    // Skills Proficiency Radar Chart
+    const skillsCtx = document.getElementById('skillsChart').getContext('2d');
+    new Chart(skillsCtx, {
+      type: 'radar',
+      data: {
+        labels: ['Python', 'Machine Learning', 'Data Analysis', 'NLP', 'Computer Vision', 'MLOps'],
+        datasets: [{
+          label: 'Proficiency Level',
+          data: [95, 90, 88, 85, 80, 75],
+          backgroundColor: 'rgba(8, 183, 185, 0.2)',
+          borderColor: 'rgba(8, 183, 185, 1)',
+          borderWidth: 2,
+          pointBackgroundColor: 'rgba(8, 183, 185, 1)',
+          pointBorderColor: '#fff',
+          pointHoverBackgroundColor: '#fff',
+          pointHoverBorderColor: 'rgba(8, 183, 185, 1)'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          r: {
+            beginAtZero: true,
+            max: 100,
+            ticks: {
+              stepSize: 20
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          }
+        }
+      }
+    });
+
+    // Project Impact Metrics Bar Chart
+    const impactCtx = document.getElementById('impactChart').getContext('2d');
+    new Chart(impactCtx, {
+      type: 'bar',
+      data: {
+        labels: ['Automation Efficiency', 'Cost Reduction', 'Processing Speed', 'Accuracy Improvement'],
+        datasets: [{
+          label: 'Impact (%)',
+          data: [85, 60, 90, 75],
+          backgroundColor: 'rgba(8, 183, 185, 0.6)',
+          borderColor: 'rgba(8, 183, 185, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 100
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          }
+        }
+      }
+    });
+
+    // Technology Stack Distribution Doughnut Chart
+    const techCtx = document.getElementById('techChart').getContext('2d');
+    new Chart(techCtx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Python', 'JavaScript', 'SQL', 'Cloud/AWS', 'ML Frameworks', 'Others'],
+        datasets: [{
+          data: [40, 20, 15, 10, 10, 5],
+          backgroundColor: [
+            'rgba(8, 183, 185, 0.8)',
+            'rgba(255, 99, 132, 0.8)',
+            'rgba(54, 162, 235, 0.8)',
+            'rgba(255, 205, 86, 0.8)',
+            'rgba(75, 192, 192, 0.8)',
+            'rgba(153, 102, 255, 0.8)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'bottom'
+          }
+        }
+      }
+    });
+
+    // 3D hero visual (Three.js)
+    const initHero3D = () => {
+      const canvas = document.getElementById('hero3d');
+      if (!canvas || !window.THREE) return;
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 100);
+      camera.position.set(0, 0, 4);
+
+      const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+      renderer.setPixelRatio(window.devicePixelRatio);
+
+      const resize = () => {
+        const width = canvas.clientWidth;
+        const height = canvas.clientHeight;
+        renderer.setSize(width, height, false);
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+      };
+      resize();
+      window.addEventListener('resize', resize);
+
+      const cube = new THREE.Mesh(
+        new THREE.BoxGeometry(1.6, 1.6, 1.6),
+        [
+          new THREE.MeshStandardMaterial({ color: 0x08b7b9 }),
+          new THREE.MeshStandardMaterial({ color: 0x1f3e5b }),
+          new THREE.MeshStandardMaterial({ color: 0xffa726 }),
+          new THREE.MeshStandardMaterial({ color: 0x6a1b9a }),
+          new THREE.MeshStandardMaterial({ color: 0x4caf50 }),
+          new THREE.MeshStandardMaterial({ color: 0xf44336 })
+        ]
+      );
+      cube.rotation.set(0.25, 0.5, 0);
+      scene.add(cube);
+
+      const light = new THREE.DirectionalLight(0xffffff, 0.9);
+      light.position.set(5, 5, 5);
+      scene.add(light);
+      scene.add(new THREE.AmbientLight(0xffffff, 0.35));
+
+      const target = { x: 0.5, y: 0.2 };
+      const pointer = { x: 0, y: 0 };
+
+      canvas.addEventListener('pointermove', (evt) => {
+        const rect = canvas.getBoundingClientRect();
+        pointer.x = ((evt.clientX - rect.left) / rect.width - 0.5) * 2;
+        pointer.y = ((evt.clientY - rect.top) / rect.height - 0.5) * -2;
+      });
+
+      const animate = () => {
+        requestAnimationFrame(animate);
+        target.x += (pointer.x - target.x) * 0.06;
+        target.y += (pointer.y - target.y) * 0.06;
+        cube.rotation.y += 0.01;
+        cube.rotation.x += 0.006;
+        cube.rotation.y += target.x * 0.07;
+        cube.rotation.x += target.y * 0.05;
+        renderer.render(scene, camera);
+      };
+      animate();
+    };
+
+    // AI Demo interaction
+    const initAIDemo = () => {
+      const form = document.getElementById('aiForm');
+      const promptInput = document.getElementById('aiPrompt');
+      const outputEl = document.getElementById('aiOutput');
+
+      if (!form || !promptInput || !outputEl) return;
+
+      const classifyPrompt = (text) => {
+        const cleaned = text.toLowerCase();
+        const keywords = {
+          'forecast': 'Time series forecasting',
+          'predict': 'Supervised prediction',
+          'sentiment': 'Sentiment analysis',
+          'positive': 'Sentiment analysis',
+          'negative': 'Sentiment analysis',
+          'entity': 'Named entity recognition',
+          'ner': 'Named entity recognition',
+          'cluster': 'Topic clustering',
+          'topic': 'Topic clustering',
+          'anomaly': 'Anomaly detection',
+          'image': 'Computer vision',
+          'vision': 'Computer vision',
+          'recommend': 'Recommendation system'
+        };
+
+        for (const [k, model] of Object.entries(keywords)) {
+          if (cleaned.includes(k)) return model;
+        }
+        return 'General ML inference';
+      };
+
+      const makeResponse = (model) => {
+        const score = Math.round(70 + Math.random() * 25);
+        const confidence = `${score}% confidence`;
+        return `Model: ${model}\n${confidence}\n\nExample output:\n` +
+          (model === 'Sentiment analysis'
+            ? '“Your text looks positive and action‑oriented.”'
+            : model === 'Named entity recognition'
+            ? '“Found entities: [Customer, Product, Revenue]”'
+            : model === 'Time series forecasting'
+            ? '“Next quarter projection: +12% growth (CI 95%).”'
+            : model === 'Topic clustering'
+            ? '“Detected 3 clusters: performance, scaling, deployment.”'
+            : model === 'Computer vision'
+            ? '“Detected object: laptop (confidence 92%).”'
+            : '“Prediction: class A (confidence 0.81).”');
+      };
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const prompt = promptInput.value.trim();
+        if (!prompt) {
+          outputEl.textContent = 'Please enter a prompt to run the demo.';
+          return;
+        }
+        const model = classifyPrompt(prompt);
+        outputEl.textContent = makeResponse(model);
+      });
+    };
+
+    initHero3D();
+    initAIDemo();
+  });
 
 </script>
 

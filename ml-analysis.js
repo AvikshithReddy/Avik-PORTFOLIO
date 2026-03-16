@@ -13,6 +13,7 @@
   }
 
   const githubUsername = "AvikshithReddy";
+  const priorityRepoNames = ["Avik-PORTFOLIO"];
   const sourceWeights = {
     portfolio: 1.15,
     resume: 1.35,
@@ -392,7 +393,7 @@
       const repos = await response.json();
       const filtered = repos
         .filter(function (repo) {
-          return !repo.fork;
+          return !repo.fork || priorityRepoNames.includes(repo.name);
         })
         .sort(function (a, b) {
           return new Date(b.pushed_at || b.updated_at) - new Date(a.pushed_at || a.updated_at);

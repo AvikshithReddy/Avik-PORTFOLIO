@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dino RL Sandbox</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <div class="hero-text">
+        <p class="eyebrow">Interactive Reinforcement Learning</p>
+        <h1>Dino RL Sandbox</h1>
+        <p class="lead">
+          Train a tiny dinosaur in a grid world. Place food, lava, and rocks, then watch
+          Q-learning discover safe, efficient paths.
+        </p>
+        <div class="hero-actions">
+          <button id="startBtn" class="primary">Start Training</button>
+          <button id="stepBtn">Step Once</button>
+          <button id="resetBtn">Reset</button>
+        </div>
+        <div class="stats">
+          <div><span class="label">Iteration</span><span id="iterCount">0</span></div>
+          <div><span class="label">Episode</span><span id="episodeCount">0</span></div>
+          <div><span class="label">Last Reward</span><span id="lastReward">0</span></div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <canvas id="grid" width="720" height="720"></canvas>
+        <div class="legend">
+          <span><i class="swatch value"></i>Value (green good, red bad)</span>
+          <span><i class="swatch meat"></i>Food (+10)</span>
+          <span><i class="swatch lava"></i>Lava (-10, terminal)</span>
+          <span><i class="swatch rock"></i>Rock (-2)</span>
+          <span><i class="swatch start"></i>Start</span>
+        </div>
+      </div>
+    </header>
+
+    <section class="panel guide">
+      <div class="guide-header">
+        <h2>Guided Journey</h2>
+        <button id="modeBtn">Switch to Free Play</button>
+      </div>
+      <p id="stepTitle" class="guide-title">Step 1: Learn to Move</p>
+      <p id="stepDesc" class="hint">Watch the agent explore the grid with no goal yet.</p>
+      <div class="guide-actions">
+        <button id="prevStep">Prev</button>
+        <button id="applyStep">Apply Step</button>
+        <button id="nextStep" class="primary">Next</button>
+      </div>
+      <p class="hint">Tip: You can still place objects manually. Apply Step resets the environment.</p>
+    </section>
+
+    <section class="panel">
+      <h2>Core Controls</h2>
+      <div class="control-grid">
+        <label>
+          Grid Size
+          <input id="gridSize" type="number" min="6" max="16" value="10" />
+        </label>
+        <label>
+          Training Speed
+          <input id="speed" type="range" min="1" max="60" value="24" />
+        </label>
+        <label>
+          Alpha (Learning Rate)
+          <input id="alpha" type="range" min="0.05" max="1" step="0.05" value="0.3" />
+        </label>
+        <label>
+          Gamma (Discount)
+          <input id="gamma" type="range" min="0.2" max="0.99" step="0.01" value="0.9" />
+        </label>
+        <label>
+          Epsilon (Explore)
+          <input id="epsilon" type="range" min="0" max="0.5" step="0.01" value="0.1" />
+        </label>
+        <label class="toggle">
+          <input id="decay" type="checkbox" checked />
+          <span>Epsilon Decay</span>
+        </label>
+        <label>
+          Step Penalty
+          <input id="stepPenalty" type="range" min="-0.2" max="0" step="0.01" value="-0.04" />
+        </label>
+        <label class="toggle">
+          <input id="dynamicEnv" type="checkbox" checked />
+          <span>Dynamic Environment</span>
+        </label>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Place Objects</h2>
+      <div class="tools">
+        <button class="tool" data-tool="meat">Place Food</button>
+        <button class="tool" data-tool="lava">Place Lava</button>
+        <button class="tool" data-tool="rock">Place Rock</button>
+        <button class="tool" data-tool="start">Set Start</button>
+        <button class="tool" data-tool="erase">Erase</button>
+      </div>
+      <p class="hint">Click the grid to place items. Use Erase to remove. Start is where each episode resets.</p>
+    </section>
+
+    <section class="panel">
+      <h2>What This Demonstrates</h2>
+      <div class="concepts">
+        <div>
+          <h3>Maximize Reward</h3>
+          <p>The agent learns to reach food while avoiding dangerous or costly tiles.</p>
+        </div>
+        <div>
+          <h3>Explore vs Exploit</h3>
+          <p>With ε-greedy strategy, it sometimes tries new actions to avoid local optima.</p>
+        </div>
+        <div>
+          <h3>Dynamic Environments</h3>
+          <p>When the world changes, the agent keeps learning rather than memorizing one path.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>Built with vanilla JavaScript and Q-learning. Adjust parameters and watch the policy evolve.</p>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

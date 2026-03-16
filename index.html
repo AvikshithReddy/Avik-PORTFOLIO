@@ -1,132 +1,2412 @@
-<!doctype html>
+
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
+  <!-- ===== Basics ===== -->
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Dino RL Sandbox</title>
-  <link rel="stylesheet" href="styles.css" />
+  <title>Avikshith Reddy Yelakonda — Data Science Portfolio</title>
+  <meta name="description" content="Data Science portfolio of Avikshith Reddy Yelakonda: ML, analytics, automation workflows, and measurable impact." />
+  <meta name="theme-color" content="#e6f7f8" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Avikshith Yelakonda — Data Science Portfolio" />
+  <meta property="og:description" content="ML, analytics, automation workflows, and impactful projects." />
+  <meta property="og:type" content="website" />
+  <meta name="google-site-verification" content="CA7gl3XRMIeCJW_gpbF-NnZ9LqTTnMg3sjzH-Wb-Pak" />
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Ccircle cx='64' cy='64' r='62' fill='%23182732'/%3E%3Cpath d='M36 75l20 9 35-35-9-20-46 46z' fill='%2308b7b9'/%3E%3Ccircle cx='86' cy='42' r='8' fill='%2394a3b8'/%3E%3C/svg%3E" />
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <style>
+    /* ========== THEME TOKENS (TIFFANY / WHITE / BLACK) ========== */
+    :root{
+      --bg:#f3fbfc;
+      --bg-soft:#e7f6f7;
+      --surface:#ffffff;
+      --surface-soft:#f6fafb;
+      --border:rgba(11,31,37,.08);
+      --border-strong:rgba(11,31,37,.18);
+      --text:#0b1f25;          /* ink */
+      --muted:#5b6b73;
+      --accent:#08b7b9;        /* tiffany */
+      --accent-dark:#057c80;
+      --accent-soft:#d5f4f4;
+      --shadow-soft:0 18px 40px rgba(11,31,37,.08);
+      --shadow-strong:0 28px 60px rgba(11,31,37,.12);
+      --maxw:1100px;
+      --brandbar-h: 64px;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:"IBM Plex Sans",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      color:var(--text);
+      background:var(--bg);
+      min-height:100vh;
+      overflow-x:hidden;
+      position:relative;
+    }
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      background:
+        radial-gradient(900px 520px at 8% -10%, rgba(8,183,185,.18), transparent 60%),
+        radial-gradient(760px 520px at 92% 0%, rgba(11,31,37,.12), transparent 65%);
+      z-index:-2;
+      pointer-events:none;
+    }
+    body::after{
+      content:"";
+      position:fixed;
+      inset:0;
+      background-image:
+        linear-gradient(rgba(8,183,185,.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(8,183,185,.06) 1px, transparent 1px);
+      background-size:36px 36px;
+      opacity:.25;
+      z-index:-1;
+      pointer-events:none;
+    }
+    a{text-decoration:none;color:inherit}
+
+    .skip{position:absolute;left:-9999px;}
+    .skip:focus{left:1rem;top:1rem;padding:.6rem .9rem;background:#fff;color:#000;border-radius:8px;z-index:10000}
+
+    /* ========== BRAND BAR ========== */
+
+  .brand-bar{
+    position:sticky;
+    top:0;
+    z-index:1000;
+    background:rgba(255,255,255,.92);
+    backdrop-filter:blur(16px);
+    border-bottom:1px solid var(--border);
+    box-shadow:0 10px 26px rgba(11,31,37,.06);
+  }
+
+  /* ✅ Grid layout: left icons | centered name | right nav */
+  .brand-inner{
+    max-width:var(--maxw);
+    margin:0 auto;
+    display:grid;
+    grid-template-columns: 1fr auto 1fr;  /* left | center | right */
+    align-items:center;
+    column-gap:2.8rem;
+    padding:1.05rem 1.6rem;
+    font-size:.8rem;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+
+  /* ✅ Move left icons more left */
+  .brand-left{
+    justify-self:start;
+    display:flex;
+    align-items:center;
+    gap:.5rem;
+  }
+
+  .brand-pill{
+    width:36px;
+    height:36px;
+    border-radius:999px;
+    border:1px solid var(--border-strong);
+    background:var(--surface);
+    display:grid;
+    place-items:center;
+    font-size:14px;
+    box-shadow:0 6px 14px rgba(15,23,42,.08);
+    transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease, background .16s ease;
+  }
+  .brand-pill i{color:var(--accent-dark);}
+  .brand-pill:hover{
+    transform:translateY(-1px);
+    background:var(--accent-soft);
+    border-color:var(--accent);
+    box-shadow:0 10px 24px rgba(7,131,136,.18);
+  }
+
+  /* ✅ More space for name + tagline */
+  .brand-center{
+    justify-self:center;
+    text-align:center;
+    display:flex;
+    flex-direction:column;
+    gap:.25rem;
+    padding:.2rem 0;
+  }
+  .brand-name{
+    font-family:"Space Grotesk",system-ui,sans-serif;
+    font-weight:800;
+    font-size:.98rem;
+    letter-spacing:.22em;
+    color:var(--text);
+    line-height:1.05;
+  }
+  .brand-tagline{
+    font-family:"Space Grotesk",system-ui,sans-serif;
+    font-weight:700;
+    font-size:.6rem;
+    letter-spacing:.16em;
+    color:var(--accent-dark);
+    line-height:1.2;
+    text-transform:uppercase;
+    white-space:nowrap;
+  }
+
+  /* ✅ Move right nav more right */
+  .brand-right{
+    justify-self:end;
+    display:flex;
+    align-items:center;
+  }
+
+  .nav{
+    display:flex;
+    gap:1.05rem;
+    align-items:center;
+    font-size:.7rem;
+    letter-spacing:.2em;
+    color:var(--muted);
+    white-space:nowrap;
+  }
+  .nav a{
+    position:relative;
+    padding:.4rem .2rem;
+    font-weight:800;
+  }
+  .nav a::after{
+    content:"";
+    position:absolute;
+    left:0; right:0;
+    bottom:.1rem;
+    height:2px;
+    transform:scaleX(0);
+    transform-origin:left;
+    background:linear-gradient(90deg,var(--accent),var(--accent-dark));
+    transition:transform .18s ease;
+    opacity:.9;
+  }
+  .nav a:hover::after{transform:scaleX(1);}
+
+  @media(max-width:980px){
+    .nav{display:none}
+  }
+
+  @media(max-width:800px){
+    .brand-inner{
+      grid-template-columns: 1fr;
+      row-gap:.85rem;
+      justify-items:center;
+      padding:.9rem 1rem;
+    }
+    .brand-left{justify-self:center}
+    .brand-right{justify-self:center}
+    .brand-tagline{
+      white-space:normal;
+      text-align:center;
+    }
+  }
+
+    /* ========== SECTION SEPARATORS ========== */
+    .container{max-width:var(--maxw);margin:0 auto}
+    .section{
+      padding:5rem 1rem;
+      position:relative;
+      background:transparent;
+    }
+    .section + .section::before{
+      content:"";
+      position:absolute;
+      left:0; right:0;
+      top:0;
+      height:1px;
+      background:linear-gradient(to right, transparent, rgba(15,23,42,.14), transparent);
+    }
+    .section + .section{padding-top:4.6rem;}
+
+    .section-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:1rem;
+      margin-bottom:1.6rem;
+    }
+    .section-title{
+      font-family:"Space Grotesk",system-ui,sans-serif;
+      font-size:clamp(1.95rem,3.1vw,2.35rem);
+      letter-spacing:.01em;
+    }
+    .section-kicker{
+      display:inline-flex;
+      align-items:center;
+      gap:.45rem;
+      font-weight:800;
+      font-size:.78rem;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color:var(--accent-dark);
+      background:var(--accent-soft);
+      border:1px solid rgba(8,183,185,.25);
+      padding:.35rem .7rem;
+      border-radius:999px;
+      white-space:nowrap;
+    }
+    @media(max-width:620px){
+      .section-head{flex-direction:column;align-items:flex-start}
+    }
+    .section-note{
+      color:var(--muted);
+      max-width:75ch;
+      line-height:1.6;
+      margin:-.6rem 0 1.6rem 0;
+      font-size:.92rem;
+    }
+
+    /* ========== HERO ========== */
+    .hero{
+      min-height: calc(100svh - clamp(64px, 7vh, 92px));
+      padding: clamp(2.2rem, 5vh, 4.2rem) 1rem;
+      background: transparent;
+      display:flex;
+      align-items:center;
+    }
+    .hero-grid{
+      max-width:var(--maxw);
+      margin:0 auto;
+      width:100%;
+      display:grid;
+      grid-template-columns:1.35fr .9fr;
+      gap: clamp(1.6rem, 3vw, 2.8rem);
+      align-items:center;
+    }
+    .hero-kicker{
+      font-size:.8rem;
+      text-transform:uppercase;
+      letter-spacing:.25em;
+      color:var(--muted);
+      margin-bottom:.9rem;
+    }
+    .hero-title{
+      font-family:"Space Grotesk",system-ui,sans-serif;
+      font-size: clamp(2.7rem, 4.2vw, 3.4rem);
+      line-height:1.06;
+      margin-bottom:1rem;
+    }
+    .hero-title .accent{color:var(--accent-dark);}
+    .hero-rotate{
+      display:inline-block;
+      transition:opacity .3s ease, transform .3s ease;
+    }
+    .hero-rotate.fade-out{
+      opacity:0;
+      transform:translateY(6px);
+    }
+    .hero-body{
+      color:var(--muted);
+      line-height:1.7;
+      max-width:52ch;
+      margin-bottom:1.3rem;
+    }
+    .hero-stack{
+      display:flex;
+      flex-wrap:wrap;
+      gap:.35rem .6rem;
+      font-size:.78rem;
+      font-weight:900;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color:var(--accent-dark);
+      margin:-.4rem 0 1.1rem 0;
+    }
+    .hero-stack .dot{color:var(--muted);}
+    .hero-meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:.9rem;
+      align-items:center;
+      font-size:.85rem;
+      color:var(--muted);
+    }
+    .hero-meta-item{
+      display:inline-flex;
+      align-items:center;
+      gap:.45rem;
+    }
+    .hero-meta-item i{color:var(--accent-dark);}
+
+    .hero-photo-card{
+      max-width:420px;
+      margin:0 auto;
+      background:var(--surface);
+      border-radius:26px;
+      padding:.6rem;
+      box-shadow:0 26px 60px rgba(15,23,42,.18);
+      border:1px solid rgba(15,23,42,.06);
+      position:relative;
+      overflow:hidden;
+    }
+    .hero-photo-card::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      border-radius:26px;
+      padding:1px;
+      background:linear-gradient(135deg,rgba(8,183,185,.65),rgba(15,23,42,.14));
+      -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+      -webkit-mask-composite:xor;
+              mask-composite:exclude;
+      pointer-events:none;
+    }
+    .hero-photo-topbar{
+      position:absolute;
+      left:0; right:0;
+      top:0;
+      padding:.75rem .95rem;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:.75rem;
+      pointer-events:none;
+    }
+    .hero-photo-topbar .label{
+      font-size:.72rem;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      font-weight:800;
+      color:rgba(15,23,42,.62);
+      background:rgba(255,255,255,.78);
+      border:1px solid rgba(15,23,42,.08);
+      padding:.28rem .6rem;
+      border-radius:999px;
+      backdrop-filter: blur(10px);
+    }
+    /* ✅ You asked to remove the "TIFFANY · WHITE · BLACK" text on top of photo.
+       So we will NOT render any right-side pill at all. */
+    .hero-photo-inner{
+      border-radius:22px;
+      overflow:hidden;
+      background:#000;
+      aspect-ratio: 16 / 10;
+    }
+    .hero-photo-inner img{
+      width:100%;
+      height:100%;
+      display:block;
+      object-fit:cover;
+      filter:grayscale(100%);
+    }
+
+    /* ✅ You asked to remove skills stack below the photo — no chips area here. */
+
+    @media(max-width:900px){
+      .hero{
+        min-height: calc(100svh - 64px);
+        align-items:flex-start;
+      }
+      .hero-grid{grid-template-columns:1fr;gap:2rem}
+      .hero-photo-card{order:-1;max-width:520px}
+    }
+
+    /* ========== SUMMARY / SKILLS / PROJECTS / TIMELINE / CONTACT (unchanged) ========== */
+    #summary.section{padding-top:4rem;padding-bottom:3.5rem}
+    .summary-spotlight{
+      background:linear-gradient(180deg, rgba(255,255,255,.95), rgba(255,255,255,.9));
+      border-radius:26px;
+      padding:2.2rem 2rem;
+      border:1px solid var(--border);
+      box-shadow:var(--shadow-soft);
+      position:relative;
+      overflow:hidden;
+    }
+    .summary-spotlight::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      border-radius:26px;
+      padding:1px;
+      background:linear-gradient(135deg, rgba(8,183,185,.55), rgba(11,31,37,.12));
+      -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite:xor;
+              mask-composite:exclude;
+      pointer-events:none;
+    }
+    .summary-title{
+      font-family:"Space Grotesk",system-ui,sans-serif;
+      font-size:clamp(1.75rem,3vw,2.05rem);
+      font-weight:700;
+      margin-bottom:.15rem;
+    }
+    .summary-lead{
+      max-width:70ch;
+      margin:0;
+      color:var(--muted);
+      line-height:1.65;
+    }
+    .summary-layout{
+      display:grid;
+      grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);
+      gap:2rem;
+      align-items:start;
+    }
+    .summary-left{
+      display:flex;
+      flex-direction:column;
+      gap:1rem;
+    }
+    .summary-subhead{
+      font-size:.72rem;
+      letter-spacing:.22em;
+      text-transform:uppercase;
+      font-weight:900;
+      color:var(--accent-dark);
+    }
+    .summary-highlights{
+      list-style:none;
+      display:grid;
+      gap:.6rem;
+      padding:0;
+      margin:0;
+    }
+    .summary-highlights li{
+      display:flex;
+      align-items:flex-start;
+      gap:.6rem;
+      padding:.65rem .75rem;
+      background:var(--surface-soft);
+      border:1px solid rgba(148,163,184,.28);
+      border-radius:12px;
+      font-weight:700;
+      color:var(--muted);
+      font-size:.9rem;
+    }
+    .summary-highlights i{
+      color:var(--accent-dark);
+      margin-top:.1rem;
+    }
+    .summary-grid{
+      display:grid;
+      gap:1.3rem;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      margin-top:.5rem;
+    }
+    .summary-right .summary-grid{
+      grid-template-columns:1fr;
+      margin-top:0;
+      gap:.9rem;
+    }
+    @media (max-width:920px){.summary-grid{grid-template-columns:1fr}}
+    @media (max-width:980px){
+      .summary-layout{grid-template-columns:1fr;}
+      .summary-right .summary-grid{grid-template-columns:1fr;}
+    }
+    .summary-item{
+      background:var(--surface-soft);
+      border-radius:18px;
+      padding:1rem .95rem;
+      border:1px solid rgba(148,163,184,.35);
+      position:relative;
+      overflow:hidden;
+    }
+    .summary-item::before{
+      content:"";
+      position:absolute;
+      left:0;
+      top:0;
+      bottom:0;
+      width:3px;
+      background:linear-gradient(var(--accent), var(--accent-dark));
+      opacity:.55;
+    }
+    .summary-item h4{
+      display:flex;
+      align-items:center;
+      gap:.55rem;
+      font-size:1rem;
+      margin-bottom:.45rem;
+    }
+    .summary-item h4 i{color:var(--accent-dark);}
+    .summary-item ul{
+      margin-left:1.1rem;
+      line-height:1.55;
+      color:var(--muted);
+      font-size:.9rem;
+    }
+    .summary-item li{margin:.25rem 0}
+    .mini-badges{
+      display:flex;
+      flex-wrap:wrap;
+      gap:.45rem;
+      margin-top:.2rem;
+    }
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap:.35rem;
+      font-weight:800;
+      font-size:.78rem;
+      padding:.35rem .7rem;
+      border-radius:999px;
+      background:var(--accent-soft);
+      border:1px solid rgba(8,183,185,.3);
+      color:var(--accent-dark);
+    }
+
+    .skills-board{
+      display:grid;
+      grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);
+      gap:1.2rem;
+    }
+    @media(max-width:980px){ .skills-board{grid-template-columns:1fr} }
+
+    .skills-primary,
+    .skills-secondary{
+      display:grid;
+      gap:1rem;
+    }
+
+    .skill-band,
+    .skill-panel{
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:1.1rem 1.1rem;
+      box-shadow:0 10px 30px rgba(15,23,42,.06);
+      position:relative;
+      overflow:hidden;
+    }
+    .skill-band::before{
+      content:"";
+      position:absolute;
+      left:0; right:0; top:0;
+      height:3px;
+      background:linear-gradient(90deg,var(--accent),var(--accent-dark));
+      opacity:.7;
+    }
+    .skill-band-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:.8rem;
+      margin-bottom:.3rem;
+    }
+    .skill-band h3{
+      margin:0;
+      font-size:1rem;
+      display:flex;
+      align-items:center;
+      gap:.55rem;
+    }
+    .skill-band h3 i{color:var(--accent-dark)}
+    .skill-level{
+      font-size:.7rem;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      font-weight:900;
+      color:var(--accent-dark);
+      background:var(--accent-soft);
+      border:1px solid rgba(8,183,185,.25);
+      padding:.18rem .55rem;
+      border-radius:999px;
+      white-space:nowrap;
+    }
+    .skill-band-desc{
+      color:var(--muted);
+      line-height:1.55;
+      font-size:.9rem;
+      margin:.2rem 0 .75rem 0;
+    }
+    .skill-row{
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      gap:.5rem .65rem;
+      margin:.35rem 0;
+    }
+    .skill-row-label{
+      font-size:.68rem;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      font-weight:800;
+      color:var(--muted);
+      min-width:88px;
+    }
+    .skill-row-chips,
+    .skill-cloud{
+      display:flex;
+      flex-wrap:wrap;
+      gap:.35rem;
+    }
+    .pill-chip,
+    .skill-dot{
+      display:inline-flex;
+      align-items:center;
+      gap:.35rem;
+      padding:.3rem .6rem;
+      border-radius:999px;
+      background:var(--surface-soft);
+      border:1px solid rgba(148,163,184,.35);
+      font-size:.78rem;
+      font-weight:800;
+      color:var(--text);
+    }
+    .skill-panel h4{
+      margin:0 0 .6rem 0;
+      font-size:.95rem;
+      display:flex;
+      align-items:center;
+      gap:.5rem;
+    }
+    .skill-panel h4 i{color:var(--accent-dark)}
+
+    .projects{
+      display:grid;
+      gap:1.1rem;
+      grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    }
+    .project{
+      position:relative;
+      overflow:hidden;
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:1.25rem 1.15rem;
+      box-shadow:0 12px 32px rgba(11,31,37,.08);
+      transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+      display:flex;
+      flex-direction:column;
+      gap:.4rem;
+    }
+    .project:hover{
+      transform:translateY(-4px);
+      border-color:var(--border-strong);
+      box-shadow:0 18px 42px rgba(15,23,42,.12);
+    }
+    .project h3{margin-bottom:.5rem;font-size:1.02rem;}
+    .project p{color:var(--muted);line-height:1.6;margin-bottom:.55rem;font-size:.9rem;}
+    .stack{color:var(--accent-dark);font-weight:800;font-size:.83rem;}
+    .project-kicker{
+      font-size:.72rem;
+      letter-spacing:.2em;
+      text-transform:uppercase;
+      font-weight:900;
+      color:var(--accent-dark);
+      margin-bottom:.3rem;
+    }
+    .project-structure{
+      display:grid;
+      gap:.55rem;
+      margin:.35rem 0 .55rem 0;
+    }
+    .project-structure .label{
+      font-size:.72rem;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      font-weight:900;
+      color:var(--accent-dark);
+      margin-bottom:.15rem;
+    }
+    .project-structure .block{
+      background:var(--surface-soft);
+      border:1px solid rgba(148,163,184,.28);
+      border-radius:12px;
+      padding:.65rem .7rem;
+    }
+    .project-structure .block p{margin:0}
+    .project-arch{
+      border:1px dashed rgba(8,183,185,.5);
+      background:rgba(8,183,185,.06);
+      border-radius:12px;
+      padding:.55rem .7rem;
+      font-size:.82rem;
+      font-weight:800;
+      color:var(--accent-dark);
+      display:flex;
+      flex-direction:column;
+      gap:.35rem;
+      margin:.2rem 0 .55rem 0;
+    }
+    .project-arch .arch-label{
+      font-size:.7rem;
+      letter-spacing:.2em;
+      text-transform:uppercase;
+      color:var(--accent-dark);
+    }
+    .project-arch .arch-flow{
+      font-family:"Space Grotesk",system-ui,sans-serif;
+      color:var(--text);
+      font-weight:700;
+    }
+    .project-footer{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:.75rem;
+      margin-top:.3rem;
+      flex-wrap:wrap;
+    }
+    .project-links{
+      display:flex;
+      gap:.45rem;
+      flex-wrap:wrap;
+    }
+    .project-link{
+      display:inline-flex;
+      align-items:center;
+      gap:.4rem;
+      padding:.35rem .7rem;
+      border-radius:999px;
+      border:1px solid rgba(8,183,185,.35);
+      background:rgba(8,183,185,.08);
+      color:var(--accent-dark);
+      font-size:.78rem;
+      font-weight:800;
+      transition:transform .16s ease, border-color .16s ease, background .16s ease;
+    }
+    .project-link:hover{
+      transform:translateY(-1px);
+      background:rgba(8,183,185,.14);
+      border-color:var(--accent);
+    }
+    .project-link.disabled{
+      opacity:.55;
+      pointer-events:none;
+      background:#f2f4f6;
+      color:#6b7280;
+      border-color:#d1d5db;
+    }
+
+    /* ========== ACHIEVEMENTS ========== */
+    .achievements{
+      display:grid;
+      gap:1rem;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    }
+    .achievement-card{
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:1.2rem 1.15rem;
+      box-shadow:0 12px 28px rgba(11,31,37,.08);
+    }
+    .achievement-card h3{
+      margin-bottom:.45rem;
+      font-size:1.02rem;
+      display:flex;
+      align-items:center;
+      gap:.5rem;
+    }
+    .achievement-card h3 i{color:var(--accent-dark);}
+    .achievement-card p{
+      margin:0 0 .45rem 0;
+      color:var(--muted);
+      line-height:1.6;
+      font-size:.9rem;
+    }
+    .achievement-metric{
+      display:inline-flex;
+      align-items:center;
+      gap:.4rem;
+      margin-top:.2rem;
+      padding:.25rem .6rem;
+      border-radius:999px;
+      background:var(--accent-soft);
+      border:1px solid rgba(8,183,185,.35);
+      color:var(--accent-dark);
+      font-weight:900;
+      font-size:.78rem;
+    }
+
+    .timeline{position:relative;padding-left:1.4rem;}
+    .timeline:before{
+      content:"";
+      position:absolute;
+      left:.3rem;
+      top:.2rem;
+      bottom:.2rem;
+      width:2px;
+      background:linear-gradient(to bottom,var(--accent),var(--accent-dark));
+      opacity:.6;
+    }
+    .titem{
+      position:relative;
+      margin:0 0 1rem 0;
+      padding:1.15rem 1.1rem;
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:14px;
+      box-shadow:0 10px 30px rgba(15,23,42,.05);
+    }
+    .titem:before{
+      content:"";
+      position:absolute;
+      left:-1.25rem;
+      top:1.4rem;
+      width:10px;height:10px;
+      border-radius:50%;
+      background:var(--accent);
+      border:3px solid #e0f7f8;
+    }
+    .titem h3{margin-bottom:.25rem;font-size:1.02rem;}
+    .titem .date{color:var(--muted);font-weight:800;margin-bottom:.55rem;font-size:.86rem;}
+    .titem p{line-height:1.6}
+    .pill{
+      display:inline-block;
+      margin-left:.4rem;
+      padding:.12rem .5rem;
+      font-size:.75rem;
+      border-radius:999px;
+      background:#e0f7f8;
+      border:1px solid rgba(8,183,185,.5);
+      color:var(--accent-dark);
+      font-weight:900;
+    }
+    .xp-list{margin:.35rem 0 1rem 1.1rem;line-height:1.6;color:var(--muted);font-size:.9rem;}
+    .xp-list li{margin-bottom:.34rem}
+    .tagrow{display:flex;flex-wrap:wrap;gap:.45rem;}
+    .tag{
+      background:#f3f4f6;
+      border:1px solid rgba(148,163,184,.5);
+      color:#111827;
+      padding:.36rem .65rem;
+      border-radius:999px;
+      font-size:.8rem;
+      font-weight:800;
+      transition:transform .12s ease, background .15s ease, border-color .15s ease;
+    }
+    .tag:hover{
+      transform:translateY(-1px);
+      background:#e0f7f8;
+      border-color:var(--accent);
+    }
+    .skill-tags{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.2rem;}
+
+    .contact-wrap{padding-top:5rem;padding-bottom:5rem}
+    .contact-title{
+      font-family:"Space Grotesk",system-ui,sans-serif;
+      font-size:clamp(2rem,4vw,2.5rem);
+      margin-bottom:.5rem;
+    }
+    .contact-subtitle{
+      color:var(--muted);
+      max-width:60ch;
+      margin:0 0 2rem 0;
+      line-height:1.6;
+    }
+    .contact-grid{
+      display:grid;
+      gap:1rem;
+      grid-template-columns:repeat(2,minmax(260px,1fr));
+      margin-bottom:1.8rem;
+    }
+    @media (max-width:820px){.contact-grid{grid-template-columns:1fr}}
+    .contact-card{
+      display:flex;
+      align-items:center;
+      gap:1rem;
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:1.15rem 1.1rem;
+      color:var(--text);
+      box-shadow:0 10px 30px rgba(15,23,42,.05);
+      transition:transform .16s ease, border-color .16s ease, box-shadow .16s ease;
+    }
+    .contact-card:hover{
+      transform:translateY(-3px);
+      border-color:var(--border-strong);
+      box-shadow:0 16px 36px rgba(15,23,42,.1);
+    }
+    .contact-icon{
+      width:42px;height:42px;
+      border-radius:14px;
+      display:grid;place-items:center;
+      background:#dbeff3;
+      border:1px solid #b8dde4;
+      flex:0 0 auto;
+    }
+    .contact-icon i{font-size:18px;color:var(--accent-dark);}
+    .contact-meta{display:flex;flex-direction:column;gap:.15rem;}
+    .contact-label{
+      font-weight:900;
+      letter-spacing:.02em;
+      font-size:.8rem;
+      text-transform:uppercase;
+      color:var(--muted);
+    }
+    .contact-value{color:var(--text);font-size:.95rem;}
+    .contact-cta{display:flex;gap:.9rem;flex-wrap:wrap;}
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:.5rem;
+      padding:.85rem 1.3rem;
+      border-radius:999px;
+      border:1px solid transparent;
+      background:var(--accent);
+      color:#ffffff;
+      font-weight:900;
+      font-size:.9rem;
+      box-shadow:0 18px 40px rgba(8,183,185,.32);
+      transition:transform .18s ease, box-shadow .18s ease, opacity .18s ease, background .18s ease;
+    }
+    .btn:hover{
+      transform:translateY(-2px);
+      background:var(--accent-dark);
+      box-shadow:0 20px 44px rgba(7,131,136,.4);
+    }
+    .btn.secondary{
+      background:#ffffff;
+      color:var(--accent-dark);
+      border:1px solid var(--border);
+      box-shadow:0 10px 26px rgba(15,23,42,.06);
+    }
+    .btn.secondary:hover{
+      background:#e5f7f8;
+      border-color:var(--accent);
+      box-shadow:0 16px 32px rgba(15,23,42,.12);
+    }
+
+    .to-top{
+      position:fixed;
+      right:1.2rem;
+      bottom:1.2rem;
+      z-index:999;
+      display:none;
+      place-items:center;
+      width:44px;height:44px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:var(--surface);
+      color:var(--accent-dark);
+      box-shadow:0 14px 30px rgba(15,23,42,.18);
+      transition:transform .18s ease, box-shadow .18s ease;
+    }
+    .to-top:hover{
+      transform:translateY(-2px);
+      box-shadow:0 18px 40px rgba(15,23,42,.24);
+    }
+
+    .fade-in{opacity:0; transform:translateY(24px); transition:all .6s ease}
+    .fade-in.visible{opacity:1; transform:translateY(0)}
+
+    /* ========== QUICK INFO MODAL (UPDATED) ========== */
+    .qi-backdrop{
+      position:fixed; inset:0;
+      background:rgba(15,23,42,.35);
+      backdrop-filter: blur(8px);
+      display:none;
+      z-index:10050;
+    }
+    .qi-backdrop.show{display:block;}
+    .qi-modal{
+      position:fixed;
+      inset:auto 1rem 1rem auto;
+      width:min(420px, calc(100vw - 2rem));
+      background:var(--surface);
+      border:1px solid rgba(255,255,255,.35);
+      border-radius:18px;
+      box-shadow:0 30px 80px rgba(0,0,0,.22);
+      overflow:hidden;
+      display:none;
+      z-index:10060;
+    }
+    .qi-modal.show{display:block;}
+
+    /* ✅ Tiffany + white top header (no extra subtitle text) */
+    .qi-head{
+      background:linear-gradient(135deg, var(--accent), var(--accent-dark));
+      color:#fff;
+      padding:1rem 1.1rem;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:1rem;
+    }
+    .qi-title{
+      font-family:"Space Grotesk",system-ui,sans-serif;
+      font-weight:800;
+      font-size:1.05rem;
+      letter-spacing:.02em;
+    }
+    .qi-close{
+      width:36px;height:36px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.35);
+      background:rgba(255,255,255,.12);
+      color:#fff;
+      cursor:pointer;
+      display:grid;
+      place-items:center;
+      transition:transform .16s ease, background .16s ease;
+    }
+    .qi-close:hover{transform:translateY(-1px); background:rgba(255,255,255,.18);}
+
+    .qi-body{
+      padding:1rem 1.1rem 1.1rem;
+      background:linear-gradient(180deg, rgba(8,183,185,.08), rgba(255,255,255,0) 40%);
+    }
+    .qi-card{
+      background:rgba(255,255,255,.9);
+      border:1px solid rgba(8,183,185,.18);
+      border-radius:16px;
+      padding:1rem;
+    }
+    .qi-kicker{
+      font-size:.78rem;
+      font-weight:900;
+      letter-spacing:.22em;
+      text-transform:uppercase;
+      color:var(--accent-dark);
+      margin-bottom:.85rem;
+    }
+    .qi-actions{display:flex;flex-direction:column;gap:.75rem;}
+    .qi-action{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:1rem;
+      padding:.85rem .9rem;
+      border-radius:14px;
+      background:#fff;
+      border:1px solid rgba(15,23,42,.10);
+      box-shadow:0 10px 26px rgba(15,23,42,.06);
+      transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+    }
+    .qi-action:hover{
+      transform:translateY(-2px);
+      border-color:rgba(8,183,185,.35);
+      box-shadow:0 16px 34px rgba(15,23,42,.10);
+    }
+    .qi-left{
+      display:flex; align-items:center; gap:.85rem;
+      min-width:0;
+    }
+    .qi-ico{
+      width:44px;height:44px;
+      border-radius:14px;
+      background:rgba(8,183,185,.12);
+      border:1px solid rgba(8,183,185,.22);
+      display:grid; place-items:center;
+      flex:0 0 auto;
+    }
+    .qi-ico i{color:var(--accent-dark); font-size:18px;}
+    .qi-text{min-width:0}
+    .qi-text .h{
+      font-weight:900;
+      font-size:1rem;
+      color:var(--text);
+      line-height:1.1;
+    }
+    .qi-text .p{
+      margin-top:.15rem;
+      color:var(--muted);
+      font-weight:700;
+      font-size:.9rem;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      max-width:260px;
+    }
+    .qi-ext{
+      color:rgba(15,23,42,.45);
+      font-size:20px;
+      flex:0 0 auto;
+    }
+
+    @media (max-width:520px){
+      .qi-modal{inset:auto .75rem .75rem .75rem; width:auto;}
+      .qi-text .p{max-width:180px;}
+    }
+
+    /* ========== CHATBOT WIDGET (kept) ========== */
+    #portfolio-chatbot-container { z-index: 9999; }
+    .chatbot-widget { position: fixed; bottom: 20px; right: 20px; font-family: inherit; z-index: 9999; }
+    .chatbot-toggle {
+      width: 56px;height: 56px;border-radius: 999px;border: none;
+      background: var(--accent);color: white;cursor: pointer;
+      box-shadow: 0 8px 24px rgba(8, 183, 185, 0.3);
+      display: flex;align-items: center;justify-content: center;
+      transition: all 0.3s ease;z-index: 10000;
+    }
+    .chatbot-toggle:hover { transform: scale(1.1); box-shadow: 0 12px 32px rgba(8, 183, 185, 0.4); }
+    .chatbot-toggle:active { transform: scale(0.95); }
+    .chatbot-window {
+      position: fixed;bottom: 90px;right: 20px;
+      width: 400px;max-width: calc(100vw - 40px);height: 500px;
+      background: white;border-radius: 16px;box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+      display: flex;flex-direction: column;transition: all 0.3s ease;z-index: 9999;
+    }
+    .chatbot-window.hidden { opacity: 0; pointer-events: none; transform: translateY(20px); }
+    .chatbot-header { padding: 16px;border-bottom: 1px solid var(--border);display: flex;justify-content: space-between;align-items: center; }
+    .chatbot-header h3 { margin: 0; font-size: 16px; font-weight: 700; }
+    .chatbot-close { background: none;border: none;cursor: pointer;padding: 4px;display: flex;color: var(--muted);transition: color 0.2s; }
+    .chatbot-close:hover { color: var(--text); }
+    .chatbot-messages { flex: 1;overflow-y: auto;padding: 16px;display: flex;flex-direction: column;gap: 12px; }
+    .chatbot-message { padding: 10px 14px;border-radius: 12px;max-width: 85%;word-wrap: break-word;font-size: 14px;line-height: 1.4;animation: slideIn 0.2s ease; }
+    @keyframes slideIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    .chatbot-message.user { align-self: flex-end;background: var(--accent);color: white; }
+    .chatbot-message.assistant { align-self: flex-start;background: var(--surface-soft);color: var(--text); }
+    .chatbot-message.loading { font-style: italic; color: var(--muted); }
+    .chatbot-input-area { padding: 12px;border-top: 1px solid var(--border);display: flex;gap: 8px; }
+    .chatbot-input { flex: 1;border: 1px solid var(--border);border-radius: 8px;padding: 10px 12px;font-size: 14px;font-family: inherit;transition: border-color 0.2s; }
+    .chatbot-input:focus { outline: none;border-color: var(--accent); }
+    .chatbot-send { width: 36px;height: 36px;border: none;border-radius: 8px;background: var(--accent);color: white;cursor: pointer;display: flex;align-items: center;justify-content: center;transition: all 0.2s; }
+    .chatbot-send:hover { background: var(--accent-dark); }
+    .chatbot-send:active { transform: scale(0.95); }
+    @media (max-width: 640px) {
+      .chatbot-window { width: calc(100vw - 32px); }
+      .chatbot-message { max-width: 90%; }
+    }
+  </style>
 </head>
+
 <body>
-  <div class="page">
-    <header class="hero">
-      <div class="hero-text">
-        <p class="eyebrow">Interactive Reinforcement Learning</p>
-        <h1>Dino RL Sandbox</h1>
-        <p class="lead">
-          Train a tiny dinosaur in a grid world. Place food, lava, and rocks, then watch
-          Q-learning discover safe, efficient paths.
-        </p>
-        <div class="hero-actions">
-          <button id="startBtn" class="primary">Start Training</button>
-          <button id="stepBtn">Step Once</button>
-          <button id="resetBtn">Reset</button>
-        </div>
-        <div class="stats">
-          <div><span class="label">Iteration</span><span id="iterCount">0</span></div>
-          <div><span class="label">Episode</span><span id="episodeCount">0</span></div>
-          <div><span class="label">Last Reward</span><span id="lastReward">0</span></div>
-        </div>
-      </div>
-      <div class="hero-visual">
-        <canvas id="grid" width="720" height="720"></canvas>
-        <div class="legend">
-          <span><i class="swatch value"></i>Value (green good, red bad)</span>
-          <span><i class="swatch meat"></i>Food (+10)</span>
-          <span><i class="swatch lava"></i>Lava (-10, terminal)</span>
-          <span><i class="swatch rock"></i>Rock (-2)</span>
-          <span><i class="swatch start"></i>Start</span>
-        </div>
-      </div>
-    </header>
+<a class="skip" href="#hero">Skip to content</a>
 
-    <section class="panel guide">
-      <div class="guide-header">
-        <h2>Guided Journey</h2>
-        <button id="modeBtn">Switch to Free Play</button>
-      </div>
-      <p id="stepTitle" class="guide-title">Step 1: Learn to Move</p>
-      <p id="stepDesc" class="hint">Watch the agent explore the grid with no goal yet.</p>
-      <div class="guide-actions">
-        <button id="prevStep">Prev</button>
-        <button id="applyStep">Apply Step</button>
-        <button id="nextStep" class="primary">Next</button>
-      </div>
-      <p class="hint">Tip: You can still place objects manually. Apply Step resets the environment.</p>
-    </section>
+<!-- ================= BRAND BAR ================= -->
+<header class="brand-bar">
+  <div class="brand-inner">
+    <div class="brand-left">
+      <a class="brand-pill" href="https://avikshithreddy.github.io/Avik-PORTFOLIO/avikshithReddy_resume.pdf" target="_blank" rel="noopener noreferrer" title="Resume">
+        <i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i>
+      </a>
 
-    <section class="panel">
-      <h2>Core Controls</h2>
-      <div class="control-grid">
-        <label>
-          Grid Size
-          <input id="gridSize" type="number" min="6" max="16" value="10" />
-        </label>
-        <label>
-          Training Speed
-          <input id="speed" type="range" min="1" max="60" value="24" />
-        </label>
-        <label>
-          Alpha (Learning Rate)
-          <input id="alpha" type="range" min="0.05" max="1" step="0.05" value="0.3" />
-        </label>
-        <label>
-          Gamma (Discount)
-          <input id="gamma" type="range" min="0.2" max="0.99" step="0.01" value="0.9" />
-        </label>
-        <label>
-          Epsilon (Explore)
-          <input id="epsilon" type="range" min="0" max="0.5" step="0.01" value="0.1" />
-        </label>
-        <label class="toggle">
-          <input id="decay" type="checkbox" checked />
-          <span>Epsilon Decay</span>
-        </label>
-        <label>
-          Step Penalty
-          <input id="stepPenalty" type="range" min="-0.2" max="0" step="0.01" value="-0.04" />
-        </label>
-        <label class="toggle">
-          <input id="dynamicEnv" type="checkbox" checked />
-          <span>Dynamic Environment</span>
-        </label>
-      </div>
-    </section>
+      <a class="brand-pill"
+         href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=avikshith.y@gmail.com"
+         target="_blank"
+         rel="noopener noreferrer"
+         title="Email Avikshith">
+        <i class="fa-regular fa-envelope" aria-hidden="true"></i>
+      </a>
 
-    <section class="panel">
-      <h2>Place Objects</h2>
-      <div class="tools">
-        <button class="tool" data-tool="meat">Place Food</button>
-        <button class="tool" data-tool="lava">Place Lava</button>
-        <button class="tool" data-tool="rock">Place Rock</button>
-        <button class="tool" data-tool="start">Set Start</button>
-        <button class="tool" data-tool="erase">Erase</button>
-      </div>
-      <p class="hint">Click the grid to place items. Use Erase to remove. Start is where each episode resets.</p>
-    </section>
+      <a class="brand-pill" href="https://github.com/AvikshithReddy" target="_blank" rel="noopener noreferrer" title="GitHub">
+        <i class="fa-brands fa-github" aria-hidden="true"></i>
+      </a>
 
-    <section class="panel">
-      <h2>What This Demonstrates</h2>
-      <div class="concepts">
-        <div>
-          <h3>Maximize Reward</h3>
-          <p>The agent learns to reach food while avoiding dangerous or costly tiles.</p>
+      <a class="brand-pill" href="https://www.linkedin.com/in/avikshith-reddy-y-1a4272234/" target="_blank" rel="noopener noreferrer" title="LinkedIn">
+        <i class="fa-brands fa-linkedin-in" aria-hidden="true"></i>
+      </a>
+    </div>
+
+    <div class="brand-center">
+      <span class="brand-name">AVIKSHITH<br>REDDY<br>YELAKONDA</span>
+      <span class="brand-tagline">DATA SCIENCE · MACHINE LEARNING · AI</span>
+    </div>
+
+    <div class="brand-right">
+      <nav class="nav" aria-label="Primary">
+        <a href="#summary">OVERVIEW</a>
+        <a href="#achievements">ACHIEVEMENTS</a>
+        <a href="#skills">SKILLS</a>
+        <a href="#projects">PROJECTS</a>
+        <a href="#experience">EXPERIENCE</a>
+        <a href="#education">EDUCATION</a>
+        <a href="#contact">CONTACT</a>
+      </nav>
+     
+    </div>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section id="hero" class="hero">
+  <div class="hero-grid fade-in">
+    <div>
+      <div class="hero-kicker">DATA SCIENCE · MACHINE LEARNING</div>
+
+      <h1 class="hero-title">
+        <span class="hero-rotate" id="heroRotate">DATA SCIENCE · MACHINE LEARNING · AI SYSTEMS</span>
+      </h1>
+
+      <p class="hero-body">
+        I design end-to-end machine learning and generative AI systems—RAG pipelines, NLP workflows, and predictive models—from data ingestion and experimentation to scalable deployment and monitoring.
+      </p>
+
+      <div class="hero-stack" aria-label="Core stack">
+        <span>Python</span><span class="dot">•</span>
+        <span>SQL</span><span class="dot">•</span>
+        <span>LLMs</span><span class="dot">•</span>
+        <span>RAG</span><span class="dot">•</span>
+        <span>ML Pipelines</span><span class="dot">•</span>
+        <span>MLOps</span>
+      </div>
+
+      <div class="hero-meta">
+        <span class="hero-meta-item">
+          <i class="fa-solid fa-location-dot"></i> Dallas, Texas
+        </span>
+        <span class="hero-meta-item">
+          <i class="fa-solid fa-graduation-cap"></i> MS Computer Science — AI/ML, SMU
+        </span>
+      </div>
+    </div>
+
+    <div class="hero-photo-card">
+      <!-- ✅ No "TIFFANY · WHITE · BLACK" pill rendered -->
+      <div class="hero-photo-topbar" aria-hidden="true">
+        <span class="label">Profile</span>
+      </div>
+
+      <div class="hero-photo-inner">
+        <img src="avatar.jpg" alt="Portrait of Avikshith Yelakonda" />
+      </div>
+
+      <!-- ✅ Removed skills stack below the photo entirely -->
+    </div>
+  </div>
+</section>
+
+<!-- ================= SUMMARY ================= -->
+<section id="summary" class="section fade-in">
+  <div class="container">
+    <div class="section-head">
+      <h2 class="section-title">End-to-End Machine Learning & AI Workflows</h2>
+      <span class="section-kicker">
+        <i class="fa-solid fa-sparkles"></i> overview
+      </span>
+    </div>
+
+    <div class="summary-spotlight" aria-labelledby="summary-title">
+      <div class="summary-layout">
+        <div class="summary-left">
+          <h3 id="summary-title" class="summary-title">
+            I design and deploy machine learning and AI systems that transform large datasets into decision-ready insights.
+          </h3>
+
+          <p class="summary-lead">
+            My work focuses on predictive modeling, experimentation, and LLM systems such as RAG pipelines and NLP workflows.
+          </p>
+
+          <div class="summary-subhead">What I Deliver</div>
+          <ul class="summary-highlights">
+            <li><i class="fa-solid fa-compass-drafting" aria-hidden="true"></i><span>Problem framing to measurable KPIs</span></li>
+            <li><i class="fa-solid fa-flask-vial" aria-hidden="true"></i><span>Modeling, experimentation, and evaluation</span></li>
+            <li><i class="fa-solid fa-rocket" aria-hidden="true"></i><span>Deployment, monitoring, and iteration</span></li>
+          </ul>
+
+          <div class="mini-badges" aria-label="Core stack">
+            <span class="chip"><i class="fa-brands fa-python"></i> Python</span>
+            <span class="chip"><i class="fa-solid fa-database"></i> SQL</span>
+            <span class="chip"><i class="fa-solid fa-chart-line"></i> Data Science</span>
+            <span class="chip"><i class="fa-solid fa-brain"></i> Machine Learning</span>
+            <span class="chip"><i class="fa-solid fa-layer-group"></i> LLMs & RAG</span>
+            <span class="chip"><i class="fa-brands fa-docker"></i> Docker</span>
+            <span class="chip"><i class="fa-solid fa-diagram-project"></i> MLflow</span>
+          </div>
         </div>
-        <div>
-          <h3>Explore vs Exploit</h3>
-          <p>With ε-greedy strategy, it sometimes tries new actions to avoid local optima.</p>
-        </div>
-        <div>
-          <h3>Dynamic Environments</h3>
-          <p>When the world changes, the agent keeps learning rather than memorizing one path.</p>
+
+        <div class="summary-right">
+          <div class="summary-grid" role="list">
+            <!-- Data Scientist -->
+            <div class="summary-item" role="listitem">
+              <h4>
+                <i class="fa-solid fa-chart-line" aria-hidden="true"></i>
+                Data Science Foundations
+              </h4>
+              <ul>
+                <li>EDA, feature engineering, statistical modeling, forecasting, and hypothesis testing</li>
+                <li>Model evaluation, validation, explainability, and experiment-driven analysis</li>
+              </ul>
+            </div>
+
+            <!-- ML / AI Engineer -->
+            <div class="summary-item" role="listitem">
+              <h4>
+                <i class="fa-solid fa-brain" aria-hidden="true"></i>
+                ML & AI Engineering
+              </h4>
+              <ul>
+                <li>Supervised ML, time-series models, and experimentation (A/B testing)</li>
+                <li>NLP and LLM-based systems including RAG pipelines, embeddings, and prompt workflows</li>
+              </ul>
+            </div>
+
+            <!-- Production & Impact -->
+            <div class="summary-item" role="listitem">
+              <h4>
+                <i class="fa-solid fa-gears" aria-hidden="true"></i>
+                Production & Impact
+              </h4>
+              <ul>
+                <li>ETL/ELT pipelines with Airflow, dbt, Spark/Databricks, and cloud platforms</li>
+                <li>Model deployment, tracking, and monitoring with Docker, MLflow, and CI/CD</li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
 
-    <footer class="footer">
-      <p>Built with vanilla JavaScript and Q-learning. Adjust parameters and watch the policy evolve.</p>
-    </footer>
+<!-- ================= ACHIEVEMENTS ================= -->
+<section id="achievements" class="section">
+  <div class="container fade-in">
+    <div class="section-head">
+      <h2 class="section-title">Key Achievements</h2>
+      <span class="section-kicker">
+        <i class="fa-solid fa-trophy"></i> impact
+      </span>
+    </div>
+
+    <div class="achievements">
+      <article class="achievement-card">
+        <h3><i class="fa-solid fa-bolt" aria-hidden="true"></i> Measured Uplift</h3>
+        <p>Designed A/B testing and uplift modeling to quantify causal impact and conversion lift.</p>
+        <span class="achievement-metric">+65% relative lift (p &lt; 0.001)</span>
+      </article>
+
+      <article class="achievement-card">
+        <h3><i class="fa-solid fa-wave-square" aria-hidden="true"></i> Forecasting Accuracy</h3>
+        <p>Built time‑series forecasting workflows with model comparison and error diagnostics.</p>
+        <span class="achievement-metric">MAPE ≈ 20.8%</span>
+      </article>
+
+      <article class="achievement-card">
+        <h3><i class="fa-solid fa-layer-group" aria-hidden="true"></i> Conversion Lift</h3>
+        <p>Handled imbalanced prediction with calibrated ranking to surface high‑value leads.</p>
+        <span class="achievement-metric">ROC‑AUC ≈ 0.683 · 2.35× top‑decile lift</span>
+      </article>
+
+      <article class="achievement-card">
+        <h3><i class="fa-solid fa-road" aria-hidden="true"></i> Ford‑Ready Focus</h3>
+        <p>Targeting mobility and manufacturing analytics: warranty cost prediction, quality analytics, supply‑chain risk, and customer feedback intelligence.</p>
+        <span class="achievement-metric">Problem → Approach → Impact</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SKILLS ================= -->
+<section id="skills" class="section">
+  <div class="container fade-in">
+    <div class="section-head">
+      <h2 class="section-title">Skills</h2>
+      <span class="section-kicker">
+        <i class="fa-solid fa-grid-2"></i> stack
+      </span>
+    </div>
+
+    <div class="skills-board">
+      <div class="skills-primary">
+        <div class="skill-band">
+          <div class="skill-band-head">
+            <h3><i class="fa-solid fa-chart-line"></i> Decision Science & Experimentation</h3>
+            <span class="skill-level">Core</span>
+          </div>
+          <p class="skill-band-desc">
+            Frame business problems into measurable KPIs, design experiments, and build interpretable models that guide
+            decisions and allocation.
+          </p>
+          <div class="skill-row">
+            <span class="skill-row-label">Methods</span>
+            <div class="skill-row-chips">
+              <span class="pill-chip">Regression</span>
+              <span class="pill-chip">Classification</span>
+              <span class="pill-chip">Forecasting</span>
+              <span class="pill-chip">Causal/Uplift</span>
+              <span class="pill-chip">A/B Testing</span>
+            </div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-row-label">Evidence</span>
+            <div class="skill-row-chips">
+              <span class="pill-chip">Model evaluation</span>
+              <span class="pill-chip">Calibration</span>
+              <span class="pill-chip">Explainability (SHAP)</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="skill-band">
+          <div class="skill-band-head">
+            <h3><i class="fa-solid fa-brain"></i> ML & GenAI Systems</h3>
+            <span class="skill-level">Core</span>
+          </div>
+          <p class="skill-band-desc">
+            Build production-grade ML and LLM pipelines with retrieval, ranking, and robust evaluation to deliver
+            reliable user-facing intelligence.
+          </p>
+          <div class="skill-row">
+            <span class="skill-row-label">Methods</span>
+            <div class="skill-row-chips">
+              <span class="pill-chip">RAG</span>
+              <span class="pill-chip">Embeddings</span>
+              <span class="pill-chip">Ranking</span>
+              <span class="pill-chip">Fine-tuning</span>
+              <span class="pill-chip">Prompting</span>
+            </div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-row-label">Evidence</span>
+            <div class="skill-row-chips">
+              <span class="pill-chip">NLP pipelines</span>
+              <span class="pill-chip">Semantic search</span>
+              <span class="pill-chip">RAG eval</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="skill-band">
+          <div class="skill-band-head">
+            <h3><i class="fa-solid fa-gears"></i> Data & MLOps Engineering</h3>
+            <span class="skill-level">Core</span>
+          </div>
+          <p class="skill-band-desc">
+            Ship models into production with reproducible pipelines, monitoring, and governance-ready workflows.
+          </p>
+          <div class="skill-row">
+            <span class="skill-row-label">Systems</span>
+            <div class="skill-row-chips">
+              <span class="pill-chip">ETL/ELT</span>
+              <span class="pill-chip">Spark</span>
+              <span class="pill-chip">Airflow</span>
+              <span class="pill-chip">dbt</span>
+            </div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-row-label">Ops</span>
+            <div class="skill-row-chips">
+              <span class="pill-chip">Docker</span>
+              <span class="pill-chip">MLflow</span>
+              <span class="pill-chip">CI/CD</span>
+              <span class="pill-chip">Monitoring</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="skills-secondary">
+        <div class="skill-panel">
+          <h4><i class="fa-solid fa-code"></i> Languages</h4>
+          <div class="skill-cloud">
+            <span class="skill-dot">Python</span>
+            <span class="skill-dot">SQL</span>
+            <span class="skill-dot">R</span>
+            <span class="skill-dot">Bash</span>
+            <span class="skill-dot">C++</span>
+            <span class="skill-dot">SAS</span>
+          </div>
+        </div>
+
+        <div class="skill-panel">
+          <h4><i class="fa-solid fa-network-wired"></i> ML Stack</h4>
+          <div class="skill-cloud">
+            <span class="skill-dot">scikit-learn</span>
+            <span class="skill-dot">PyTorch</span>
+            <span class="skill-dot">TensorFlow</span>
+            <span class="skill-dot">Hugging Face</span>
+            <span class="skill-dot">FAISS</span>
+            <span class="skill-dot">LlamaIndex</span>
+          </div>
+        </div>
+
+        <div class="skill-panel">
+          <h4><i class="fa-solid fa-cloud"></i> Data & Cloud</h4>
+          <div class="skill-cloud">
+            <span class="skill-dot">AWS</span>
+            <span class="skill-dot">Azure</span>
+            <span class="skill-dot">GCP</span>
+            <span class="skill-dot">Databricks</span>
+            <span class="skill-dot">Snowflake</span>
+            <span class="skill-dot">BigQuery</span>
+          </div>
+        </div>
+
+        <div class="skill-panel">
+          <h4><i class="fa-solid fa-chart-line"></i> Analytics</h4>
+          <div class="skill-cloud">
+            <span class="skill-dot">Power BI</span>
+            <span class="skill-dot">Tableau</span>
+            <span class="skill-dot">Looker</span>
+            <span class="skill-dot">Matplotlib</span>
+            <span class="skill-dot">Seaborn</span>
+            <span class="skill-dot">Excel</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PROJECTS ================= -->
+<section id="projects" class="section">
+  <div class="container fade-in">
+    <div class="section-head">
+      <h2 class="section-title">Featured Projects</h2>
+      <span class="section-kicker"><i class="fa-solid fa-folder-open"></i> work</span>
+    </div>
+
+    <div class="projects">
+      <article class="project">
+        <div class="project-kicker">Reinforcement Learning · Q-Learning · Interactive</div>
+        <h3>Dino RL Sandbox</h3>
+        <div class="project-structure">
+          <div class="block">
+            <p>Interactive grid-world that teaches reinforcement learning step-by-step. Visitors can train the agent, add food/lava/rocks, and visualize value functions as the policy improves.</p>
+          </div>
+        </div>
+        <div class="project-arch">
+          <span class="arch-label">Architecture</span>
+          <div class="arch-flow">Grid World → State/Action → Reward Shaping → Q-Learning Update → Value Map</div>
+        </div>
+        <div class="project-footer">
+          <div class="stack">JavaScript · Q-Learning · Canvas · UI/UX</div>
+          <div class="project-links">
+            <a class="project-link" href="rl-dino-demo/index.html" target="_blank" rel="noopener noreferrer" aria-label="Open Dino RL Sandbox demo">
+              <i class="fa-solid fa-play" aria-hidden="true"></i> View Demo
+            </a>
+            <a class="project-link disabled" href="#" aria-disabled="true">
+              <i class="fa-brands fa-github" aria-hidden="true"></i> View Code
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <article class="project" data-gh-repo="AvikshithReddy/Amazon_Executive-review-intelligence">
+        <div class="project-kicker">NLP · RAG · Reviews Intelligence</div>
+        <h3>Executive Review Intelligence (LLM + RAG)</h3>
+        <div class="project-structure">
+          <div class="block">
+            <p>Surfaces recurring issues in large review volumes for executive triage. Clusters themes, attaches RAG evidence, scores outputs with RAGAS, and pushes Slack alerts to accelerate decisions.</p>
+          </div>
+        </div>
+        <div class="project-arch">
+          <span class="arch-label">Architecture</span>
+          <div class="arch-flow">Reviews → Cleaning → Embeddings → Topic Clustering → RAG Evidence → RAGAS Eval → Slack Alerts</div>
+        </div>
+        <div class="project-footer">
+          <div class="stack">Python · LlamaIndex · ChromaDB · RAG · Streamlit</div>
+          <div class="project-links">
+            <a class="project-link" href="https://github.com/AvikshithReddy/Amazon_Executive-review-intelligence" target="_blank" rel="noopener noreferrer" aria-label="Open Executive Review Intelligence GitHub repository">
+              <i class="fa-brands fa-github" aria-hidden="true"></i> View Code
+            </a>
+            <a class="project-link" href="https://github.com/AvikshithReddy/Amazon_Executive-review-intelligence" target="_blank" rel="noopener noreferrer" aria-label="Open Executive Review Intelligence demo in README">
+              <i class="fa-solid fa-play" aria-hidden="true"></i> View Demo
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <article class="project" data-gh-repo="AvikshithReddy/AI_expense_Claim">
+        <div class="project-kicker">OCR · CV · Automation</div>
+        <h3>AI Expense Claim Processing (OCR + automation)</h3>
+        <div class="project-structure">
+          <div class="block">
+            <p>Manual expense processing is slow, inconsistent, and hard to audit at scale. Automates receipt OCR and extraction with confidence scoring, FastAPI services, and a Streamlit review UI to speed approvals and analytics.</p>
+          </div>
+        </div>
+        <div class="project-arch">
+          <span class="arch-label">Architecture</span>
+          <div class="arch-flow">Receipts → OCR → Field Extraction → Validation → API → Review UI</div>
+        </div>
+        <div class="project-footer">
+          <div class="stack">Python · FastAPI · OCR · Docling · Streamlit</div>
+          <div class="project-links">
+            <a class="project-link" href="https://github.com/AvikshithReddy/AI_expense_Claim" target="_blank" rel="noopener noreferrer" aria-label="Open AI Expense Claim Processing System GitHub repository">
+              <i class="fa-brands fa-github" aria-hidden="true"></i> View Code
+            </a>
+            <a class="project-link" href="https://github.com/AvikshithReddy/AI_expense_Claim" target="_blank" rel="noopener noreferrer" aria-label="Open AI Expense Claim demo in README">
+              <i class="fa-solid fa-play" aria-hidden="true"></i> View Demo
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <article class="project" data-gh-repo="AvikshithReddy/llm-finetune-chatbot">
+        <div class="project-kicker">LLM · RAG · Finance</div>
+        <h3>Financial LLM Chatbot</h3>
+        <div class="project-structure">
+          <div class="block">
+            <p>Finance teams need fast, grounded answers across SEC filings and reporting metrics. A fine‑tuned LLM with RAG over filings delivers cited responses and metric explanations.</p>
+          </div>
+        </div>
+        <div class="project-arch">
+          <span class="arch-label">Architecture</span>
+          <div class="arch-flow">Filings → Chunking → Embeddings → FAISS → LLM → Cited Answer</div>
+        </div>
+        <div class="project-footer">
+          <div class="stack">Python · LLM Fine‑Tuning · RAG · FAISS</div>
+          <div class="project-links">
+            <a class="project-link" href="https://github.com/AvikshithReddy/llm-finetune-chatbot" target="_blank" rel="noopener noreferrer" aria-label="Open Financial Fine-Tuned Chatbot GitHub repository">
+              <i class="fa-brands fa-github" aria-hidden="true"></i> View Code
+            </a>
+            <a class="project-link" href="https://github.com/AvikshithReddy/llm-finetune-chatbot" target="_blank" rel="noopener noreferrer" aria-label="Open Financial Fine-Tuned Chatbot demo in README">
+              <i class="fa-solid fa-play" aria-hidden="true"></i> View Demo
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <article class="project" data-gh-repo="AvikshithReddy/teaching-assistant-rag">
+        <div class="project-kicker">RAG · Education · Search</div>
+        <h3>Teaching Assistant RAG</h3>
+        <div class="project-structure">
+          <div class="block">
+            <p>Students need course‑specific answers without hallucinations across multiple classes. Course‑isolated vector stores with hybrid retrieval and per‑student memory deliver cited, personalized answers in a Streamlit UI.</p>
+          </div>
+        </div>
+        <div class="project-arch">
+          <span class="arch-label">Architecture</span>
+          <div class="arch-flow">Syllabus/Notes → TF‑IDF + Embeddings → Vector Store → RAG → Streamlit UI</div>
+        </div>
+        <div class="project-footer">
+          <div class="stack">Python · RAG · FAISS · TF‑IDF · Streamlit · OpenAI</div>
+          <div class="project-links">
+            <a class="project-link" href="https://github.com/AvikshithReddy/teaching-assistant-rag" target="_blank" rel="noopener noreferrer" aria-label="Open Teaching Assistant RAG GitHub repository">
+              <i class="fa-brands fa-github" aria-hidden="true"></i> View Code
+            </a>
+            <a class="project-link" href="https://github.com/AvikshithReddy/teaching-assistant-rag" target="_blank" rel="noopener noreferrer" aria-label="Open Teaching Assistant RAG demo in README">
+              <i class="fa-solid fa-play" aria-hidden="true"></i> View Demo
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <article class="project" data-gh-repo="AvikshithReddy/AB_test">
+        <div class="project-kicker">Experimentation · Causal Inference</div>
+        <h3>A/B Testing &amp; Uplift Modeling</h3>
+        <div class="project-structure">
+          <div class="block">
+            <p>Marketing teams need to measure incremental impact and target high‑lift customers. Power analysis, lift diagnostics, and uplift modeling quantified +65% relative conversion lift (p &lt; 0.001) and identified responsive segments.</p>
+          </div>
+        </div>
+        <div class="project-arch">
+          <span class="arch-label">Architecture</span>
+          <div class="arch-flow">Experiment Data → Power/Lift → Uplift Model → Segment Targeting</div>
+        </div>
+        <div class="project-footer">
+          <div class="stack">Python · CausalML · Statsmodels · Uplift</div>
+          <div class="project-links">
+            <a class="project-link" href="https://github.com/AvikshithReddy/AB_test" target="_blank" rel="noopener noreferrer" aria-label="Open A/B Testing and Uplift Modeling GitHub repository">
+              <i class="fa-brands fa-github" aria-hidden="true"></i> View Code
+            </a>
+            <a class="project-link disabled" href="#" aria-disabled="true">
+              <i class="fa-solid fa-play" aria-hidden="true"></i> View Demo
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <article class="project" data-gh-repo="AvikshithReddy/Time_Series-Demand_Forecsating">
+        <div class="project-kicker">Forecasting · Retail</div>
+        <h3>Walmart Demand Forecasting</h3>
+        <div class="project-structure">
+          <div class="block">
+            <p>Retail planning needs reliable short‑horizon demand forecasts for staffing and inventory. Compared Prophet and LSTM models across 7–30 day horizons, achieving MAPE ≈ 20.8% on the best model.</p>
+          </div>
+        </div>
+        <div class="project-arch">
+          <span class="arch-label">Architecture</span>
+          <div class="arch-flow">Sales Data → Feature Engineering → Model Compare → Forecast → Error Tracking</div>
+        </div>
+        <div class="project-footer">
+          <div class="stack">Python · Prophet · LSTM · Time Series</div>
+          <div class="project-links">
+            <a class="project-link" href="https://github.com/AvikshithReddy/Time_Series-Demand_Forecsating" target="_blank" rel="noopener noreferrer" aria-label="Open Walmart Demand Forecasting GitHub repository">
+              <i class="fa-brands fa-github" aria-hidden="true"></i> View Code
+            </a>
+            <a class="project-link disabled" href="#" aria-disabled="true">
+              <i class="fa-solid fa-play" aria-hidden="true"></i> View Demo
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <article class="project" data-gh-repo="AvikshithReddy/Consumer-Affairs---Prediction">
+        <div class="project-kicker">Classification · Lead Scoring</div>
+        <h3>Lead Conversion Modeling (Consumer Affairs)</h3>
+        <div class="project-structure">
+          <div class="block">
+            <p>Imbalanced lead data requires reliable ranking for outreach. Feature‑engineered XGBoost with calibration and SHAP reached ROC‑AUC ≈ 0.683 and ~2.35× top‑decile lift.</p>
+          </div>
+        </div>
+        <div class="project-arch">
+          <span class="arch-label">Architecture</span>
+          <div class="arch-flow">Leads → Feature Engineering → Model → SHAP → Ranked Outreach</div>
+        </div>
+        <div class="project-footer">
+          <div class="stack">Python · scikit‑learn · XGBoost · SHAP</div>
+          <div class="project-links">
+            <a class="project-link" href="https://github.com/AvikshithReddy/Consumer-Affairs---Prediction" target="_blank" rel="noopener noreferrer" aria-label="Open Consumer Affairs Lead Conversion GitHub repository">
+              <i class="fa-brands fa-github" aria-hidden="true"></i> View Code
+            </a>
+            <a class="project-link disabled" href="#" aria-disabled="true">
+              <i class="fa-solid fa-play" aria-hidden="true"></i> View Demo
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <article class="project" data-gh-repo="AvikshithReddy/A-B-testing-marketing-analysis">
+        <div class="project-kicker">A/B Testing · Marketing Mix</div>
+        <h3>A/B Testing for Marketing Campaign Optimization</h3>
+        <div class="project-structure">
+          <div class="block">
+            <p>Choose the higher‑ROI ad channel while controlling for temporal effects. Hypothesis testing with regression/time‑series analysis compared channels and identified the better option for budget allocation.</p>
+          </div>
+        </div>
+        <div class="project-arch">
+          <span class="arch-label">Architecture</span>
+          <div class="arch-flow">Channel Spend → Experiment → Statistical Test → ROI Decision</div>
+        </div>
+        <div class="project-footer">
+          <div class="stack">Python · Hypothesis Testing · Statsmodels</div>
+          <div class="project-links">
+            <a class="project-link" href="https://github.com/AvikshithReddy/A-B-testing-marketing-analysis" target="_blank" rel="noopener noreferrer" aria-label="Open Marketing A/B Testing GitHub repository">
+              <i class="fa-brands fa-github" aria-hidden="true"></i> View Code
+            </a>
+            <a class="project-link disabled" href="#" aria-disabled="true">
+              <i class="fa-solid fa-play" aria-hidden="true"></i> View Demo
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <article class="project" data-gh-repo="AvikshithReddy/Movie_Recommendation-Ranking-">
+        <div class="project-kicker">Ranking · Recommenders</div>
+        <h3>Movie Recommendation &amp; Ranking</h3>
+        <div class="project-structure">
+          <div class="block">
+            <p>Users need personalized rankings to improve engagement and discovery. Built ranking features from user–item interactions to generate Top‑N recommendations for personalization experiments.</p>
+          </div>
+        </div>
+        <div class="project-arch">
+          <span class="arch-label">Architecture</span>
+          <div class="arch-flow">User Events → Feature Engineering → Ranking Model → Top‑N Recommendations</div>
+        </div>
+        <div class="project-footer">
+          <div class="stack">Python · Recommendation Systems · Ranking</div>
+          <div class="project-links">
+            <a class="project-link" href="https://github.com/AvikshithReddy/Movie_Recommendation-Ranking-" target="_blank" rel="noopener noreferrer" aria-label="Open Movie Recommendation GitHub repository">
+              <i class="fa-brands fa-github" aria-hidden="true"></i> View Code
+            </a>
+            <a class="project-link disabled" href="#" aria-disabled="true">
+              <i class="fa-solid fa-play" aria-hidden="true"></i> View Demo
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <article class="project" data-gh-repo="AvikshithReddy/Customer-Churn-and-Segmentation">
+        <div class="project-kicker">Churn · Segmentation</div>
+        <h3>Customer Churn &amp; Segmentation</h3>
+        <div class="project-structure">
+          <div class="block">
+            <p>Retention teams need to identify churn risk and high‑value segments. Built churn predictors and segmentation from behavioral features to produce risk scores and segment insights for retention.</p>
+          </div>
+        </div>
+        <div class="project-arch">
+          <span class="arch-label">Architecture</span>
+          <div class="arch-flow">Customer Data → Feature Engineering → Churn Model → Segmentation → Retention Playbooks</div>
+        </div>
+        <div class="project-footer">
+          <div class="stack">Python · Classification · Segmentation</div>
+          <div class="project-links">
+            <a class="project-link" href="https://github.com/AvikshithReddy/Customer-Churn-and-Segmentation" target="_blank" rel="noopener noreferrer" aria-label="Open Customer Churn and Segmentation GitHub repository">
+              <i class="fa-brands fa-github" aria-hidden="true"></i> View Code
+            </a>
+            <a class="project-link disabled" href="#" aria-disabled="true">
+              <i class="fa-solid fa-play" aria-hidden="true"></i> View Demo
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <article class="project" data-gh-repo="AvikshithReddy/Fraud_detection">
+        <div class="project-kicker">Risk · Fraud Detection</div>
+        <h3>Fraud Detection Modeling</h3>
+        <div class="project-structure">
+          <div class="block">
+            <p>High‑risk transactions must be flagged quickly with minimal false positives. Imbalance‑aware classification generates fraud risk scores to prioritize review while controlling false positives.</p>
+          </div>
+        </div>
+        <div class="project-arch">
+          <span class="arch-label">Architecture</span>
+          <div class="arch-flow">Transactions → Feature Engineering → Fraud Model → Risk Scoring → Review Queue</div>
+        </div>
+        <div class="project-footer">
+          <div class="stack">Python · Classification · Imbalanced Learning</div>
+          <div class="project-links">
+            <a class="project-link" href="https://github.com/AvikshithReddy/Fraud_detection" target="_blank" rel="noopener noreferrer" aria-label="Open Fraud Detection GitHub repository">
+              <i class="fa-brands fa-github" aria-hidden="true"></i> View Code
+            </a>
+            <a class="project-link disabled" href="#" aria-disabled="true">
+              <i class="fa-solid fa-play" aria-hidden="true"></i> View Demo
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <article class="project" data-gh-repo="AvikshithReddy/EHR">
+        <div class="project-kicker">Healthcare · EHR Analytics</div>
+        <h3>EHR Analytics &amp; Predictive Modeling</h3>
+        <div class="project-structure">
+          <div class="block">
+            <p>Clinical records are noisy and heterogeneous, making prediction difficult. Cleaned and standardized EHR data to build predictive baselines and deliver clinical risk insights.</p>
+          </div>
+        </div>
+        <div class="project-arch">
+          <span class="arch-label">Architecture</span>
+          <div class="arch-flow">EHR Data → Cleaning → Feature Engineering → Predictive Model → Clinical Insights</div>
+        </div>
+        <div class="project-footer">
+          <div class="stack">Python · EDA · Predictive Modeling</div>
+          <div class="project-links">
+            <a class="project-link" href="https://github.com/AvikshithReddy/EHR" target="_blank" rel="noopener noreferrer" aria-label="Open EHR GitHub repository">
+              <i class="fa-brands fa-github" aria-hidden="true"></i> View Code
+            </a>
+            <a class="project-link disabled" href="#" aria-disabled="true">
+              <i class="fa-solid fa-play" aria-hidden="true"></i> View Demo
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <article class="project" data-gh-repo="AvikshithReddy/Time-Series-Stock-market_-Analysis">
+        <div class="project-kicker">Time Series · Finance</div>
+        <h3>Stock Market Time‑Series Analysis</h3>
+        <div class="project-structure">
+          <div class="block">
+            <p>Investors need comparative diagnostics on trend and volatility across equities. Computed indicators and visual diagnostics across SHOP, JD, and BABA for portfolio analysis.</p>
+          </div>
+        </div>
+        <div class="project-arch">
+          <span class="arch-label">Architecture</span>
+          <div class="arch-flow">Price Data → Indicators → Diagnostics → Visualization</div>
+        </div>
+        <div class="project-footer">
+          <div class="stack">Python · yfinance · Pandas · Matplotlib</div>
+          <div class="project-links">
+            <a class="project-link" href="https://github.com/AvikshithReddy/Time-Series-Stock-market_-Analysis" target="_blank" rel="noopener noreferrer" aria-label="Open Stock Market Time-Series Analysis GitHub repository">
+              <i class="fa-brands fa-github" aria-hidden="true"></i> View Code
+            </a>
+            <a class="project-link disabled" href="#" aria-disabled="true">
+              <i class="fa-solid fa-play" aria-hidden="true"></i> View Demo
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <article class="project" data-gh-repo="AvikshithReddy/Health_care">
+        <div class="project-kicker">Clustering · Healthcare</div>
+        <h3>Heart Disease Risk Clustering (Health Care)</h3>
+        <div class="project-structure">
+          <div class="block">
+            <p>Identify patient risk groups when labels are limited or uncertain. PCA with K‑Means/DBSCAN/Hierarchical clustering revealed four risk groups for targeted analysis.</p>
+          </div>
+        </div>
+        <div class="project-arch">
+          <span class="arch-label">Architecture</span>
+          <div class="arch-flow">Clinical Data → PCA → Clustering → Risk Groups</div>
+        </div>
+        <div class="project-footer">
+          <div class="stack">Python · K‑Means · DBSCAN · PCA</div>
+          <div class="project-links">
+            <a class="project-link" href="https://github.com/AvikshithReddy/Health_care" target="_blank" rel="noopener noreferrer" aria-label="Open Health Care Risk Clustering GitHub repository">
+              <i class="fa-brands fa-github" aria-hidden="true"></i> View Code
+            </a>
+            <a class="project-link disabled" href="#" aria-disabled="true">
+              <i class="fa-solid fa-play" aria-hidden="true"></i> View Demo
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <article class="project" data-gh-repo="AvikshithReddy/tenant-matcher">
+        <div class="project-kicker">Matching · Ranking</div>
+        <h3>Tenant Matcher</h3>
+        <div class="project-structure">
+          <div class="block">
+            <p>Match renters to properties using preferences and availability signals. Preference‑based scoring ranks properties and automates email recommendations.</p>
+          </div>
+        </div>
+        <div class="project-arch">
+          <span class="arch-label">Architecture</span>
+          <div class="arch-flow">Preferences → Scoring → Ranking → Email Delivery</div>
+        </div>
+        <div class="project-footer">
+          <div class="stack">Python · Pandas · Streamlit · SMTP</div>
+          <div class="project-links">
+            <a class="project-link" href="https://github.com/AvikshithReddy/tenant-matcher" target="_blank" rel="noopener noreferrer" aria-label="Open Tenant Matcher GitHub repository">
+              <i class="fa-brands fa-github" aria-hidden="true"></i> View Code
+            </a>
+            <a class="project-link" href="https://github.com/AvikshithReddy/tenant-matcher" target="_blank" rel="noopener noreferrer" aria-label="Open Tenant Matcher demo in README">
+              <i class="fa-solid fa-play" aria-hidden="true"></i> View Demo
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <article class="project" data-gh-repo="AvikshithReddy/python--web-scrapping">
+        <div class="project-kicker">Data Collection · Scraping</div>
+        <h3>Job Web Scraping (job_web)</h3>
+        <div class="project-structure">
+          <div class="block">
+            <p>Gather job market data at scale for tracking and analysis. Reusable scraping pipelines collect listings and normalize them into analysis‑ready datasets.</p>
+          </div>
+        </div>
+        <div class="project-arch">
+          <span class="arch-label">Architecture</span>
+          <div class="arch-flow">Sites → Scraper → Normalization → Dataset</div>
+        </div>
+        <div class="project-footer">
+          <div class="stack">Python · Web Scraping</div>
+          <div class="project-links">
+            <a class="project-link" href="https://github.com/AvikshithReddy/python--web-scrapping/tree/main/job_web" target="_blank" rel="noopener noreferrer" aria-label="Open Job Web Scraping GitHub repository">
+              <i class="fa-brands fa-github" aria-hidden="true"></i> View Code
+            </a>
+            <a class="project-link disabled" href="#" aria-disabled="true">
+              <i class="fa-solid fa-play" aria-hidden="true"></i> View Demo
+            </a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= EXPERIENCE ================= -->
+<section id="experience" class="section">
+  <div class="container fade-in">
+    <div class="section-head">
+      <h2 class="section-title">Experience</h2>
+      <span class="section-kicker">
+        <i class="fa-solid fa-briefcase" aria-hidden="true"></i> timeline
+      </span>
+    </div>
+
+    <div class="timeline">
+      <div class="titem">
+        <h3>Data Scientist — PioneerSoft (Client: Freddie Mac)</h3>
+        <div class="date">Jul 2025 – Present · United States</div>
+
+        <ul class="xp-list">
+          <li>
+            Lead end-to-end ML delivery for regulated mortgage and housing finance analytics, covering data ingestion,
+            feature engineering, model training, validation, deployment support, and ongoing monitoring with audit-ready
+            documentation.
+          </li>
+          <li>
+            Build predictive models for loan performance, credit risk, and portfolio behavior using Python and SQL, applying
+            robust feature engineering, cross-validation, backtesting, and drift checks to ensure stable model performance.
+          </li>
+          <li>
+            Develop NLP/LLM workflows (RAG, embeddings, structured extraction) to turn policy memos, underwriting notes,
+            and servicing documents into measurable insights and automated analytics.
+          </li>
+          <li>
+            Engineer scalable data and feature pipelines with data-quality gates, lineage, and governance controls to
+            support repeatable experiments and reliable production training.
+          </li>
+          <li>
+            Operationalize models with MLflow, Docker, CI/CD, and cloud tooling; create monitoring dashboards for performance,
+            data drift, and compliance reporting.
+          </li>
+          <li>
+            Partner with risk, compliance, and business stakeholders to translate regulatory requirements into explainable,
+            production-ready ML solutions and decisioning outputs.
+          </li>
+        </ul>
+
+        <div class="skill-tags">
+          <span class="tag">Python</span>
+          <span class="tag">SQL</span>
+          <span class="tag">ML Systems</span>
+          <span class="tag">LLMs</span>
+          <span class="tag">RAG</span>
+          <span class="tag">MLOps</span>
+          <span class="tag">MLflow</span>
+          <span class="tag">Docker</span>
+          <span class="tag">CI/CD</span>
+          <span class="tag">Data Pipelines</span>
+          <span class="tag">Cloud</span>
+        </div>
+      </div>
+
+      <div class="titem">
+        <h3>Cox Copy Center — Support <span class="pill">Part-time</span></h3>
+        <div class="date">SMU Cox School of Business · Sep 2024 – May 2025 · Dallas, TX · On-site</div>
+        <ul class="xp-list">
+          <li>Maintained secure access to confidential materials (exam papers, keys, staff resources).</li>
+          <li>Handled high-volume print/copy requests under tight deadlines for professors and staff.</li>
+          <li>Point-of-contact for real-time staff support in a fast-paced academic environment.</li>
+          <li>Assisted with building security procedures and safe closing operations after hours.</li>
+          <li>Supported exam proctoring while upholding academic integrity.</li>
+        </ul>
+        <div class="skill-tags">
+          <span class="tag">Communication</span>
+          <span class="tag">Customer Service</span>
+          <span class="tag">Team Coordination</span>
+          <span class="tag">Time Management</span>
+        </div>
+      </div>
+
+      <div class="titem">
+        <h3>Student Ambassador — RLSH SMU <span class="pill">Part-time</span></h3>
+        <div class="date">Southern Methodist University · Sep 2023 – Aug 2024 · Dallas, TX · On-site</div>
+        <ul class="xp-list">
+          <li>Front-desk representative supporting student engagement and housing operations.</li>
+          <li>Maintained accurate housing records and ensured policy clarity through consistent documentation.</li>
+          <li>Resolved routine and urgent concerns with confidentiality and professionalism.</li>
+          <li>Led one-on-one and group engagement to improve residential experience.</li>
+          <li>Served as interim Program Coordinator for a Dorm Leadership Team.</li>
+        </ul>
+        <div class="skill-tags">
+          <span class="tag">Leadership</span>
+          <span class="tag">Event Planning</span>
+          <span class="tag">Problem Solving</span>
+          <span class="tag">Slack</span>
+        </div>
+      </div>
+
+      <div class="titem">
+        <h3>Data Analyst — Yogin</h3>
+        <div class="date">May 2021 – May 2023 · 2 yrs · India · Hybrid</div>
+
+        <ul class="xp-list">
+          <li>
+            Delivered end-to-end analytics and ML workflows, transforming multi-source data into curated datasets and models
+            that supported planning, performance tracking, and operational decisions.
+          </li>
+          <li>
+            Built forecasting, segmentation, and classification models with Python and SQL; applied feature engineering,
+            hypothesis testing, and rigorous evaluation to produce interpretable, reliable outcomes.
+          </li>
+          <li>
+            Designed ETL pipelines and automated reporting layers to improve data consistency, reduce manual effort, and
+            enable scalable analysis for product and business teams.
+          </li>
+          <li>
+            Developed dashboards and KPI reporting in Power BI and Tableau to translate analytical results into clear,
+            actionable narratives for non-technical stakeholders.
+          </li>
+          <li>
+            Prototyped early AI capabilities with NLP techniques (text classification, topic modeling, entity extraction)
+            and integrated models into analytics workflows with a focus on data quality and maintainability.
+          </li>
+        </ul>
+
+        <div class="skill-tags">
+          <span class="tag">Python</span>
+          <span class="tag">SQL</span>
+          <span class="tag">EDA</span>
+          <span class="tag">Feature Engineering</span>
+          <span class="tag">Forecasting</span>
+          <span class="tag">Machine Learning</span>
+          <span class="tag">ETL Pipelines</span>
+          <span class="tag">Data Visualization</span>
+          <span class="tag">Power BI</span>
+          <span class="tag">Tableau</span>
+          <span class="tag">NLP</span>
+        </div>
+      </div>
+    </div><!-- /.timeline -->
+  </div><!-- /.container -->
+</section>
+
+<!-- ================= EDUCATION & ACHIEVEMENTS ================= -->
+<section id="education" class="section" aria-labelledby="edu-title">
+  <div class="container fade-in">
+    <div class="section-head">
+      <h2 id="edu-title" class="section-title">Education &amp; Achievements</h2>
+      <span class="section-kicker"><i class="fa-solid fa-graduation-cap"></i> profile</span>
+    </div>
+
+    <div class="timeline" style="margin-bottom:1.4rem" aria-label="Education timeline">
+      <div class="titem">
+        <h3>B.Tech (Computer Engineering)</h3>
+        <div class="date">2019 – 2023</div>
+        <p>CVR College of Engineering — Hyderabad</p>
+      </div>
+      <div class="titem">
+        <h3>Masters (Computer Science — AI/ML)</h3>
+        <div class="date">2023 – 2025</div>
+        <p>Southern Methodist University — Dallas</p>
+      </div>
+    </div>
+
+    <div class="tagrow" style="margin-bottom:1rem;">
+      <span class="tag">Leadership</span>
+      <span class="tag">Recognition</span>
+      <span class="tag">Certifications</span>
+      <span class="tag">Events</span>
+    </div>
+
+    <div class="timeline" aria-label="Highlights">
+      <div class="titem">
+        <h3>Leadership Roles</h3>
+        <ul class="xp-list">
+          <li>Coordinator Head for the college annual fest; drove cross-team collaboration and seamless execution.</li>
+          <li>Program Coordinator for the SMU residential leadership team; led peer engagement and strengthened community culture.</li>
+          <li>Coordinator for Street Cause at CVR College of Engineering; managed volunteers and executed social impact campaigns.</li>
+          <li>Board Member, SMU International Student Board; represented student interests and fostered global inclusivity.</li>
+        </ul>
+      </div>
+
+      <div class="titem">
+        <h3>Recognition</h3>
+        <ul class="xp-list">
+          <li>Nominee, Unsung Hero Award — SMU RLSH Year-End Student Banquet.</li>
+        </ul>
+      </div>
+
+      <div class="titem">
+        <h3>Certifications</h3>
+        <div class="tagrow" role="list">
+          <span class="tag" role="listitem">British Airways — Data Science (Forage, May 2025)</span>
+          <span class="tag" role="listitem">Deloitte AU — Data Analytics (Forage, May 2025)</span>
+          <span class="tag" role="listitem">Quantium — Data Analytics (Forage, May 2025)</span>
+          <span class="tag" role="listitem">Tata — Data Visualisation (Forage, May 2025)</span>
+          <span class="tag" role="listitem">Data Analyst Certification — OneRoadmap (Apr 2025)</span>
+          <span class="tag" role="listitem">Google Project Management — Coursera</span>
+        </div>
+      </div>
+
+      <div class="titem">
+        <h3>Hackathons &amp; Events</h3>
+        <div class="tagrow" role="list">
+          <span class="tag" role="listitem">Hackathon — SMU</span>
+          <span class="tag" role="listitem">Career Development Programme (Oracle) — CVR</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section id="contact" class="section contact-wrap" role="region" aria-labelledby="contact-title">
+  <div class="container fade-in">
+    <div class="section-head" style="margin-bottom:1rem;">
+      <h2 class="contact-title" id="contact-title">Let's Connect</h2>
+      <span class="section-kicker"><i class="fa-solid fa-paper-plane"></i> reach</span>
+    </div>
+
+    <p class="contact-subtitle">
+      I'm actively seeking opportunities in Data Science and AI. Let's discuss how I can contribute to your team.
+    </p>
+
+    <div class="contact-grid" role="list">
+      <a class="contact-card" role="listitem"
+         href="mailto:avikshith.y@gmail.com"
+         aria-label="Email Avikshith at avikshith.y@gmail.com"
+         rel="noopener noreferrer">
+        <div class="contact-icon" aria-hidden="true"><i class="fa-regular fa-envelope"></i></div>
+        <div class="contact-meta">
+          <div class="contact-label">Email</div>
+          <div class="contact-value">avikshith.y@gmail.com</div>
+        </div>
+      </a>
+
+      <a class="contact-card" role="listitem"
+         href="tel:+19459983967"
+         aria-label="Call Avikshith at plus one nine four five nine nine eight three nine six seven"
+         rel="noopener noreferrer">
+        <div class="contact-icon" aria-hidden="true"><i class="fa-solid fa-phone"></i></div>
+        <div class="contact-meta">
+          <div class="contact-label">Phone</div>
+          <div class="contact-value">+1 (945) 998-3967</div>
+        </div>
+      </a>
+
+      <a class="contact-card" role="listitem"
+         target="_blank" rel="noopener noreferrer"
+         href="https://www.linkedin.com/in/avikshith-reddy-y-1a4272234/"
+         aria-label="Open Avikshith's LinkedIn profile in a new tab">
+        <div class="contact-icon" aria-hidden="true"><i class="fa-brands fa-linkedin"></i></div>
+        <div class="contact-meta">
+          <div class="contact-label">LinkedIn</div>
+          <div class="contact-value">Connect on LinkedIn</div>
+        </div>
+      </a>
+
+      <a class="contact-card" role="listitem"
+         target="_blank" rel="noopener noreferrer"
+         href="https://github.com/AvikshithReddy"
+         aria-label="Open Avikshith's GitHub repositories in a new tab">
+        <div class="contact-icon" aria-hidden="true"><i class="fa-brands fa-github"></i></div>
+        <div class="contact-meta">
+          <div class="contact-label">GitHub</div>
+          <div class="contact-value">View my repositories</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="contact-cta" role="group" aria-label="Contact quick actions">
+      <a class="btn" href="mailto:avikshith.y@gmail.com">
+        <i class="fa-regular fa-paper-plane" aria-hidden="true"></i> Send Email
+      </a>
+      <a class="btn secondary" target="_blank" rel="noopener noreferrer"
+         href="https://www.linkedin.com/in/avikshith-reddy-y-1a4272234/">
+        <i class="fa-brands fa-linkedin" aria-hidden="true"></i> LinkedIn Profile
+      </a>
+      <a class="btn secondary" target="_blank" rel="noopener noreferrer"
+         href="https://avikshithreddy.github.io/Avik-PORTFOLIO/avikshithReddy_resume.pdf">
+        <i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i> View Resume
+      </a>
+    </div>
+  </div>
+</section>
+
+<a href="#hero" class="to-top" id="toTop" aria-label="Back to top">
+  <i class="fa-solid fa-arrow-up"></i>
+</a>
+
+<!-- ================= QUICK INFO MODAL (NO EXTRA TEXT) ================= -->
+<div class="qi-backdrop" id="qiBackdrop" aria-hidden="true"></div>
+
+<aside class="qi-modal" id="qiModal" role="dialog" aria-modal="true" aria-label="Quick Info">
+  <div class="qi-head">
+    <div class="qi-title">Quick Info</div>
+    <button class="qi-close" id="qiClose" aria-label="Close quick info">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
   </div>
 
-  <script src="app.js"></script>
+  <div class="qi-body">
+    <div class="qi-card">
+      <div class="qi-kicker">Quick Actions</div>
+
+      <div class="qi-actions">
+        <a class="qi-action" target="_blank" rel="noopener noreferrer"
+           href="https://avikshithreddy.github.io/Avik-PORTFOLIO/avikshithReddy_resume.pdf">
+          <div class="qi-left">
+            <div class="qi-ico"><i class="fa-solid fa-file-arrow-down"></i></div>
+            <div class="qi-text">
+              <div class="h">Resume</div>
+              <div class="p">Open PDF in a new tab</div>
+            </div>
+          </div>
+          <i class="fa-solid fa-arrow-up-right-from-square qi-ext" aria-hidden="true"></i>
+        </a>
+
+        <a class="qi-action" target="_blank" rel="noopener noreferrer"
+           href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=avikshith.y@gmail.com">
+          <div class="qi-left">
+            <div class="qi-ico"><i class="fa-regular fa-envelope"></i></div>
+            <div class="qi-text">
+              <div class="h">Email</div>
+              <div class="p">avikshith.y@gmail.com</div>
+            </div>
+          </div>
+          <i class="fa-solid fa-arrow-up-right-from-square qi-ext" aria-hidden="true"></i>
+        </a>
+
+        <a class="qi-action" target="_blank" rel="noopener noreferrer"
+           href="https://github.com/AvikshithReddy">
+          <div class="qi-left">
+            <div class="qi-ico"><i class="fa-brands fa-github"></i></div>
+            <div class="qi-text">
+              <div class="h">GitHub</div>
+              <div class="p">Projects &amp; repos</div>
+            </div>
+          </div>
+          <i class="fa-solid fa-arrow-up-right-from-square qi-ext" aria-hidden="true"></i>
+        </a>
+
+        <a class="qi-action" target="_blank" rel="noopener noreferrer"
+           href="https://www.linkedin.com/in/avikshith-reddy-y-1a4272234/">
+          <div class="qi-left">
+            <div class="qi-ico"><i class="fa-brands fa-linkedin-in"></i></div>
+            <div class="qi-text">
+              <div class="h">LinkedIn</div>
+              <div class="p">Connect / message</div>
+            </div>
+          </div>
+          <i class="fa-solid fa-arrow-up-right-from-square qi-ext" aria-hidden="true"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<script>
+  // Reveal on scroll
+  const reveals = () => {
+    document.querySelectorAll('.fade-in').forEach(el=>{
+      const r = el.getBoundingClientRect();
+      if(r.top < window.innerHeight - 130) el.classList.add('visible');
+    });
+  };
+  document.addEventListener('scroll', reveals, {passive:true});
+  window.addEventListener('load', reveals);
+
+  // Back to top visibility
+  const toTop = document.getElementById('toTop');
+  const showTop = () => {
+    toTop.style.display = (window.scrollY > 600) ? 'grid' : 'none';
+  };
+  document.addEventListener('scroll', showTop, {passive:true});
+  window.addEventListener('load', showTop);
+
+  // Rotating hero title
+  const heroRotate = document.getElementById('heroRotate');
+  if (heroRotate) {
+    const phrases = [
+      'DATA SCIENCE · MACHINE LEARNING · AI SYSTEMS',
+      'Building production ML and AI systems from raw data',
+      'From data to production AI systems'
+    ];
+    let p = 0;
+
+    const rotate = () => {
+      heroRotate.classList.add('fade-out');
+      setTimeout(() => {
+        p = (p + 1) % phrases.length;
+        heroRotate.textContent = phrases[p];
+        heroRotate.classList.remove('fade-out');
+      }, 260);
+    };
+
+    setInterval(rotate, 2600);
+  }
+
+  // ✅ Quick Info modal open/close
+  const infoBtn = document.getElementById('infoBtn');
+  const qiModal = document.getElementById('qiModal');
+  const qiBackdrop = document.getElementById('qiBackdrop');
+  const qiClose = document.getElementById('qiClose');
+
+  const openQI = () => {
+    qiModal.classList.add('show');
+    qiBackdrop.classList.add('show');
+    qiBackdrop.setAttribute('aria-hidden', 'false');
+  };
+  const closeQI = () => {
+    qiModal.classList.remove('show');
+    qiBackdrop.classList.remove('show');
+    qiBackdrop.setAttribute('aria-hidden', 'true');
+  };
+
+  infoBtn?.addEventListener('click', openQI);
+  qiClose?.addEventListener('click', closeQI);
+  qiBackdrop?.addEventListener('click', closeQI);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeQI(); });
+
+</script>
+
+<!-- AI Chatbot Widget Configuration -->
+<script>
+  window.chatbotConfig = {
+    backendUrl: '',
+    theme: 'light',
+    position: 'bottom-right',
+    includeSources: true
+  };
+</script>
+<script src="frontend/chatbot.js"></script>
 </body>
 </html>

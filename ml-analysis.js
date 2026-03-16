@@ -395,14 +395,14 @@
           return !repo.fork;
         })
         .sort(function (a, b) {
-          return new Date(b.updated_at) - new Date(a.updated_at);
+          return new Date(b.pushed_at || b.updated_at) - new Date(a.pushed_at || a.updated_at);
         });
 
       return {
         chunks: githubChunksFromRepos(filtered),
         repoCount: filtered.length,
         live: true,
-        latestUpdate: filtered[0] ? filtered[0].updated_at : "",
+        latestUpdate: filtered[0] ? (filtered[0].pushed_at || filtered[0].updated_at) : "",
       };
     } catch (error) {
       return {
@@ -585,7 +585,7 @@
   }
 
   function renderStatus(meta) {
-    const latest = meta.githubLatestUpdate ? " Latest repo update: " + formatDate(meta.githubLatestUpdate) + "." : "";
+    const latest = meta.githubLatestUpdate ? " Latest repo push: " + formatDate(meta.githubLatestUpdate) + "." : "";
     elements.status.classList.toggle("live", meta.githubLive);
     elements.status.textContent = meta.githubLive
       ? "Live GitHub repo metadata loaded from api.github.com." + latest

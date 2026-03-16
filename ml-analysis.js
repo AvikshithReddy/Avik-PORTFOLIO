@@ -63,6 +63,7 @@
       label: "LLM + RAG Systems",
       aliases: [
         "llm",
+        "llms",
         "large language model",
         "rag",
         "retrieval-augmented generation",
@@ -71,6 +72,7 @@
         "embeddings",
         "faiss",
         "vector database",
+        "vector databases",
         "vector store",
         "openai",
         "langchain",
@@ -214,7 +216,6 @@
         "redshift",
         "lambda",
         "ec2",
-        "cloud",
       ],
     },
     {
@@ -235,9 +236,8 @@
         "tableau",
         "dashboard",
         "dashboards",
-        "visualize",
-        "analytics",
-        "insights",
+        "visualization",
+        "reporting",
       ],
     },
   ];
@@ -489,7 +489,7 @@
 
   function renderSources(meta) {
     const sourceItems = [
-      { icon: "fa-solid fa-diagram-project", label: "Portfolio", detail: meta.portfolioMode === "json" ? "structured project + resume data" : "page content fallback" },
+      { icon: "fa-solid fa-diagram-project", label: "Portfolio", detail: meta.portfolioMode === "json" ? "structured project data" : "page content fallback" },
       { icon: "fa-solid fa-file-lines", label: "Resume", detail: "extracted AI/ML resume signals" },
       { icon: "fa-brands fa-github", label: "GitHub", detail: meta.githubLive ? "live repo metadata" : "repo snapshot fallback" },
     ];

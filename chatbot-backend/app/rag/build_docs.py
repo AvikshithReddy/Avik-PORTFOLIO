@@ -50,6 +50,7 @@ class DocumentBuilder:
         """
         if sources is None:
             sources = ["portfolio", "resume", "markdown", "github"]
+        normalized_sources = [source.strip().lower() for source in sources if source and source.strip()]
         
         # Check if index already exists
         if not force_rebuild and self.rag_index.loaded:
@@ -60,17 +61,17 @@ class DocumentBuilder:
                 "documents_processed": 0,
                 "chunks_created": stats.get("total_chunks", 0),
                 "embeddings_generated": stats.get("total_chunks", 0),
-                "sources_ingested": sources
+                "sources_ingested": normalized_sources
             }
-        
-        app_logger.info(f"Building RAG index from sources: {sources}")
+
+        app_logger.info(f"Building RAG index from sources: {normalized_sources}")
         
         all_chunks = []
         errors = []
         docs_processed = 0
         
         # Load portfolio data
-        if "portfolio" in sources:
+        if "portfolio" in normalized_sources:
             try:
                 portfolio_chunks = self._process_portfolio()
                 all_chunks.extend(portfolio_chunks)
@@ -82,7 +83,7 @@ class DocumentBuilder:
                 errors.append(error_msg)
         
         # Load resume
-        if "resume" in sources:
+        if "resume" in normalized_sources:
             try:
                 resume_chunks = self._process_resume()
                 all_chunks.extend(resume_chunks)
@@ -94,7 +95,7 @@ class DocumentBuilder:
                 errors.append(error_msg)
         
         # Load markdown files
-        if "markdown" in sources:
+        if "markdown" in normalized_sources:
             try:
                 md_chunks = self._process_markdown()
                 all_chunks.extend(md_chunks)
@@ -106,7 +107,7 @@ class DocumentBuilder:
                 errors.append(error_msg)
         
         # Load GitHub repos
-        if "github" in sources and settings.GITHUB_TOKEN:
+        if "github" in normalized_sources:
             try:
                 github_chunks = self._process_github()
                 all_chunks.extend(github_chunks)
@@ -120,23 +121,26 @@ class DocumentBuilder:
         if not all_chunks:
             raise ValueError("No documents were successfully processed")
         
-        # Generate embeddings
-        app_logger.info(f"Generating embeddings for {len(all_chunks)} chunks...")
-        texts = [chunk["text"] for chunk in all_chunks if chunk.get("text") and chunk["text"].strip()]
-        
-        if not texts:
+        valid_chunks = [
+            chunk for chunk in all_chunks
+            if chunk.get("text") and isinstance(chunk["text"], str) and chunk["text"].strip()
+        ]
+
+        if not valid_chunks:
             raise ValueError("No valid text chunks found for embedding generation")
-        
-        if len(texts) != len(all_chunks):
-            app_logger.warning(f"Filtered out {len(all_chunks) - len(texts)} empty chunks")
-        
+
+        if len(valid_chunks) != len(all_chunks):
+            app_logger.warning(f"Filtered out {len(all_chunks) - len(valid_chunks)} empty chunks")
+
+        app_logger.info(f"Generating embeddings for {len(valid_chunks)} chunks...")
+        texts = [chunk["text"] for chunk in valid_chunks]
         embeddings = self.openai_client.create_embeddings_batch(texts)
         
         # Convert to numpy array
         embeddings_array = np.array(embeddings)
         
         # Extract metadata
-        metadata = [chunk["metadata"] for chunk in all_chunks]
+        metadata = [chunk["metadata"] for chunk in valid_chunks]
         
         # Save to index
         self.rag_index.save_index(embeddings_array, metadata)
@@ -144,9 +148,9 @@ class DocumentBuilder:
         return {
             "status": "success",
             "documents_processed": docs_processed,
-            "chunks_created": len(all_chunks),
+            "chunks_created": len(valid_chunks),
             "embeddings_generated": len(embeddings),
-            "sources_ingested": sources,
+            "sources_ingested": normalized_sources,
             "errors": errors
         }
     

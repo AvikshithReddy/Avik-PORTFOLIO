@@ -1,11 +1,4 @@
 steps:
-  # Copy resume from parent directory to chatbot-backend/data
-  - name: 'bash'
-    args:
-      - '-c'
-      - |
-        cp ../avikshithReddy_resume.pdf data/ || echo "Resume not found"
-  
   # Build the container image
   - name: 'gcr.io/cloud-builders/docker'
     args:
@@ -15,7 +8,7 @@ steps:
       - '-t'
       - 'gcr.io/$PROJECT_ID/avik-portfolio-chatbot:latest'
       - '-f'
-      - 'Dockerfile.cloudrun'
+      - 'Dockerfile'
       - '.'
   
   # Push the container image to Container Registry
@@ -51,8 +44,10 @@ steps:
       - '300'
       - '--max-instances'
       - '10'
+      - '--port'
+      - '8000'
       - '--set-env-vars'
-      - 'OPENAI_API_KEY=$$OPENAI_API_KEY,GITHUB_TOKEN=$$GITHUB_TOKEN,GITHUB_USERNAME=avikshithreddy,ADMIN_INGEST_KEY=$$ADMIN_INGEST_KEY,CORS_ALLOW_ORIGINS=*'
+      - 'OPENAI_API_KEY=$$OPENAI_API_KEY,GITHUB_TOKEN=$$GITHUB_TOKEN,GITHUB_USERNAME=avikshithreddy,ADMIN_INGEST_KEY=$$ADMIN_INGEST_KEY,CORS_ALLOW_ORIGINS=*,AUTO_INGEST_ON_STARTUP=true,STARTUP_INGEST_SOURCES=portfolio,resume,markdown,github,CHAT_MODEL=gpt-4.1-mini,QUERY_REWRITE_MODEL=gpt-4.1-mini'
     secretEnv: ['OPENAI_API_KEY', 'GITHUB_TOKEN', 'ADMIN_INGEST_KEY']
 
 availableSecrets:

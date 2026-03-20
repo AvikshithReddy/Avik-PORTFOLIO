@@ -130,7 +130,12 @@ class RAGIndex:
             if filter_fn is None or filter_fn(metadata):
                 results.append((metadata, score))
         
-        app_logger.info(f"Search returned {len(results)} results (top score: {results[0][1]:.3f if results else 0})")
+        top_score = results[0][1] if results else 0.0
+        app_logger.info(
+            "Search returned %s results (top score: %.3f)",
+            len(results),
+            top_score
+        )
         return results
     
     def get_stats(self) -> Dict[str, Any]:

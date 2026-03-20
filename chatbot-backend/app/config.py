@@ -2,9 +2,9 @@
 Configuration management for the chatbot backend
 """
 
-import os
 from pathlib import Path
 from typing import List
+
 from pydantic_settings import BaseSettings
 
 
@@ -13,10 +13,12 @@ class Settings(BaseSettings):
     
     # OpenAI Configuration
     OPENAI_API_KEY: str
-    CHAT_MODEL: str = "gpt-4-turbo-preview"
+    CHAT_MODEL: str = "gpt-4.1-mini"
     EMBEDDING_MODEL: str = "text-embedding-3-small"
     CHAT_TEMPERATURE: float = 0.2
     CHAT_MAX_TOKENS: int = 1000
+    QUERY_REWRITE_MODEL: str = "gpt-4.1-mini"
+    ENABLE_QUERY_REWRITING: bool = True
     
     # RAG Configuration
     RAG_INDEX_DIR: str = "./rag_index"
@@ -24,6 +26,8 @@ class Settings(BaseSettings):
     RAG_CHUNK_SIZE: int = 1200
     RAG_CHUNK_OVERLAP: int = 150
     RAG_CONFIDENCE_THRESHOLD: float = 0.55
+    AUTO_INGEST_ON_STARTUP: bool = True
+    STARTUP_INGEST_SOURCES: str = "portfolio,resume,markdown,github"
     
     # Source Paths
     PORTFOLIO_JSON_PATH: str = "./data/portfolio_data.json"
@@ -43,6 +47,7 @@ class Settings(BaseSettings):
     HOST: str = "0.0.0.0"
     PORT: int = 8000
     LOG_LEVEL: str = "info"
+    SESSION_MAX_MESSAGES: int = 20
     
     class Config:
         env_file = ".env"
@@ -60,6 +65,15 @@ class Settings(BaseSettings):
     def rag_index_path(self) -> Path:
         """Get RAG index directory as Path object"""
         return Path(self.RAG_INDEX_DIR)
+
+    @property
+    def startup_ingest_sources(self) -> List[str]:
+        """Parse startup ingestion sources from a comma-separated string."""
+        return [
+            source.strip()
+            for source in self.STARTUP_INGEST_SOURCES.split(",")
+            if source.strip()
+        ]
     
     def ensure_directories(self):
         """Ensure all required directories exist"""

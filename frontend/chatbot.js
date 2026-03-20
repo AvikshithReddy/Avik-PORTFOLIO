@@ -6,13 +6,14 @@
 class PortfolioChatbot {
     constructor(config = {}) {
         this.config = {
-            backendUrl: config.backendUrl || 'http://localhost:8000',
+            backendUrl: config.backendUrl || '',
             theme: config.theme || 'light',
             position: config.position || 'bottom-right',
             includeSources: config.includeSources !== false,
             ...config
         };
         
+        this.backendUrl = this.resolveBackendUrl(this.config.backendUrl);
         this.sessionId = this.loadSessionId();
         this.isOpen = false;
         this.messageHistory = [];
@@ -41,6 +42,21 @@ class PortfolioChatbot {
             const v = c === 'x' ? r : (r & 0x3 | 0x8);
             return v.toString(16);
         });
+    }
+
+    resolveBackendUrl(configuredUrl) {
+        const trimmedUrl = (configuredUrl || '').trim().replace(/\/$/, '');
+        if (trimmedUrl) return trimmedUrl;
+
+        if (window.location.protocol === 'file:') {
+            return 'http://localhost:8000';
+        }
+
+        if (['localhost', '127.0.0.1'].includes(window.location.hostname)) {
+            return `${window.location.protocol}//${window.location.hostname}:8000`;
+        }
+
+        return '';
     }
     
     createChatWidget() {
@@ -127,16 +143,34 @@ class PortfolioChatbot {
     }
     
     async checkBackendHealth() {
+        if (!this.backendUrl) {
+            this.setInputEnabled(false);
+            this.showStatus(
+                'Set window.chatbotConfig.backendUrl to your deployed chatbot API URL. Local files default to http://localhost:8000.',
+                'warning',
+                true
+            );
+            return;
+        }
+
         try {
-            const response = await fetch(`${this.config.backendUrl}/health`);
+            const response = await fetch(`${this.backendUrl}/health`);
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+            }
             const data = await response.json();
             
             if (!data.rag_index_loaded) {
-                this.showStatus('⚠️ Backend index not loaded. Limited functionality.', 'warning');
+                this.setInputEnabled(false);
+                this.showStatus('Backend is reachable, but the RAG index is not loaded yet.', 'warning', true);
+                return;
             }
+
+            this.setInputEnabled(true);
         } catch (error) {
             console.error('Backend health check failed:', error);
-            this.showStatus('⚠️ Cannot connect to backend', 'error');
+            this.setInputEnabled(false);
+            this.showStatus(`Cannot connect to backend at ${this.backendUrl}`, 'error', true);
         }
     }
     
@@ -145,6 +179,14 @@ class PortfolioChatbot {
         const query = input.value.trim();
         
         if (!query) return;
+        if (!this.backendUrl) {
+            this.addMessage(
+                'The chatbot backend is not configured yet. Set window.chatbotConfig.backendUrl to your deployed API URL.',
+                'bot',
+                { isError: true, answerMode: 'error' }
+            );
+            return;
+        }
         
         // Add user message to UI
         this.addMessage(query, 'user');
@@ -154,7 +196,7 @@ class PortfolioChatbot {
         this.showTypingIndicator();
         
         try {
-            const response = await fetch(`${this.config.backendUrl}/api/chat`, {
+            const response = await fetch(`${this.backendUrl}/api/chat`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -167,7 +209,8 @@ class PortfolioChatbot {
             });
             
             if (!response.ok) {
-                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                const errorPayload = await response.json().catch(() => null);
+                throw new Error(errorPayload?.detail || `HTTP ${response.status}: ${response.statusText}`);
             }
             
             const data = await response.json();
@@ -178,19 +221,21 @@ class PortfolioChatbot {
             // Add bot response
             this.addMessage(data.response, 'bot', {
                 confidence: data.confidence,
+                answerMode: data.answer_mode,
                 sources: data.sources || []
             });
             
             // Update session ID
             this.sessionId = data.session_id;
+            localStorage.setItem('chatbot_session_id', this.sessionId);
             
         } catch (error) {
             console.error('Chat error:', error);
             this.removeTypingIndicator();
             this.addMessage(
-                'Sorry, I encountered an error processing your request. Please try again.',
+                `The chatbot request failed: ${error.message}`,
                 'bot',
-                { isError: true }
+                { isError: true, answerMode: 'error' }
             );
         }
     }
@@ -200,27 +245,24 @@ class PortfolioChatbot {
         const messageDiv = document.createElement('div');
         messageDiv.className = `message ${sender}-message`;
         
-        let messageHTML = `<div class="message-content">${this.escapeHtml(text)}</div>`;
+        let messageHTML = `<div class="message-content">${this.formatMessageText(text)}</div>`;
+
+        if (sender === 'bot' && metadata.answerMode) {
+            messageHTML += `
+                <div class="message-meta">
+                    <span class="answer-badge ${metadata.answerMode}">${this.getAnswerModeLabel(metadata.answerMode)}</span>
+                </div>
+            `;
+        }
         
         // Add sources if available
         if (metadata.sources && metadata.sources.length > 0) {
             messageHTML += '<div class="message-sources">';
             messageHTML += '<div class="sources-header">Sources:</div>';
             metadata.sources.slice(0, 3).forEach(source => {
-                messageHTML += `
-                    <div class="source-item">
-                        <span class="source-type">${source.source_type}</span>
-                        <span class="source-name">${this.escapeHtml(source.source_name)}</span>
-                    </div>
-                `;
+                messageHTML += this.renderSourceItem(source);
             });
             messageHTML += '</div>';
-        }
-        
-        // Add confidence indicator for bot messages
-        if (sender === 'bot' && metadata.confidence !== undefined) {
-            const confidenceClass = metadata.confidence > 0.7 ? 'high' : metadata.confidence > 0.5 ? 'medium' : 'low';
-            messageHTML += `<div class="confidence-indicator ${confidenceClass}" title="Confidence: ${(metadata.confidence * 100).toFixed(0)}%"></div>`;
         }
         
         messageDiv.innerHTML = messageHTML;
@@ -253,21 +295,74 @@ class PortfolioChatbot {
         if (indicator) indicator.remove();
     }
     
-    showStatus(message, type = 'info') {
+    showStatus(message, type = 'info', persist = false) {
         const statusDiv = document.getElementById('chatbot-status');
         statusDiv.textContent = message;
         statusDiv.className = `chatbot-status ${type}`;
         statusDiv.style.display = 'block';
-        
-        setTimeout(() => {
-            statusDiv.style.display = 'none';
-        }, 5000);
+
+        if (!persist) {
+            setTimeout(() => {
+                statusDiv.style.display = 'none';
+            }, 5000);
+        }
     }
     
     escapeHtml(text) {
         const div = document.createElement('div');
         div.textContent = text;
         return div.innerHTML;
+    }
+
+    formatMessageText(text) {
+        return this.escapeHtml(text).replace(/\n/g, '<br>');
+    }
+
+    isHttpUrl(value) {
+        return /^https?:\/\//i.test(value || '');
+    }
+
+    getAnswerModeLabel(answerMode) {
+        if (answerMode === 'grounded') return 'Grounded answer';
+        if (answerMode === 'clarification') return 'Limited evidence';
+        return 'Error';
+    }
+
+    renderSourceItem(source) {
+        const sourceType = this.escapeHtml(source.source_type || 'source');
+        const sourceName = this.escapeHtml(source.source_name || 'Untitled source');
+        const snippet = source.snippet ? `<div class="source-snippet">${this.escapeHtml(source.snippet)}</div>` : '';
+        let locator = '';
+
+        if (this.isHttpUrl(source.locator)) {
+            const safeLocator = this.escapeHtml(source.locator);
+            locator = `<a class="source-link" href="${safeLocator}" target="_blank" rel="noopener noreferrer">Open source</a>`;
+        } else if (source.locator) {
+            locator = `<span class="source-locator">${this.escapeHtml(source.locator)}</span>`;
+        }
+
+        return `
+            <div class="source-item">
+                <div class="source-row">
+                    <span class="source-type">${sourceType}</span>
+                    <span class="source-name">${sourceName}</span>
+                </div>
+                ${snippet}
+                ${locator}
+            </div>
+        `;
+    }
+
+    setInputEnabled(enabled) {
+        const input = document.getElementById('chatbot-input');
+        const sendBtn = document.getElementById('chatbot-send');
+        if (!input || !sendBtn) return;
+
+        input.disabled = !enabled;
+        sendBtn.disabled = !enabled;
+        input.placeholder = enabled
+            ? 'Ask about projects, skills, experience...'
+            : 'Chatbot unavailable until backend is ready';
     }
     
     injectStyles() {
@@ -387,7 +482,6 @@ class PortfolioChatbot {
                 border-radius: 12px;
                 max-width: 85%;
                 word-wrap: break-word;
-                position: relative;
             }
             
             .user-message .message-content {
@@ -427,11 +521,39 @@ class PortfolioChatbot {
             }
             
             .message-sources {
-                margin-top: 8px;
-                padding: 8px;
+                margin-top: 10px;
+                padding: 10px;
                 background: #f0f0f0;
                 border-radius: 6px;
                 font-size: 12px;
+            }
+
+            .message-meta {
+                margin-top: 8px;
+            }
+
+            .answer-badge {
+                display: inline-flex;
+                align-items: center;
+                padding: 4px 8px;
+                border-radius: 999px;
+                font-size: 11px;
+                font-weight: 600;
+            }
+
+            .answer-badge.grounded {
+                background: #e6f4ea;
+                color: #1e7a35;
+            }
+
+            .answer-badge.clarification {
+                background: #fff4e5;
+                color: #a15c00;
+            }
+
+            .answer-badge.error {
+                background: #fdecea;
+                color: #b42318;
             }
             
             .sources-header {
@@ -441,9 +563,20 @@ class PortfolioChatbot {
             }
             
             .source-item {
-                padding: 4px 0;
+                padding: 6px 0;
+                border-top: 1px solid rgba(0,0,0,0.06);
+            }
+
+            .source-item:first-of-type {
+                border-top: none;
+                padding-top: 0;
+            }
+
+            .source-row {
                 display: flex;
                 gap: 8px;
+                align-items: center;
+                flex-wrap: wrap;
             }
             
             .source-type {
@@ -457,20 +590,22 @@ class PortfolioChatbot {
             
             .source-name {
                 color: #555;
+                font-weight: 600;
             }
-            
-            .confidence-indicator {
-                width: 6px;
-                height: 6px;
-                border-radius: 50%;
-                position: absolute;
-                bottom: 4px;
-                right: 4px;
+
+            .source-snippet {
+                margin-top: 6px;
+                color: #666;
+                line-height: 1.4;
             }
-            
-            .confidence-indicator.high { background: #4caf50; }
-            .confidence-indicator.medium { background: #ff9800; }
-            .confidence-indicator.low { background: #f44336; }
+
+            .source-link,
+            .source-locator {
+                display: inline-block;
+                margin-top: 6px;
+                color: #4f46e5;
+                word-break: break-all;
+            }
             
             .chatbot-input-area {
                 border-top: 1px solid #e0e0e0;
@@ -533,6 +668,12 @@ class PortfolioChatbot {
             .chatbot-send-btn:hover {
                 transform: scale(1.05);
                 box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+            }
+
+            .chatbot-send-btn:disabled,
+            #chatbot-input:disabled {
+                opacity: 0.6;
+                cursor: not-allowed;
             }
             
             .chatbot-send-btn svg {

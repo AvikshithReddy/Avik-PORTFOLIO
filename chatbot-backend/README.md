@@ -1,412 +1,223 @@
-# Portfolio Chatbot - Complete Setup Guide
+# Portfolio Chatbot Backend
 
-## 🎯 Overview
+FastAPI backend for the portfolio chatbot. It answers questions using local portfolio content, resume data, markdown notes, and GitHub repositories via lightweight RAG.
 
-An advanced AI-powered chatbot for your portfolio website that provides grounded responses based on your resume, GitHub repositories, portfolio content, and markdown documentation. Built with FastAPI, OpenAI, and RAG (Retrieval-Augmented Generation).
+Use Python 3.11 for local development. The current dependency lock was verified on Python 3.11 and the provided Docker image also uses Python 3.11.
 
-## 🏗️ Architecture
+## What Changed
 
-```
-chatbot-backend/
-├── app/
-│   ├── __init__.py
-│   ├── main.py              # FastAPI application
-│   ├── config.py            # Configuration management
-│   ├── schemas.py           # Pydantic models
-│   ├── llm/
-│   │   ├── __init__.py
-│   │   └── openai_client.py # OpenAI API wrapper
-│   ├── rag/
-│   │   ├── __init__.py
-│   │   ├── index.py         # RAG index management
-│   │   ├── build_docs.py    # Document ingestion
-│   │   └── prompts.py       # System prompts
-│   ├── sources/
-│   │   ├── __init__.py
-│   │   ├── local_files.py   # Portfolio/resume/markdown loading
-│   │   └── github.py        # GitHub API integration
-│   └── utils/
-│       ├── __init__.py
-│       ├── text.py          # Text processing utilities
-│       └── logging.py       # Logging setup
-├── data/
-│   ├── portfolio_data.json  # Your portfolio data
-│   ├── avikshithReddy_resume.pdf  # Your resume
-│   ├── PORTFOLIO_SUMMARY.md
-│   └── PROJECT_ANALYSIS.md
-├── frontend/
-│   ├── chatbot.js           # Chatbot widget
-│   └── chatbot_test.html    # Test page
-├── requirements.txt
-├── Dockerfile
-├── docker-compose.yml
-├── .env.example
-└── README.md
+- Startup now auto-builds the RAG index when one is not present.
+- GitHub ingestion works with public repositories even without a token.
+- Follow-up questions are rewritten into standalone retrieval queries before search.
+- The assistant no longer treats prior assistant replies as grounding context.
+- The frontend now fails clearly when the backend URL is missing instead of making broken same-origin calls.
+
+## Architecture
+
+```text
+Static portfolio page
+  -> frontend/chatbot.js
+  -> POST /api/chat
+FastAPI backend
+  -> rewrite follow-up query if needed
+  -> embed rewritten query
+  -> retrieve relevant chunks from local RAG index
+  -> answer only from retrieved context
+Sources
+  -> data/portfolio_data.json
+  -> data/avikshithReddy_resume.pdf
+  -> data/*.md
+  -> GitHub repos / READMEs
 ```
 
-## 📋 Prerequisites
+## Local Setup
 
-- Python 3.11+
-- OpenAI API key
-- GitHub Personal Access Token (optional, for GitHub repo ingestion)
-- Docker & Docker Compose (optional, for containerized deployment)
-
-## 🚀 Quick Start
-
-### 1. Environment Setup
+1. Create the backend environment file.
 
 ```bash
-# Navigate to backend directory
 cd chatbot-backend
-
-# Create and activate virtual environment
-python3 -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install dependencies
-pip install -r requirements.txt
-```
-
-### 2. Configuration
-
-Create a `.env` file in the `chatbot-backend` directory:
-
-```bash
 cp .env.example .env
 ```
 
-Edit `.env` and add your API keys:
+2. Edit `.env`.
 
 ```env
-# REQUIRED: OpenAI Configuration
-OPENAI_API_KEY=sk-your-openai-api-key-here
-CHAT_MODEL=gpt-4-turbo-preview
+OPENAI_API_KEY=sk-...
+CHAT_MODEL=gpt-4.1-mini
+QUERY_REWRITE_MODEL=gpt-4.1-mini
 EMBEDDING_MODEL=text-embedding-3-small
-
-# OPTIONAL: GitHub Integration
-GITHUB_TOKEN=ghp_your_github_token_here
+AUTO_INGEST_ON_STARTUP=true
+STARTUP_INGEST_SOURCES=portfolio,resume,markdown,github
 GITHUB_USERNAME=avikshithreddy
-
-# Security
-ADMIN_INGEST_KEY=your-secret-admin-key
+GITHUB_TOKEN=
+ADMIN_INGEST_KEY=change-me
+CORS_ALLOW_ORIGINS=http://localhost:8000,http://127.0.0.1:8000
 ```
 
-**⚠️ IMPORTANT: Where to get API keys**
+`GITHUB_TOKEN` is optional. Without it, public repositories still ingest, but GitHub rate limits are lower.
 
-1. **OpenAI API Key**: 
-   - Go to https://platform.openai.com/api-keys
-   - Create new secret key
-   - Add to `.env` as `OPENAI_API_KEY`
-
-2. **GitHub Token** (optional):
-   - Go to https://github.com/settings/tokens
-   - Generate new token (classic)
-   - Select scopes: `public_repo`, `read:user`
-   - Add to `.env` as `GITHUB_TOKEN`
-
-### 3. Prepare Your Data
-
-Place your resume in the `data/` folder:
-
-```bash
-# Copy your resume PDF
-cp /path/to/your/resume.pdf data/avikshithReddy_resume.pdf
-```
-
-The system will use:
-- ✅ `data/portfolio_data.json` (sample provided)
-- ✅ `data/avikshithReddy_resume.pdf` (add your resume here)
-- ✅ `data/*.md` (markdown files for additional context)
-- ✅ GitHub repos (if token provided)
-
-### 4. Build RAG Index
-
-Start the backend server:
+3. Install and run the backend.
 
 ```bash
 cd chatbot-backend
+python3.11 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-Build the RAG index (in another terminal):
+If `AUTO_INGEST_ON_STARTUP=true`, the index is built automatically on first boot. You do not need to call `/api/ingest` unless you want to rebuild manually.
+
+4. Test the backend.
+
+```bash
+curl http://localhost:8000/health
+
+curl -X POST http://localhost:8000/api/chat \
+  -H "Content-Type: application/json" \
+  -d '{"query":"What are Avikshith'\''s main projects?","include_sources":true}'
+```
+
+## Frontend Wiring
+
+The widget is already loaded from `frontend/chatbot.js`. It now resolves the backend URL like this:
+
+- `window.chatbotConfig.backendUrl` if you set one
+- `http://localhost:8000` when opened locally
+- no backend by default in production, with an explicit status message
+
+For production, set the deployed backend URL in `index.html`:
+
+```html
+<script>
+  window.CHATBOT_BACKEND_URL = 'https://YOUR-CLOUD-RUN-URL';
+</script>
+```
+
+That must appear before the existing `window.chatbotConfig` block.
+
+## Manual Rebuild
+
+Use this only when you want to force a fresh index.
 
 ```bash
 curl -X POST http://localhost:8000/api/ingest \
   -H "Content-Type: application/json" \
-  -H "X-Admin-Key: your-secret-admin-key" \
-  -d '{"sources": ["portfolio", "resume", "markdown", "github"], "force_rebuild": true}'
+  -H "X-Admin-Key: change-me" \
+  -d '{"sources":["portfolio","resume","markdown","github"],"force_rebuild":true}'
 ```
 
-Or use Python:
+## Docker
 
-```python
-import requests
-
-response = requests.post(
-    "http://localhost:8000/api/ingest",
-    headers={"X-Admin-Key": "your-secret-admin-key"},
-    json={"sources": ["portfolio", "resume", "markdown", "github"], "force_rebuild": True}
-)
-print(response.json())
-```
-
-### 5. Test the API
-
-```bash
-# Health check
-curl http://localhost:8000/health
-
-# Chat test
-curl -X POST http://localhost:8000/api/chat \
-  -H "Content-Type: application/json" \
-  -d '{"query": "What are Avikshith'\''s main skills?", "include_sources": true}'
-```
-
-### 6. Frontend Integration
-
-The chatbot widget is already integrated in `index.html`. To test:
-
-1. Open `frontend/chatbot_test.html` in a browser
-2. Click "Test Health Endpoint"
-3. Try sample chat questions
-4. Check the widget in bottom-right corner
-
-For production, update the backend URL in `index.html`:
-
-```javascript
-window.chatbotConfig = {
-  backendUrl: 'https://your-backend-url.com',  // Change this
-  theme: 'light',
-  position: 'bottom-right',
-  includeSources: true
-};
-```
-
-## 🐳 Docker Deployment
-
-### Local Docker
+Local Docker is optional. Use it when you want a portable backend container.
 
 ```bash
 cd chatbot-backend
-
-# Build and run
-docker-compose up --build
-
-# In another terminal, build the index
-curl -X POST http://localhost:8000/api/ingest \
-  -H "X-Admin-Key: your-secret-admin-key" \
-  -d '{"force_rebuild": true}'
+docker compose up --build
 ```
 
-### Production Deployment
+The container respects `$PORT`, auto-builds the RAG index on startup, and mounts `rag_index/` and `logs/` locally through Compose.
 
-#### Google Cloud Run
+## Google Cloud Run
+
+Use Cloud Run only for the backend. Keep the portfolio itself on GitHub Pages or your current static host.
+
+### Option 1: Deploy From Cloud Build
+
+The repo includes `cloudbuild.yaml`, which now builds from the correct Dockerfile and enables startup ingestion.
+
+From `chatbot-backend/`:
 
 ```bash
-# Build and push image
-gcloud builds submit --tag gcr.io/YOUR_PROJECT/chatbot-backend
+gcloud builds submit --config cloudbuild.yaml .
+```
 
-# Deploy
-gcloud run deploy chatbot-backend \
-  --image gcr.io/YOUR_PROJECT/chatbot-backend \
+Before running that, create these Secret Manager secrets in your Google Cloud project:
+
+- `OPENAI_API_KEY`
+- `GITHUB_TOKEN`
+- `ADMIN_INGEST_KEY`
+
+`GITHUB_TOKEN` can be empty if you only need public repositories.
+
+### Option 2: Manual Cloud Run Deploy
+
+```bash
+cd chatbot-backend
+gcloud builds submit --tag gcr.io/YOUR_PROJECT/avik-portfolio-chatbot .
+
+gcloud run deploy avik-portfolio-chatbot \
+  --image gcr.io/YOUR_PROJECT/avik-portfolio-chatbot \
   --platform managed \
   --region us-central1 \
   --allow-unauthenticated \
-  --set-env-vars OPENAI_API_KEY=sk-xxx,GITHUB_TOKEN=ghp_xxx
+  --port 8000 \
+  --set-env-vars OPENAI_API_KEY=sk-...,GITHUB_USERNAME=avikshithreddy,AUTO_INGEST_ON_STARTUP=true,STARTUP_INGEST_SOURCES=portfolio,resume,markdown,github,CORS_ALLOW_ORIGINS=https://YOUR-GITHUB-PAGES-DOMAIN
 ```
 
-#### AWS ECS / Azure Container Apps
+If you want GitHub ingestion beyond anonymous rate limits, also add `GITHUB_TOKEN=...`.
 
-Use the provided `Dockerfile` and deploy to your preferred container platform.
+After deployment, copy the Cloud Run service URL and set it in `window.CHATBOT_BACKEND_URL` inside `index.html`.
 
-## 🔧 API Endpoints
+## API
 
 ### `GET /health`
-Health check endpoint
 
-**Response:**
 ```json
 {
   "status": "ok",
   "version": "1.0.0",
   "rag_index_loaded": true,
-  "total_documents": 150
+  "total_documents": 42
 }
 ```
 
 ### `POST /api/chat`
-Chat with the AI assistant
 
-**Request:**
+Request:
+
 ```json
 {
-  "query": "What projects has Avikshith worked on?",
+  "query": "Tell me about Avikshith's finance chatbot project",
   "session_id": "optional-session-id",
   "include_sources": true
 }
 ```
 
-**Response:**
+Response:
+
 ```json
 {
-  "response": "Avikshith has worked on several projects...",
+  "response": "Avikshith built a finance-focused LLM assistant...",
   "session_id": "abc-123",
-  "confidence": 0.89,
+  "confidence": 0.81,
+  "answer_mode": "grounded",
   "sources": [
     {
       "source_type": "portfolio",
-      "source_name": "Project: Customer Churn Prediction",
+      "source_name": "Project: Financial Chatbot",
       "locator": "./data/portfolio_data.json",
-      "snippet": "Built an end-to-end machine learning...",
-      "relevance_score": 0.92
+      "snippet": "Built a finance-focused LLM assistant..."
     }
   ]
 }
 ```
 
-### `POST /api/ingest`
-Rebuild RAG index (admin only)
+`answer_mode` is the user-facing signal to trust, not raw `confidence`. The retrieval score is still returned for debugging and tuning.
 
-**Headers:**
-- `X-Admin-Key`: Your admin key from `.env`
+## Verification
 
-**Request:**
-```json
-{
-  "sources": ["portfolio", "resume", "markdown", "github"],
-  "force_rebuild": true
-}
+Run the unit/smoke tests:
+
+```bash
+cd chatbot-backend
+python -m unittest discover -s tests
 ```
 
-**Response:**
-```json
-{
-  "status": "success",
-  "documents_processed": 15,
-  "chunks_created": 150,
-  "embeddings_generated": 150,
-  "sources_ingested": ["portfolio", "resume", "markdown", "github"],
-  "errors": []
-}
-```
+## Recommended Deployment Workflow
 
-## 🎨 Frontend Widget
-
-The chatbot widget is a standalone JavaScript component that can be added to any HTML page.
-
-### Features
-- 💬 Floating chat bubble
-- 🎯 Session persistence
-- 📚 Source citations
-- 🎨 Customizable theme
-- 📱 Mobile responsive
-- ⚡ Real-time responses
-
-### Configuration Options
-
-```javascript
-window.chatbotConfig = {
-  backendUrl: 'http://localhost:8000',  // Backend API URL
-  theme: 'light',                       // 'light' or 'dark'
-  position: 'bottom-right',             // Widget position
-  includeSources: true                  // Show source citations
-};
-```
-
-## 🔒 Security Considerations
-
-1. **API Keys**: Never commit `.env` file to git
-2. **CORS**: Configure `CORS_ALLOW_ORIGINS` for production
-3. **Admin Key**: Use strong `ADMIN_INGEST_KEY` for ingestion endpoint
-4. **Rate Limiting**: Consider adding rate limiting in production
-5. **HTTPS**: Always use HTTPS in production
-
-## 📊 Monitoring & Logging
-
-Logs are written to:
-- Console (stdout)
-- `logs/chatbot.log` (file)
-
-Monitor:
-- API response times
-- RAG retrieval accuracy
-- OpenAI API usage
-- Error rates
-
-## 🐛 Troubleshooting
-
-### Backend won't start
-- Check Python version (3.11+)
-- Verify all dependencies installed: `pip install -r requirements.txt`
-- Check `.env` file exists and has valid `OPENAI_API_KEY`
-
-### RAG index not loading
-- Run ingestion endpoint: `/api/ingest`
-- Check data files exist in `data/` folder
-- Verify OpenAI API key has embedding model access
-
-### Chat responses are generic
-- Ensure RAG index is built successfully
-- Check confidence scores in responses
-- Verify source documents contain relevant information
-- Try rebuilding index with `force_rebuild: true`
-
-### Frontend can't connect to backend
-- Verify backend is running: `curl http://localhost:8000/health`
-- Check CORS settings in `.env`
-- Update `backendUrl` in chatbot config
-- Check browser console for errors
-
-## 📝 Customization
-
-### Adding New Data Sources
-
-Edit `app/rag/build_docs.py` and add a new processing method:
-
-```python
-def _process_custom_source(self) -> List[Dict[str, Any]]:
-    # Your custom data loading logic
-    pass
-```
-
-### Modifying System Prompt
-
-Edit `app/rag/prompts.py` to customize the chatbot personality and instructions.
-
-### Changing Models
-
-Update `.env`:
-```env
-CHAT_MODEL=gpt-4-turbo-preview  # or gpt-3.5-turbo for faster/cheaper
-EMBEDDING_MODEL=text-embedding-3-small  # or text-embedding-3-large
-```
-
-## 🎓 Best Practices
-
-1. **Regular Index Updates**: Rebuild index when content changes
-2. **Monitor Costs**: Track OpenAI API usage
-3. **Version Control**: Keep data files in git (except sensitive info)
-4. **Testing**: Use `chatbot_test.html` to verify functionality
-5. **Backup**: Backup RAG index periodically
-
-## 📚 Additional Resources
-
-- [OpenAI API Documentation](https://platform.openai.com/docs)
-- [FastAPI Documentation](https://fastapi.tiangolo.com/)
-- [GitHub API Documentation](https://docs.github.com/en/rest)
-
-## 🤝 Support
-
-For issues or questions:
-1. Check logs in `logs/chatbot.log`
-2. Test with `chatbot_test.html`
-3. Verify API keys are valid
-4. Check backend status: `/health` endpoint
-
-## 📄 License
-
-MIT License - Feel free to modify and use for your portfolio!
-
----
-
-**Built with ❤️ using OpenAI, FastAPI, and modern RAG techniques**
+1. Keep the static portfolio in GitHub Pages or your current Git-based static host.
+2. Deploy only `chatbot-backend/` to Cloud Run.
+3. Set the Cloud Run URL in `window.CHATBOT_BACKEND_URL` in `index.html`.
+4. Commit and push the static portfolio update.
+5. Verify `/health` and one real `/api/chat` request after deploy.

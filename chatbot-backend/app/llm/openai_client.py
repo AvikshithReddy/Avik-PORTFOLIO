@@ -2,9 +2,10 @@
 OpenAI client wrapper for chat completions and embeddings
 """
 
-import os
-from typing import List, Dict, Any
+from typing import List, Dict
+
 from openai import OpenAI
+
 from app.utils.logging import app_logger
 
 
@@ -29,7 +30,8 @@ class OpenAIClient:
         self,
         messages: List[Dict[str, str]],
         temperature: float = 0.2,
-        max_tokens: int = 1000
+        max_tokens: int = 1000,
+        model: str = None
     ) -> str:
         """
         Generate chat completion
@@ -44,7 +46,7 @@ class OpenAIClient:
         """
         try:
             response = self.client.chat.completions.create(
-                model=self.chat_model,
+                model=model or self.chat_model,
                 messages=messages,
                 temperature=temperature,
                 max_tokens=max_tokens
@@ -55,6 +57,23 @@ class OpenAIClient:
         except Exception as e:
             app_logger.error(f"Chat completion error: {str(e)}")
             raise
+
+    def rewrite_query(
+        self,
+        prompt: str,
+        model: str = None,
+        max_tokens: int = 120
+    ) -> str:
+        """
+        Rewrite a conversational follow-up into a standalone retrieval query.
+        """
+        response = self.chat_completion(
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0.0,
+            max_tokens=max_tokens,
+            model=model or self.chat_model
+        )
+        return response.strip()
     
     def create_embedding(self, text: str) -> List[float]:
         """

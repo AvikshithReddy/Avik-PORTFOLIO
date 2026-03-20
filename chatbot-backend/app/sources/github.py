@@ -2,8 +2,10 @@
 GitHub repository ingestion
 """
 
-import requests
 from typing import List, Dict, Any
+
+import requests
+
 from app.utils.logging import app_logger
 
 
@@ -23,14 +25,14 @@ def fetch_github_repos(
     Returns:
         List of repository data dictionaries
     """
-    if not token:
-        app_logger.warning("GitHub token not provided, skipping GitHub ingestion")
-        return []
-    
     headers = {
-        "Authorization": f"token {token}",
-        "Accept": "application/vnd.github.v3+json"
+        "Accept": "application/vnd.github.v3+json",
+        "User-Agent": "avik-portfolio-chatbot"
     }
+    if token:
+        headers["Authorization"] = f"token {token}"
+    else:
+        app_logger.info("GitHub token not provided, using unauthenticated GitHub API access")
     
     repos_data = []
     
@@ -40,7 +42,8 @@ def fetch_github_repos(
         params = {
             "sort": "updated",
             "direction": "desc",
-            "per_page": max_repos
+            "per_page": max_repos,
+            "type": "owner"
         }
         
         response = requests.get(url, headers=headers, params=params, timeout=10)

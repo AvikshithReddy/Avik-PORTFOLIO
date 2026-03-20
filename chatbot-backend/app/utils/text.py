@@ -41,10 +41,20 @@ def chunk_text(
     # Clean the text first
     text = clean_text(text)
     
+    if not text:
+        return []
+
     if len(text) <= chunk_size:
         return [{
             "text": text,
-            "metadata": {**metadata, "chunk_index": 0, "total_chunks": 1}
+            "metadata": {
+                **metadata,
+                "text": text,
+                "chunk_index": 0,
+                "char_start": 0,
+                "char_end": len(text),
+                "total_chunks": 1
+            }
         }]
     
     chunks = []

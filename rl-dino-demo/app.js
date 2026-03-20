@@ -102,6 +102,7 @@ const state = {
   stepIndex: 0,
   episodeSteps: 0,
   maxStepsPerEpisode: 50,
+  animationFrameId: null,
 };
 
 function key(x, y) {
@@ -218,6 +219,7 @@ function applyPreset(index) {
   if (!step) return;
 
   state.training = false;
+  stopAnimationLoop();
   ui.startBtn.textContent = 'Start Training';
 
   const config = step.config;
@@ -243,6 +245,7 @@ function applyPreset(index) {
   if (config.rocks) placeRandomCells(config.rocks, state.rocks);
 
   resetTraining();
+  drawGrid();
 }
 
 function updateGuideUI() {
@@ -463,18 +466,33 @@ function updateValueMap() {
 }
 
 function animationLoop() {
-  if (state.training) {
-    state.renderEvery = state.speed > 35 ? 3 : 2;
-    for (let i = 0; i < state.speed; i += 1) {
-      trainStep();
-    }
+  state.animationFrameId = null;
+  if (!state.training) return;
+
+  state.renderEvery = state.speed > 35 ? 3 : 2;
+  for (let i = 0; i < state.speed; i += 1) {
+    trainStep();
   }
-  if (!state.training || state.frame % state.renderEvery === 0) {
+
+  if (state.frame % state.renderEvery === 0) {
     drawGrid();
   }
   state.frame += 1;
   updateStats();
-  requestAnimationFrame(animationLoop);
+  if (state.training) {
+    startAnimationLoop();
+  }
+}
+
+function startAnimationLoop() {
+  if (state.animationFrameId !== null) return;
+  state.animationFrameId = requestAnimationFrame(animationLoop);
+}
+
+function stopAnimationLoop() {
+  if (state.animationFrameId === null) return;
+  cancelAnimationFrame(state.animationFrameId);
+  state.animationFrameId = null;
 }
 
 function handleCanvasClick(event) {
@@ -503,6 +521,8 @@ function handleCanvasClick(event) {
     state.rocks.delete(cellKey);
     state.foods.delete(cellKey);
   }
+
+  drawGrid();
 }
 
 function setTool(tool) {
@@ -515,6 +535,13 @@ function setTool(tool) {
 ui.startBtn.addEventListener('click', () => {
   state.training = !state.training;
   ui.startBtn.textContent = state.training ? 'Pause Training' : 'Start Training';
+  if (state.training) {
+    startAnimationLoop();
+  } else {
+    stopAnimationLoop();
+    drawGrid();
+    updateStats();
+  }
 });
 
 ui.stepBtn.addEventListener('click', () => {
@@ -525,6 +552,7 @@ ui.stepBtn.addEventListener('click', () => {
 
 ui.resetBtn.addEventListener('click', () => {
   state.training = false;
+  stopAnimationLoop();
   ui.startBtn.textContent = 'Start Training';
   state.gridSize = Number(ui.gridSize.value);
   if (state.mode === 'guided') {
@@ -532,12 +560,17 @@ ui.resetBtn.addEventListener('click', () => {
   } else {
     resetWorld();
   }
+  drawGrid();
 });
 
 ui.gridSize.addEventListener('change', () => {
   state.gridSize = Number(ui.gridSize.value);
+  stopAnimationLoop();
+  state.training = false;
+  ui.startBtn.textContent = 'Start Training';
   resetWorld();
   resizeCanvas();
+  drawGrid();
 });
 
 ui.speed.addEventListener('input', () => {
@@ -607,4 +640,3 @@ resizeCanvas();
 initQ();
 setTool('meat');
 setMode('guided');
-requestAnimationFrame(animationLoop);

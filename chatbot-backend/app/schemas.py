@@ -27,6 +27,7 @@ class ChatResponse(BaseModel):
     response: str = Field(..., description="Generated response text")
     session_id: str = Field(..., description="Session identifier")
     confidence: float = Field(..., ge=0.0, le=1.0, description="Confidence score for the response")
+    answer_mode: str = Field(..., description="Whether the answer is grounded or a clarification fallback")
     sources: List[SourceReference] = Field(default_factory=list, description="Source citations")
 
 

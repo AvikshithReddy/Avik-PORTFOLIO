@@ -126,7 +126,7 @@
         <div class="test-section">
             <h2>1. Health Check</h2>
             <div class="endpoint-info">
-                <strong>GET</strong> <span class="endpoint-url">http://localhost:8000/health</span>
+                <strong>GET</strong> <span class="endpoint-url" id="health-endpoint">http://localhost:8000/health</span>
             </div>
             <button onclick="testHealth()">Test Health Endpoint</button>
             <div id="health-response" class="response-box" style="display:none;"></div>
@@ -136,7 +136,7 @@
         <div class="test-section">
             <h2>2. Chat Test</h2>
             <div class="endpoint-info">
-                <strong>POST</strong> <span class="endpoint-url">http://localhost:8000/api/chat</span>
+                <strong>POST</strong> <span class="endpoint-url" id="chat-endpoint">http://localhost:8000/api/chat</span>
             </div>
             <input 
                 type="text" 
@@ -172,7 +172,12 @@
     </div>
 
     <script>
-        const BACKEND_URL = 'http://localhost:8000';
+        const BACKEND_URL = window.location.hostname
+            ? `${window.location.protocol}//${window.location.hostname}:8000`
+            : 'http://localhost:8000';
+
+        document.getElementById('health-endpoint').textContent = `${BACKEND_URL}/health`;
+        document.getElementById('chat-endpoint').textContent = `${BACKEND_URL}/api/chat`;
         
         async function testHealth() {
             const responseDiv = document.getElementById('health-response');
@@ -223,12 +228,15 @@
                 let output = `<span class="success">✓ Success</span>\n\n`;
                 output += `<strong>Question:</strong> ${query}\n\n`;
                 output += `<strong>Response:</strong>\n${data.response}\n\n`;
-                output += `<strong>Confidence:</strong> ${(data.confidence * 100).toFixed(1)}%\n\n`;
+                output += `<strong>Answer mode:</strong> ${data.answer_mode}\n`;
+                output += `<strong>Retrieval score:</strong> ${(data.confidence * 100).toFixed(1)}%\n\n`;
                 
                 if (data.sources && data.sources.length > 0) {
                     output += `<strong>Sources (${data.sources.length}):</strong>\n`;
                     data.sources.forEach((source, i) => {
                         output += `${i + 1}. [${source.source_type}] ${source.source_name}\n`;
+                        if (source.locator) output += `   locator: ${source.locator}\n`;
+                        if (source.snippet) output += `   snippet: ${source.snippet}\n`;
                     });
                 }
                 
@@ -267,7 +275,7 @@
     <!-- Load chatbot widget -->
     <script>
         window.chatbotConfig = {
-            backendUrl: 'http://localhost:8000',
+            backendUrl: BACKEND_URL,
             theme: 'light',
             position: 'bottom-right',
             includeSources: true

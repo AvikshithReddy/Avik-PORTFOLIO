@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Avikshith Reddy Yelakonda — Data Science Portfolio</title>
   <meta name="description" content="Data Science portfolio of Avikshith Reddy Yelakonda: ML, analytics, automation workflows, and measurable impact." />
-  <meta name="theme-color" content="#2c2842" />
+  <meta name="theme-color" content="#08b7b9" />
 
   <!-- Open Graph -->
   <meta property="og:title" content="Avikshith Yelakonda — Data Science Portfolio" />
@@ -26,19 +26,19 @@
   <style>
     /* ========== THEME TOKENS ========== */
     :root{
-      --bg:#f4f6f8;
-      --bg-soft:#e8edf0;
+      --bg:#f3fbfc;
+      --bg-soft:#e7f6f7;
       --surface:#ffffff;
-      --surface-soft:#f3f6f8;
-      --border:rgba(18,37,45,.08);
-      --border-strong:rgba(18,37,45,.18);
-      --text:#12252d;
-      --muted:#5e6d75;
-      --accent:#279796;
-      --accent-dark:#1b6e72;
-      --accent-soft:#dcefee;
-      --shadow-soft:0 18px 40px rgba(18,37,45,.08);
-      --shadow-strong:0 28px 60px rgba(18,37,45,.12);
+      --surface-soft:#f6fafb;
+      --border:rgba(11,31,37,.08);
+      --border-strong:rgba(11,31,37,.18);
+      --text:#0b1f25;
+      --muted:#5b6b73;
+      --accent:#08b7b9;
+      --accent-dark:#057c80;
+      --accent-soft:#d5f4f4;
+      --shadow-soft:0 18px 40px rgba(11,31,37,.08);
+      --shadow-strong:0 28px 60px rgba(11,31,37,.12);
       --maxw:1100px;
       --brandbar-h: 64px;
     }
@@ -58,8 +58,8 @@
       position:fixed;
       inset:0;
       background:
-        radial-gradient(900px 520px at 8% -10%, rgba(39,151,150,.14), transparent 60%),
-        radial-gradient(760px 520px at 92% 0%, rgba(44,40,66,.09), transparent 65%);
+        radial-gradient(900px 520px at 8% -10%, rgba(8,183,185,.18), transparent 60%),
+        radial-gradient(760px 520px at 92% 0%, rgba(11,31,37,.12), transparent 65%);
       z-index:-2;
       pointer-events:none;
     }
@@ -68,10 +68,10 @@
       position:fixed;
       inset:0;
       background-image:
-        linear-gradient(rgba(39,151,150,.06) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(39,151,150,.04) 1px, transparent 1px);
+        linear-gradient(rgba(8,183,185,.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(8,183,185,.06) 1px, transparent 1px);
       background-size:36px 36px;
-      opacity:.18;
+      opacity:.25;
       z-index:-1;
       pointer-events:none;
     }
@@ -277,7 +277,9 @@
       position:relative;
       min-height: calc(100svh - clamp(64px, 7vh, 92px));
       padding: clamp(2.2rem, 5vh, 4.2rem) 1rem;
-      background:linear-gradient(180deg, #2d2941 0%, #27233a 58%, #232035 100%);
+      background:
+        radial-gradient(720px 420px at 50% 46%, rgba(255,255,255,.12), transparent 60%),
+        linear-gradient(180deg, #08b7b9 0%, #069ea3 52%, #057f88 100%);
       display:flex;
       align-items:center;
       overflow:hidden;
@@ -290,7 +292,7 @@
       right:0;
       bottom:0;
       height:180px;
-      background:linear-gradient(180deg, rgba(35,32,53,0), var(--bg));
+      background:linear-gradient(180deg, rgba(5,127,136,0), var(--bg));
       pointer-events:none;
     }
     .hero-backdrop{
@@ -304,10 +306,10 @@
       position:absolute;
       inset:0;
       background-image:
-        linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+        linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
       background-size:40px 40px;
-      opacity:.26;
+      opacity:.24;
     }
     .hero-network-glow{
       position:absolute;
@@ -321,7 +323,7 @@
       left:50%;
       top:52%;
       transform:translate(-50%, -50%);
-      background:radial-gradient(circle, rgba(89,70,157,.4), rgba(89,70,157,0) 68%);
+      background:radial-gradient(circle, rgba(213,244,244,.32), rgba(213,244,244,0) 68%);
     }
     .hero-network-glow-b{
       width:min(38vw, 500px);
@@ -329,7 +331,7 @@
       left:52%;
       top:54%;
       transform:translate(-50%, -50%);
-      background:radial-gradient(circle, rgba(39,151,150,.16), rgba(39,151,150,0) 72%);
+      background:radial-gradient(circle, rgba(8,183,185,.24), rgba(8,183,185,0) 72%);
     }
     .hero-network{
       position:absolute;
@@ -338,7 +340,7 @@
       width:min(50vw, 680px);
       aspect-ratio:1 / 1;
       transform:translate(-50%, -50%);
-      filter:drop-shadow(0 28px 44px rgba(7,6,20,.28));
+      filter:drop-shadow(0 24px 34px rgba(3,75,80,.22));
       opacity:.98;
     }
     .hero-grid{
@@ -362,7 +364,7 @@
       font-size:.8rem;
       text-transform:uppercase;
       letter-spacing:.25em;
-      color:rgba(244,244,250,.72);
+      color:rgba(237,255,255,.82);
       margin-bottom:.9rem;
     }
     .hero-title{
@@ -376,8 +378,16 @@
       color:#f9f8fd;
       text-wrap:balance;
     }
+    .hero-rotate{
+      display:inline-block;
+      transition:opacity .3s ease, transform .3s ease;
+    }
+    .hero-rotate.fade-out{
+      opacity:0;
+      transform:translateY(6px);
+    }
     .hero-body{
-      color:rgba(231,233,243,.78);
+      color:rgba(241,255,255,.88);
       line-height:1.7;
       max-width:36rem;
       margin-bottom:1.3rem;
@@ -394,7 +404,7 @@
       font-weight:900;
       letter-spacing:.18em;
       text-transform:uppercase;
-      color:#7fd2cc;
+      color:#d5f4f4;
       margin:-.4rem 0 1.1rem 0;
     }
     .hero-stack .dot{color:rgba(255,255,255,.32);}
@@ -405,14 +415,14 @@
       gap:.9rem;
       align-items:center;
       font-size:.85rem;
-      color:rgba(231,233,243,.74);
+      color:rgba(236,255,255,.84);
     }
     .hero-meta-item{
       display:inline-flex;
       align-items:center;
       gap:.45rem;
     }
-    .hero-meta-item i{color:#7fd2cc;}
+    .hero-meta-item i{color:#d5f4f4;}
 
     .hero-ai-node{
       --size:12px;
@@ -427,7 +437,7 @@
       margin-top:calc(var(--size) / -2);
       border-radius:50%;
       background:var(--node-color, #5eead4);
-      box-shadow:0 0 0 1px rgba(255,255,255,.08), 0 8px 22px rgba(4,4,10,.18);
+      box-shadow:0 0 0 1px rgba(255,255,255,.12), 0 8px 18px rgba(4,104,110,.18);
       opacity:.82;
       animation:heroNodeFloat var(--duration) ease-in-out infinite;
       animation-delay:var(--delay);
@@ -1544,7 +1554,9 @@
     <div class="hero-copy">
       <div class="hero-kicker">DATA SCIENTIST · ML ENGINEER · APPLIED AI</div>
 
-      <h1 class="hero-title">From raw data to monitored AI systems</h1>
+      <h1 class="hero-title">
+        <span class="hero-rotate" id="heroRotate">PRODUCTION ML · ANALYTICS · GENAI SYSTEMS</span>
+      </h1>
 
       <p class="hero-body">
         I build production-grade machine learning, analytics, and generative AI systems that turn messy data into decision-ready products: predictive models, RAG pipelines, experimentation platforms, and monitored deployment workflows.
@@ -2689,13 +2701,53 @@
   document.addEventListener('scroll', showTop, {passive:true});
   window.addEventListener('load', showTop);
 
+  // Rotating hero title
+  const heroRotate = document.getElementById('heroRotate');
+  if (heroRotate) {
+    const phrases = [
+      'PRODUCTION ML · ANALYTICS · GENAI SYSTEMS',
+      'Predictive models, RAG pipelines, and decision-ready analytics',
+      'From raw data to monitored AI systems'
+    ];
+    let p = 0;
+
+    const rotate = () => {
+      heroRotate.classList.add('fade-out');
+      setTimeout(() => {
+        p = (p + 1) % phrases.length;
+        heroRotate.textContent = phrases[p];
+        heroRotate.classList.remove('fade-out');
+      }, 260);
+    };
+
+    setInterval(rotate, 2600);
+  }
+
   // Hero AI signal cloud
+  const heroSection = document.getElementById('hero');
   const heroSignalCloud = document.getElementById('heroSignalCloud');
-  if (heroSignalCloud) {
-    const palette = ['#c84f72', '#c57a35', '#c2ab31', '#4da59d', '#2f82b6', '#d16363'];
+  if (heroSection && heroSignalCloud) {
+    const palette = ['#08b7b9', '#36c7c8', '#7cdedf', '#c8f5f5', '#067f88', '#0fc1c4'];
     const nodeCount = window.innerWidth < 640 ? 180 : 260;
     const nodes = [];
     const states = ['blob', 'ring', 'crescent', 'ring'];
+    const pointer = { x: 0.5, y: 0.5, active: false };
+
+    const applyPointerEffect = (node, baseX, baseY) => {
+      const px = pointer.x * 100;
+      const py = pointer.y * 100;
+      const dx = baseX - px;
+      const dy = baseY - py;
+      const distance = Math.hypot(dx, dy);
+      const influence = Math.max(0, 1 - distance / 32);
+      const strength = pointer.active ? 7.5 : 0;
+      const offsetX = distance ? (dx / distance) * influence * strength : 0;
+      const offsetY = distance ? (dy / distance) * influence * strength : 0;
+
+      node.style.left = `${baseX + offsetX}%`;
+      node.style.top = `${baseY + offsetY}%`;
+      node.style.opacity = `${Math.min(0.96, Number(node.dataset.baseOpacity || 0.8) + influence * 0.14)}`;
+    };
 
     const placeNode = (node, mode) => {
       const angle = Number(node.dataset.angle);
@@ -2729,9 +2781,10 @@
         opacity = 0.6 + innerBias * 0.18;
       }
 
-      node.style.left = `${x}%`;
-      node.style.top = `${y}%`;
-      node.style.opacity = `${opacity}`;
+      node.dataset.baseX = String(x);
+      node.dataset.baseY = String(y);
+      node.dataset.baseOpacity = String(opacity);
+      applyPointerEffect(node, x, y);
     };
 
     const createNode = () => {
@@ -2772,6 +2825,32 @@
       const mode = states[stateIndex];
       nodes.forEach((node) => placeNode(node, mode));
     }, 3600);
+
+    const updatePointer = (event) => {
+      const rect = heroSection.getBoundingClientRect();
+      pointer.x = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
+      pointer.y = Math.min(1, Math.max(0, (event.clientY - rect.top) / rect.height));
+      pointer.active = true;
+      nodes.forEach((node) => {
+        applyPointerEffect(
+          node,
+          Number(node.dataset.baseX || 50),
+          Number(node.dataset.baseY || 50)
+        );
+      });
+    };
+
+    heroSection.addEventListener('pointermove', updatePointer, { passive: true });
+    heroSection.addEventListener('pointerleave', () => {
+      pointer.active = false;
+      nodes.forEach((node) => {
+        applyPointerEffect(
+          node,
+          Number(node.dataset.baseX || 50),
+          Number(node.dataset.baseY || 50)
+        );
+      });
+    }, { passive: true });
   }
 
   // ✅ Quick Info modal open/close

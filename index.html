@@ -316,43 +316,45 @@
       opacity:.9;
     }
     .hero-network-glow-a{
-      width:min(52vw, 720px);
-      height:min(52vw, 720px);
-      right:-4rem;
-      top:14%;
-      background:radial-gradient(circle, rgba(89,70,157,.34), rgba(89,70,157,0) 68%);
+      width:min(54vw, 760px);
+      height:min(54vw, 760px);
+      left:54%;
+      top:53%;
+      transform:translate(-50%, -50%);
+      background:radial-gradient(circle, rgba(89,70,157,.4), rgba(89,70,157,0) 68%);
     }
     .hero-network-glow-b{
-      width:min(36vw, 460px);
-      height:min(36vw, 460px);
-      right:10%;
-      top:24%;
-      background:radial-gradient(circle, rgba(39,151,150,.18), rgba(39,151,150,0) 72%);
+      width:min(38vw, 500px);
+      height:min(38vw, 500px);
+      left:58%;
+      top:57%;
+      transform:translate(-50%, -50%);
+      background:radial-gradient(circle, rgba(39,151,150,.16), rgba(39,151,150,0) 72%);
     }
     .hero-network{
       position:absolute;
-      right:clamp(-5rem, 1vw, 1rem);
-      top:53%;
-      width:min(48vw, 640px);
+      left:56%;
+      top:56%;
+      width:min(46vw, 620px);
       aspect-ratio:1 / 1;
-      transform:translateY(-50%);
+      transform:translate(-50%, -50%);
       filter:drop-shadow(0 28px 44px rgba(7,6,20,.28));
-      opacity:.94;
+      opacity:.98;
     }
     .hero-grid{
       max-width:var(--maxw);
       margin:0 auto;
       width:100%;
-      display:grid;
-      grid-template-columns:1.35fr .9fr;
-      gap: clamp(1.6rem, 3vw, 2.8rem);
-      align-items:center;
+      display:block;
       position:relative;
       z-index:1;
     }
     .hero-copy{
       position:relative;
       z-index:2;
+      width:min(100%, 720px);
+      margin:0 auto;
+      text-align:center;
     }
     .hero-kicker{
       font-size:.8rem;
@@ -363,22 +365,27 @@
     }
     .hero-title{
       font-family:"Space Grotesk",system-ui,sans-serif;
-      font-size: clamp(2.9rem, 4.8vw, 4.2rem);
+      font-size: clamp(3rem, 5vw, 4.4rem);
       line-height:1.06;
       margin-bottom:1rem;
       max-width:11ch;
+      margin-left:auto;
+      margin-right:auto;
       color:#f9f8fd;
     }
     .hero-body{
       color:rgba(231,233,243,.78);
       line-height:1.7;
-      max-width:52ch;
+      max-width:42rem;
       margin-bottom:1.3rem;
+      margin-left:auto;
+      margin-right:auto;
       font-size:1.03rem;
     }
     .hero-stack{
       display:flex;
       flex-wrap:wrap;
+      justify-content:center;
       gap:.35rem .6rem;
       font-size:.78rem;
       font-weight:900;
@@ -391,6 +398,7 @@
     .hero-meta{
       display:flex;
       flex-wrap:wrap;
+      justify-content:center;
       gap:.9rem;
       align-items:center;
       font-size:.85rem;
@@ -403,77 +411,6 @@
     }
     .hero-meta-item i{color:#7fd2cc;}
 
-    .hero-visual-stack{
-      width:100%;
-      max-width:390px;
-      margin:0 0 0 auto;
-      display:flex;
-      justify-content:flex-end;
-      position:relative;
-      z-index:2;
-    }
-    .hero-photo-card{
-      width:min(100%, 390px);
-      margin:0;
-      background:rgba(255,255,255,.08);
-      border-radius:26px;
-      padding:.6rem;
-      box-shadow:0 30px 64px rgba(7,6,18,.24);
-      border:1px solid rgba(255,255,255,.14);
-      position:relative;
-      overflow:hidden;
-      backdrop-filter:blur(10px);
-    }
-    .hero-photo-card::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      border-radius:26px;
-      padding:1px;
-      background:linear-gradient(135deg, rgba(127,210,204,.7), rgba(255,255,255,.1));
-      -webkit-mask:
-        linear-gradient(#000 0 0) content-box,
-        linear-gradient(#000 0 0);
-      -webkit-mask-composite:xor;
-              mask-composite:exclude;
-      pointer-events:none;
-    }
-    .hero-photo-topbar{
-      position:absolute;
-      left:0; right:0;
-      top:0;
-      padding:.75rem .95rem;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:.75rem;
-      pointer-events:none;
-    }
-    .hero-photo-topbar .label{
-      font-size:.72rem;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      font-weight:800;
-      color:rgba(249,248,253,.82);
-      background:rgba(32,29,50,.48);
-      border:1px solid rgba(255,255,255,.12);
-      padding:.28rem .6rem;
-      border-radius:999px;
-      backdrop-filter: blur(10px);
-    }
-    .hero-photo-inner{
-      border-radius:22px;
-      overflow:hidden;
-      background:#000;
-      aspect-ratio:16 / 11;
-    }
-    .hero-photo-inner img{
-      width:100%;
-      height:100%;
-      display:block;
-      object-fit:cover;
-      filter:grayscale(100%);
-    }
     .hero-ai-node{
       --size:12px;
       --drift-x:0px;
@@ -508,27 +445,21 @@
         padding-top:2.4rem;
         padding-bottom:4.8rem;
       }
-      .hero-grid{grid-template-columns:1fr;gap:2rem}
       .hero-network{
-        width:min(82vw, 520px);
-        right:-6rem;
-        top:23%;
-        transform:none;
-        opacity:.5;
+        width:min(88vw, 560px);
+        left:52%;
+        top:58%;
+        opacity:.72;
       }
       .hero-network-glow-a{
-        width:min(82vw, 540px);
-        height:min(82vw, 540px);
-        right:-8rem;
-        top:5%;
+        width:min(90vw, 580px);
+        height:min(90vw, 580px);
+        left:52%;
+        top:56%;
       }
       .hero-network-glow-b{
-        right:-2rem;
-        top:12%;
-      }
-      .hero-visual-stack{
-        margin:0;
-        max-width:420px;
+        left:56%;
+        top:60%;
       }
     }
     @media(max-width:640px){
@@ -541,11 +472,17 @@
       .hero-body{
         font-size:.98rem;
       }
+      .hero-kicker{
+        letter-spacing:.18em;
+      }
+      .hero-meta{
+        gap:.7rem 1rem;
+      }
       .hero-network{
-        width:115vw;
-        right:-42vw;
-        top:20%;
-        opacity:.38;
+        width:122vw;
+        left:50%;
+        top:63%;
+        opacity:.42;
       }
     }
     @media (prefers-reduced-motion: reduce){
@@ -1621,18 +1558,6 @@
         <span class="hero-meta-item">
           <i class="fa-solid fa-graduation-cap"></i> MS Computer Science — AI/ML, SMU
         </span>
-      </div>
-    </div>
-
-    <div class="hero-visual-stack">
-      <div class="hero-photo-card hero-profile-card">
-        <div class="hero-photo-topbar" aria-hidden="true">
-          <span class="label">Profile</span>
-        </div>
-
-        <div class="hero-photo-inner">
-          <img src="avatar.jpg" alt="Portrait of Avikshith Yelakonda" />
-        </div>
       </div>
     </div>
   </div>
@@ -2760,30 +2685,29 @@
   const heroSignalCloud = document.getElementById('heroSignalCloud');
   if (heroSignalCloud) {
     const palette = ['#c84f72', '#c57a35', '#c2ab31', '#4da59d', '#2f82b6', '#d16363'];
-    const nodeCount = window.innerWidth < 640 ? 112 : 176;
+    const nodeCount = window.innerWidth < 640 ? 180 : 260;
 
     const createNode = () => {
       const node = document.createElement('span');
       node.className = 'hero-ai-node';
 
       const angle = Math.random() * Math.PI * 2;
-      const spread = Math.sqrt(Math.random());
-      const radiusX = 33;
-      const radiusY = 31;
-      const x = 50 + Math.cos(angle) * spread * radiusX + (Math.random() - 0.5) * 1.8;
-      const y = 50 + Math.sin(angle) * spread * radiusY + (Math.random() - 0.5) * 1.8;
-      const size = 6 + Math.random() * 14;
+      const spread = Math.pow(Math.random(), 0.82);
+      const radius = 34;
+      const x = 50 + Math.cos(angle) * spread * radius;
+      const y = 50 + Math.sin(angle) * spread * radius;
+      const size = 4 + Math.random() * 13;
       const color = palette[Math.floor(Math.random() * palette.length)];
 
       node.style.left = `${x}%`;
       node.style.top = `${y}%`;
       node.style.setProperty('--size', `${size}px`);
       node.style.setProperty('--node-color', color);
-      node.style.setProperty('--drift-x', `${(Math.random() - 0.5) * 8}px`);
-      node.style.setProperty('--drift-y', `${(Math.random() - 0.5) * 10}px`);
-      node.style.setProperty('--duration', `${7 + Math.random() * 5}s`);
-      node.style.setProperty('--delay', `${Math.random() * -8}s`);
-      node.style.opacity = `${0.52 + Math.random() * 0.34}`;
+      node.style.setProperty('--drift-x', `${(Math.random() - 0.5) * 5}px`);
+      node.style.setProperty('--drift-y', `${(Math.random() - 0.5) * 6}px`);
+      node.style.setProperty('--duration', `${8 + Math.random() * 6}s`);
+      node.style.setProperty('--delay', `${Math.random() * -10}s`);
+      node.style.opacity = `${0.62 + Math.random() * 0.26}`;
 
       return node;
     };

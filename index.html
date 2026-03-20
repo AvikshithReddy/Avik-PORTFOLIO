@@ -318,24 +318,24 @@
     .hero-network-glow-a{
       width:min(54vw, 760px);
       height:min(54vw, 760px);
-      left:54%;
-      top:53%;
+      left:50%;
+      top:52%;
       transform:translate(-50%, -50%);
       background:radial-gradient(circle, rgba(89,70,157,.4), rgba(89,70,157,0) 68%);
     }
     .hero-network-glow-b{
       width:min(38vw, 500px);
       height:min(38vw, 500px);
-      left:58%;
-      top:57%;
+      left:52%;
+      top:54%;
       transform:translate(-50%, -50%);
       background:radial-gradient(circle, rgba(39,151,150,.16), rgba(39,151,150,0) 72%);
     }
     .hero-network{
       position:absolute;
-      left:56%;
-      top:56%;
-      width:min(46vw, 620px);
+      left:50%;
+      top:54%;
+      width:min(50vw, 680px);
       aspect-ratio:1 / 1;
       transform:translate(-50%, -50%);
       filter:drop-shadow(0 28px 44px rgba(7,6,20,.28));
@@ -352,9 +352,11 @@
     .hero-copy{
       position:relative;
       z-index:2;
-      width:min(100%, 720px);
+      width:min(100%, 760px);
       margin:0 auto;
       text-align:center;
+      padding-top:3rem;
+      padding-bottom:2rem;
     }
     .hero-kicker{
       font-size:.8rem;
@@ -372,15 +374,16 @@
       margin-left:auto;
       margin-right:auto;
       color:#f9f8fd;
+      text-wrap:balance;
     }
     .hero-body{
       color:rgba(231,233,243,.78);
       line-height:1.7;
-      max-width:42rem;
+      max-width:36rem;
       margin-bottom:1.3rem;
       margin-left:auto;
       margin-right:auto;
-      font-size:1.03rem;
+      font-size:1rem;
     }
     .hero-stack{
       display:flex;
@@ -428,6 +431,8 @@
       opacity:.82;
       animation:heroNodeFloat var(--duration) ease-in-out infinite;
       animation-delay:var(--delay);
+      transition:left 2.8s ease, top 2.8s ease, opacity 2.8s ease, transform 2.8s ease;
+      will-change:left, top, transform, opacity;
     }
     @keyframes heroNodeFloat{
       0%, 100%{
@@ -446,25 +451,28 @@
         padding-bottom:4.8rem;
       }
       .hero-network{
-        width:min(88vw, 560px);
-        left:52%;
-        top:58%;
+        width:min(92vw, 560px);
+        left:50%;
+        top:54%;
         opacity:.72;
       }
       .hero-network-glow-a{
         width:min(90vw, 580px);
         height:min(90vw, 580px);
-        left:52%;
-        top:56%;
+        left:50%;
+        top:53%;
       }
       .hero-network-glow-b{
-        left:56%;
-        top:60%;
+        left:50%;
+        top:55%;
       }
     }
     @media(max-width:640px){
       .hero{
         padding:2rem 1rem 4.2rem;
+      }
+      .hero-copy{
+        padding-top:2.25rem;
       }
       .hero-title{
         font-size:clamp(2.45rem, 11vw, 3.35rem);
@@ -481,7 +489,7 @@
       .hero-network{
         width:122vw;
         left:50%;
-        top:63%;
+        top:54%;
         opacity:.42;
       }
     }
@@ -2686,37 +2694,84 @@
   if (heroSignalCloud) {
     const palette = ['#c84f72', '#c57a35', '#c2ab31', '#4da59d', '#2f82b6', '#d16363'];
     const nodeCount = window.innerWidth < 640 ? 180 : 260;
+    const nodes = [];
+    const states = ['blob', 'ring', 'crescent', 'ring'];
+
+    const placeNode = (node, mode) => {
+      const angle = Number(node.dataset.angle);
+      const scatter = Number(node.dataset.scatter);
+      const innerBias = Number(node.dataset.innerBias);
+
+      let radius = 0;
+      let x = 50;
+      let y = 50;
+      let opacity = 0.8;
+
+      if (mode === 'blob') {
+        radius = scatter * 31;
+        x = 50 + Math.cos(angle) * radius;
+        y = 49 + Math.sin(angle) * radius;
+        opacity = 0.68 + (1 - scatter) * 0.2;
+      } else if (mode === 'ring') {
+        radius = 23 + scatter * 13;
+        x = 50 + Math.cos(angle) * radius;
+        y = 50 + Math.sin(angle) * radius;
+        opacity = 0.66 + innerBias * 0.18;
+      } else if (mode === 'crescent') {
+        const sweep = angle * 0.86 + 0.52;
+        radius = 20 + scatter * 16;
+        x = 53 + Math.cos(sweep) * radius;
+        y = 51 + Math.sin(sweep) * radius;
+        if (Math.cos(sweep) > 0.28) {
+          x += 8 + scatter * 3;
+          y += (Math.sin(sweep) * 3);
+        }
+        opacity = 0.6 + innerBias * 0.18;
+      }
+
+      node.style.left = `${x}%`;
+      node.style.top = `${y}%`;
+      node.style.opacity = `${opacity}`;
+    };
 
     const createNode = () => {
       const node = document.createElement('span');
       node.className = 'hero-ai-node';
-
-      const angle = Math.random() * Math.PI * 2;
-      const spread = Math.pow(Math.random(), 0.82);
-      const radius = 34;
-      const x = 50 + Math.cos(angle) * spread * radius;
-      const y = 50 + Math.sin(angle) * spread * radius;
       const size = 4 + Math.random() * 13;
       const color = palette[Math.floor(Math.random() * palette.length)];
+      const angle = Math.random() * Math.PI * 2;
+      const scatter = Math.pow(Math.random(), 0.82);
+      const innerBias = Math.random();
 
-      node.style.left = `${x}%`;
-      node.style.top = `${y}%`;
       node.style.setProperty('--size', `${size}px`);
       node.style.setProperty('--node-color', color);
       node.style.setProperty('--drift-x', `${(Math.random() - 0.5) * 5}px`);
       node.style.setProperty('--drift-y', `${(Math.random() - 0.5) * 6}px`);
       node.style.setProperty('--duration', `${8 + Math.random() * 6}s`);
       node.style.setProperty('--delay', `${Math.random() * -10}s`);
-      node.style.opacity = `${0.62 + Math.random() * 0.26}`;
+      node.dataset.angle = String(angle);
+      node.dataset.scatter = String(scatter);
+      node.dataset.innerBias = String(innerBias);
+
+      placeNode(node, 'blob');
 
       return node;
     };
 
     const fragment = document.createDocumentFragment();
     for (let i = 0; i < nodeCount; i += 1) {
-      fragment.appendChild(createNode());
+      const node = createNode();
+      nodes.push(node);
+      fragment.appendChild(node);
     }
     heroSignalCloud.appendChild(fragment);
+
+    let stateIndex = 0;
+    window.setInterval(() => {
+      stateIndex = (stateIndex + 1) % states.length;
+      const mode = states[stateIndex];
+      nodes.forEach((node) => placeNode(node, mode));
+    }, 3600);
   }
 
   // ✅ Quick Info modal open/close
